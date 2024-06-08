@@ -5,6 +5,9 @@ import fr_FR from '../i18n/fr_FR.json'
 
 const showUS = ref(true)
 const { t, setLocale } = useI18n()
+// const { data: authData } = useAuth()
+// const isLoggedIn = computed(() => authData.value?.user)
+const isLoggedIn = true
 
 const renderedJSON = computed(() => {
   return showUS.value ? en_US : fr_FR
@@ -70,6 +73,14 @@ watch(showUS, (newVal, _oldVal) => {
                   {{ t('cta') }}
                 </a>
                 <NuxtLink
+                  v-if="isLoggedIn"
+                  to="app"
+                  class="text-sm font-semibold leading-6 text-gray-900"
+                >
+                  {{ t('app') }} <span aria-hidden="true">→</span>
+                </NuxtLink>
+                <NuxtLink
+                  v-else
                   to="login"
                   class="text-sm font-semibold leading-6 text-gray-900"
                 >

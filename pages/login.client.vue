@@ -1,7 +1,13 @@
 <script setup lang="ts">
-const { t } = useI18n()
+definePageMeta({
+  auth: {
+    unauthenticatedOnly: true,
+    navigateAuthenticatedTo: '/app',
+  },
+})
 
-const { signIn } = useAuth()
+const { t } = useI18n()
+// const { signIn } = useAuth()
 </script>
 
 <template>
@@ -138,8 +144,16 @@ const { signIn } = useAuth()
               <span class="text-sm font-semibold leading-6">Google</span>
             </a>
 
+            <!-- <button
+              @click="
+                () =>
+                  signIn('github', {
+                    callbackUrl: '/app',
+                  })
+              "
+              class="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent"
+            > -->
             <button
-              @click="() => signIn('github')"
               class="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent"
             >
               <svg
