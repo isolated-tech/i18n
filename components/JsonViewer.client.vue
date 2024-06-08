@@ -10,7 +10,9 @@ interface Props {
 const props = defineProps<Props>()
 
 onMounted(() => {
-  Prism.highlightAll()
+  nextTick(() => {
+    Prism.highlightAll()
+  })
 })
 
 watch(
