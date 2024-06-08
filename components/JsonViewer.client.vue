@@ -28,3 +28,9 @@ watch(
 <template>
   <code class="lang-json">{{ jsonData }}</code>
 </template>
+
+<style scoped>
+:not(pre) > code[class*='language-'] {
+  @apply !bg-gray-900;
+}
+</style>
