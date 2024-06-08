@@ -69,12 +69,12 @@ watch(showUS, (newVal, _oldVal) => {
                 >
                   {{ t('cta') }}
                 </a>
-                <a
-                  href="#"
+                <NuxtLink
+                  to="login"
                   class="text-sm font-semibold leading-6 text-gray-900"
                 >
-                  {{ t('login') }} <span aria-hidden="true">→</span></a
-                >
+                  {{ t('login') }} <span aria-hidden="true">→</span>
+                </NuxtLink>
               </div>
             </div>
           </div>
