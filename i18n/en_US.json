@@ -11,5 +11,6 @@
   "password": "Password",
   "rememberMe": "Remember me",
   "forgotPassword": "Forgot password",
-  "orContinueWith": "Or continue with"
+  "orContinueWith": "Or continue with",
+  "app": "App"
 }
