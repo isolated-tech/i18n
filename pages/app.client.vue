@@ -1,20 +1,3 @@
-<template>
-  <div class="flex flex-col">
-    <FileInput @file-change="content => handleFileContents(content)" />
-
-    <codemirror
-      v-model="code"
-      placeholder="Code goes here..."
-      :style="{ height: '400px' }"
-      :autofocus="true"
-      :indent-with-tab="true"
-      :tab-size="2"
-      :extensions="extensions"
-      @ready="handleReady"
-    />
-  </div>
-</template>
-
 <script setup lang="ts">
 import { Codemirror } from 'vue-codemirror'
 import { json } from '@codemirror/lang-json'
@@ -48,3 +31,26 @@ const getCodemirrorStates = () => {
   // return ...
 }
 </script>
+
+<template>
+  <div class="max-w-4xl mx-auto h-screen">
+    <FileInput @file-change="content => handleFileContents(content)" />
+
+    <codemirror
+      v-model="code"
+      placeholder="Code goes here..."
+      :style="{ height: '400px' }"
+      :autofocus="true"
+      :indent-with-tab="true"
+      :tab-size="2"
+      :extensions="extensions"
+      @ready="handleReady"
+    />
+  </div>
+</template>
+
+<style scoped>
+.cm-editor {
+  @apply !w-full;
+}
+</style>
