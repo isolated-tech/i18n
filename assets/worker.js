@@ -31,6 +31,8 @@ self.addEventListener('message', async event => {
   })
 
   const obj = JSON.parse(event.data.text)
+  const languages = JSON.parse(event.data.languages)
+
   const returnedObj = {}
   const keys = Object.keys(obj)
   const langKeys = Object.keys(LANGUAGES)

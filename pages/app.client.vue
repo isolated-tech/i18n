@@ -13,7 +13,7 @@ const worker = ref<Worker>()
 const ready = ref()
 const disabled = ref(false)
 const progressItems = ref([])
-const sourceLanguage = ref('eng_Latn')
+const sourceLanguage = ref<Language>()
 const targetLanguage = ref('fra_Latn')
 const { t } = useI18n()
 const languages = ref<string[]>([])
@@ -149,6 +149,7 @@ const translate = () => {
   <div class="h-screen">
     <div class="flex flex-col w-screen">
       <div class="grid grid-cols-2 gap-10">
+        <!-- Input -->
         <div class="h-full flex flex-col my-2 ml-2">
           <div class="flex">
             <div class="relative w-full md:pr-0">
@@ -184,6 +185,7 @@ const translate = () => {
           />
         </div>
 
+        <!-- Output -->
         <div class="h-full flex flex-col">
           <div v-if="language" class="mt-2">
             <div class="flex">
@@ -233,7 +235,7 @@ const translate = () => {
             <div v-if="checkedLanguages.length <= 0">
               <LanguageSelector v-model="selectedLanguages" />
             </div>
-            <div class="flex flex-col">
+            <!-- <div class="flex flex-col">
               <div class="flex gap-2">
                 <FileInput
                   class="w-auto cursor-pointer"
@@ -253,7 +255,7 @@ const translate = () => {
                   <Progress :model-value="data.progress" />
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
