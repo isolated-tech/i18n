@@ -18,7 +18,7 @@ const toggleAllLanguages = () => {
 }
 
 const handleToggle = (index: number) => {
-  if (index === 0) {
+  if (index === 0 && !single.value) {
     toggleAllLanguages()
   } else {
     const language = languages.value[index]
@@ -43,7 +43,7 @@ watch(languages, () => {
       class="flex justify-between text-base font-semibold leading-6 text-gray-900 w-full pr-5"
     >
       <p>Language</p>
-      <p class="text-gray-500 font-medium text-xs" v-if="languages">
+      <p class="text-gray-500 font-medium text-xs" v-if="languages && !single">
         {{ `${checkedCount} / ${languages.length}` }}
       </p>
     </legend>
@@ -52,7 +52,7 @@ watch(languages, () => {
       class="max-h-96 overflow-y-scroll mt-4 divide-y divide-gray-200 border-b border-t border-gray-200 pr-5"
     >
       <div
-        v-for="(language, index) in languages"
+        v-for="(language, index) in languages?.slice(1, languages.length - 1)"
         :key="index"
         class="relative flex items-start py-4"
       >
@@ -69,7 +69,6 @@ watch(languages, () => {
             :id="language.code"
             :name="language.code"
             :checked="language.checked"
-            :disabled="index === 0 && single"
             type="checkbox"
             class="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
             @change="() => handleToggle(index)"
