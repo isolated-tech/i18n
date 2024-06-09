@@ -1,6 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: false },
+  app: {
+    head: {
+      script: [{ src: 'http://localhost:8098' }],
+    },
+  },
+  devtools: { enabled: true },
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/i18n',
