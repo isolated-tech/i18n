@@ -34,6 +34,7 @@ const handleFileContents = (e: any) => {
         <div class="px-6 lg:px-0 lg:pt-4">
           <div class="mx-auto max-w-2xl">
             <div class="max-w-lg">
+              <!-- TODO: This should pass query as well -->
               <NuxtLink to="input">
                 <ArrowLeftIcon class="h-11 cursor-pointer" />
               </NuxtLink>

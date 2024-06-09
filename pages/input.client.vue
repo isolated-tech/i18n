@@ -23,6 +23,9 @@ const handleFileContents = (e: any) => {
 const handleNav = () => {
   router.push({
     path: '/translate',
+    query: {
+      lang: route.query.lang,
+    },
   })
 }
 </script>
