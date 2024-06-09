@@ -31,7 +31,9 @@ const checkedCount = computed(() => {
       class="flex justify-between text-base font-semibold leading-6 text-gray-900 w-full pr-5"
     >
       <p>Language</p>
-      <div>{{ `(${checkedCount}/${languages.length})` }}</div>
+      <p class="text-gray-500 font-medium text-xs">
+        {{ `${checkedCount} / ${languages.length}` }}
+      </p>
     </legend>
 
     <div
