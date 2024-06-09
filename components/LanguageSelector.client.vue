@@ -5,24 +5,28 @@ interface Props {
   single?: boolean
 }
 
-defineProps<Props>()
+const { single } = defineProps<Props>()
 const languages = defineModel<Language[]>()
 const emit = defineEmits(['languagesUpdated'])
 
-const toggleAllLanguages = () => {
-  const checkTo = !languages.value[0].checked
-
+const toggleAllLanguages = (checkTo: boolean) => {
   languages.value.forEach(language => {
     language.checked = checkTo
   })
 }
 
-const handleToggle = (index: number) => {
-  if (index === 0 && !single.value) {
-    toggleAllLanguages()
-  } else {
-    const language = languages.value[index]
-    language.checked = !language.checked
+const handleToggle = (code: string) => {
+  const language = languages.value?.find(l => l.code === code)
+
+  if (language) {
+    if (language.code === 'all' && !single) {
+      toggleAllLanguages(!language.checked)
+    } else if (single) {
+      toggleAllLanguages(false)
+      language.checked = !language.checked
+    } else {
+      language.checked = !language.checked
+    }
   }
 }
 
@@ -52,8 +56,10 @@ watch(languages, () => {
       class="max-h-96 overflow-y-scroll mt-4 divide-y divide-gray-200 border-b border-t border-gray-200 pr-5"
     >
       <div
-        v-for="(language, index) in languages?.slice(1, languages.length - 1)"
-        :key="index"
+        v-for="(language, index) in single
+          ? languages?.slice(1, languages.length - 1)
+          : languages"
+        :key="language.code"
         class="relative flex items-start py-4"
       >
         <div class="min-w-0 flex-1 text-sm leading-6">
@@ -71,7 +77,7 @@ watch(languages, () => {
             :checked="language.checked"
             type="checkbox"
             class="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
-            @change="() => handleToggle(index)"
+            @change="() => handleToggle(language.code)"
           />
         </div>
       </div>

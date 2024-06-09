@@ -13,5 +13,6 @@
   "forgotPassword": "Forgot password",
   "orContinueWith": "Or continue with",
   "app": "App",
-  "translate": "Translate"
+  "translate": "Translate",
+  "pasteYourJsonHere": "Paste your JSON here"
 }

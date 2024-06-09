@@ -1,22 +1,26 @@
 <script setup lang="ts">
-import { type Language, languages as languagesConst } from '@/lib/constants'
+import { ArrowLeftIcon } from '@heroicons/vue/20/solid'
+import { languages, type Language } from '@/lib/constants'
+
+import { Codemirror } from 'vue-codemirror'
+import { json } from '@codemirror/lang-json'
+import { oneDark } from '@codemirror/theme-one-dark'
 
 const { t } = useI18n()
+const route = useRoute()
 const router = useRouter()
+const extensions = [json(), oneDark]
+const code = ref<string | undefined>()
+const view = shallowRef()
+const selectedLanguages = ref<Language[]>(languages)
 
-const selectedLanguages = ref<Language[]>(languagesConst)
-const checkedLanguages = computed(() => {
-  return selectedLanguages.value.filter(language => language.checked)
-})
+const handleReady = (payload: any) => {
+  view.value = payload.view
+}
 
-watch(checkedLanguages, (newVal, _oldVal) => {
-  router.push({
-    path: '/input',
-    query: {
-      lang: newVal[0].code,
-    },
-  })
-})
+const handleFileContents = (e: any) => {
+  code.value = e
+}
 </script>
 
 <template>
@@ -30,20 +34,26 @@ watch(checkedLanguages, (newVal, _oldVal) => {
         <div class="px-6 lg:px-0 lg:pt-4">
           <div class="mx-auto max-w-2xl">
             <div class="max-w-lg">
-              <img
-                class="h-11"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&amp;shade=600"
-                alt="Your Company"
-              />
+              <NuxtLink to="input">
+                <ArrowLeftIcon class="h-11 cursor-pointer" />
+              </NuxtLink>
               <h1
                 class="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
               >
-                Select your input language
+                Select output languages
               </h1>
               <p class="mt-6 text-lg leading-8 text-gray-600">
-                Get started by selecting the language you plan on translating
-                from. This is typically your base i18n file that you work with
-                within your native tongue.
+                Now select that language(s) to translate to. Our
+                <a
+                  class="underline"
+                  href="https://huggingface.co/facebook/nllb-200-distilled-600M"
+                  target="_blank"
+                >
+                  model
+                </a>
+                supports {{ languages.length }} languages. Please keep in mind
+                that the time of task completion will vary depending on the
+                number of languages you wish to translate to.
               </p>
             </div>
           </div>
@@ -66,10 +76,7 @@ watch(checkedLanguages, (newVal, _oldVal) => {
                 <div
                   class="mx-auto max-w-2xl bg-opacity-95 md:mx-0 md:max-w-none"
                 >
-                  <LanguageSelector
-                    v-model="selectedLanguages"
-                    :single="true"
-                  />
+                  <LanguageSelector v-model="selectedLanguages" />
                 </div>
                 <div
                   class="pointer-events-none absolute inset-0 ring-1 ring-inset ring-black/10 md:rounded-3xl"
