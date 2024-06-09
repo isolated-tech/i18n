@@ -3,6 +3,7 @@ import { Codemirror } from 'vue-codemirror'
 import { json } from '@codemirror/lang-json'
 import { oneDark } from '@codemirror/theme-one-dark'
 import { js_beautify } from 'js-beautify'
+import { type Language, languages as languagesConst } from '@/lib/constants'
 
 const file = ref<string>()
 const code = ref<string | undefined>("console.log('Hello, world!')")
@@ -17,7 +18,9 @@ const targetLanguage = ref('fra_Latn')
 const { t } = useI18n()
 const languages = ref<string[]>([])
 const language = ref<string>()
+const selectedLanguages = ref<Language[]>(languagesConst)
 const otherCode = ref()
+
 const setL = (l: string) => {
   language.value = l
   otherCode.value = JSON.stringify(JSON.parse(codeOutput.value)[language.value])
@@ -139,30 +142,10 @@ const translate = () => {
 </script>
 
 <template>
-  <div class="mt-10 h-screen">
+  <div class="h-screen">
     <div class="flex flex-col w-screen">
-      <div class="flex flex-col items-center justify-center gap-8">
-        <div class="flex gap-2">
-          <FileInput
-            class="w-auto cursor-pointer"
-            @file-change="content => handleFileContents(content)"
-          />
-          <Button :disabled @click="translate">{{ t('translate') }}</Button>
-        </div>
-
-        <div>
-          <label v-if="ready === false"
-            >Loading models... (only run once)</label
-          >
-
-          <div v-for="data in progressItems" :key="data.file">
-            <Progress :model-value="data.progress" />
-          </div>
-        </div>
-      </div>
-
-      <div class="flex gap-5 mt-10">
-        <div class="w-1/2 h-full flex flex-col">
+      <div class="grid grid-cols-2 gap-10">
+        <div class="h-full flex flex-col my-2 ml-2">
           <div class="flex">
             <div class="relative w-full md:pr-0">
               <div class="mx-auto w-full max-w-2xl md:mx-0 md:max-w-none">
@@ -183,8 +166,12 @@ const translate = () => {
           </div>
           <Codemirror
             v-model="code"
-            placeholder="Code goes here..."
-            :style="{ height: '100vh' }"
+            placeholder="Paste your JSON here..."
+            :style="{
+              height: '94svh',
+              borderBottomLeftRadius: '10px',
+              borderBottomRightRadius: '10px',
+            }"
             :autofocus="true"
             :indent-with-tab="true"
             :tab-size="2"
@@ -193,8 +180,8 @@ const translate = () => {
           />
         </div>
 
-        <div class="w-1/2 h-full flex flex-col">
-          <div v-if="language">
+        <div class="h-full flex flex-col">
+          <div v-if="language" class="mt-2">
             <div class="flex">
               <div class="relative md:pr-0">
                 <div class="mx-auto max-w-2xl md:mx-0 md:max-w-none">
@@ -235,8 +222,31 @@ const translate = () => {
             />
           </div>
 
-          <div v-else class="mx-10">
-            <LanguageSelector />
+          <div class="flex flex-col h-full justify-around">
+            <div v-if="!language">
+              <LanguageSelector v-model="selectedLanguages" />
+            </div>
+            <div class="flex flex-col">
+              <div class="flex gap-2">
+                <FileInput
+                  class="w-auto cursor-pointer"
+                  @file-change="content => handleFileContents(content)"
+                />
+                <Button :disabled @click="translate">{{
+                  t('translate')
+                }}</Button>
+              </div>
+
+              <div>
+                <label v-if="ready === false">
+                  Loading models... (only run once)
+                </label>
+
+                <div v-for="data in progressItems" :key="data.file">
+                  <Progress :model-value="data.progress" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -247,5 +257,16 @@ const translate = () => {
 <style scoped>
 .cm-editor {
   @apply !w-full;
+}
+
+.ͼo.cm-gutter {
+  border-bottom-left-radius: 10px !important;
+}
+.cm-gutter.cm-foldGutter {
+  border-bottom-left-radius: 10px !important;
+}
+
+.cm-scroller {
+  border-bottom-left-radius: 10px !important;
 }
 </style>
