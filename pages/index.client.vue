@@ -74,10 +74,10 @@ watch(showUS, (newVal, _oldVal) => {
                 </a>
                 <NuxtLink
                   v-if="isLoggedIn"
-                  to="app"
+                  to="get-started"
                   class="text-sm font-semibold leading-6 text-gray-900"
                 >
-                  {{ t('app') }} <span aria-hidden="true">→</span>
+                  Get started <span aria-hidden="true">→</span>
                 </NuxtLink>
                 <NuxtLink
                   v-else
