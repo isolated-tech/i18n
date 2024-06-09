@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { languages as languagesConst } from '@/lib/constants'
+import { type Language } from '@/lib/constants'
 
-const languages = ref(languagesConst)
+const languages = defineModel<Language[]>()
+const emit = defineEmits(['languagesUpdated'])
 
 const toggleAllLanguages = () => {
   const checkTo = !languages.value[0].checked
@@ -23,6 +24,10 @@ const handleToggle = (index: number) => {
 const checkedCount = computed(() => {
   return languages.value.filter(l => l.checked).length
 })
+
+watch(languages, () => {
+  emit('languagesUpdated', languages)
+})
 </script>
 
 <template>
@@ -37,7 +42,7 @@ const checkedCount = computed(() => {
     </legend>
 
     <div
-      class="max-h-screen overflow-y-scroll mt-4 divide-y divide-gray-200 border-b border-t border-gray-200 pr-5"
+      class="max-h-96 overflow-y-scroll mt-4 divide-y divide-gray-200 border-b border-t border-gray-200 pr-5"
     >
       <div
         v-for="(language, index) in languages"
