@@ -5,7 +5,7 @@ export default defineNuxtConfig({
       script: [{ src: 'http://localhost:8098' }],
     },
   },
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/i18n',
