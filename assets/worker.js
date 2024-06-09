@@ -1,5 +1,5 @@
 import { pipeline } from '@xenova/transformers'
-import { LANGUAGES } from './utils/constants'
+import { LANGUAGES } from '@/lib/constants'
 
 /**
  * This class uses the Singleton pattern to ensure that only one instance of the
@@ -73,10 +73,4 @@ self.addEventListener('message', async event => {
       output: returnedObj[LANGUAGES[language]],
     })
   }
-
-  // Send the output back to the main thread
-  // self.postMessage({
-  //   status: 'complete',
-  //   output: JSON.stringify(obj),
-  // })
 })
