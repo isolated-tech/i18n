@@ -1,5 +1,5 @@
 <template>
-  <html class="h-full bg-gray-50">
+  <html class="h-full">
     <body class="h-full">
       <NuxtPage />
     </body>
