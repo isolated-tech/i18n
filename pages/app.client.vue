@@ -218,6 +218,9 @@ const translate = () => {
               :indent-with-tab="true"
               :tab-size="2"
               :extensions="extensions"
+              :class="{
+                'rounded-bl': true,
+              }"
               @ready="handleReady"
             />
           </div>
@@ -254,7 +257,7 @@ const translate = () => {
   </div>
 </template>
 
-<style scoped>
+<style>
 .cm-editor {
   @apply !w-full;
 }
@@ -269,4 +272,35 @@ const translate = () => {
 .cm-scroller {
   border-bottom-left-radius: 10px !important;
 }
+
+body
+  > div
+  > div
+  > div
+  > div
+  > div.h-full.flex.flex-col.my-2.ml-2
+  > div.v-codemirror
+  > div
+  > div.cm-scroller
+  > div.cm-content
+  > div
+  > span.ͼq {
+  color: #9cdcfe !important;
+}
+
+body
+  > div
+  > div
+  > div
+  > div
+  > div.h-full.flex.flex-col.my-2.ml-2
+  > div.v-codemirror
+  > div
+  > div.cm-scroller
+  > div.cm-content
+  > div
+  > span.ͼ13 {
+  color: #ce9178 !important;
+}
+/* #101827 */
 </style>

@@ -63,7 +63,7 @@ watch(languages, () => {
             :name="language.code"
             :checked="language.checked"
             type="checkbox"
-            class="h-4 w-4 rounded border-gray-300 text-indigo-500 focus:ring-indigo-500"
+            class="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
             @change="() => handleToggle(index)"
           />
         </div>
