@@ -15,11 +15,22 @@ const progressItems = ref([])
 const sourceLanguage = ref('eng_Latn')
 const targetLanguage = ref('fra_Latn')
 const { t } = useI18n()
-const formattedCodeOutput = computed(() =>
-  // JSON.stringify(codeOutput.value, null, 4)
-  js_beautify(codeOutput.value, options)
-)
-const options = { indent_size: 2, space_in_empty_paren: true }
+const languages = ref<string[]>([])
+const language = ref<string>()
+const otherCode = ref()
+const setL = (l: string) => {
+  language.value = l
+  otherCode.value = JSON.stringify(JSON.parse(codeOutput.value)[language.value])
+}
+
+const formattedCodeOutput = computed(() => {
+  if (otherCode.value) {
+    return js_beautify(otherCode.value, {
+      indent_size: 2,
+      space_in_empty_paren: true,
+    })
+  }
+})
 
 const view = shallowRef()
 const handleReady = (payload: any) => {
@@ -79,11 +90,16 @@ const onMessageReceived = e => {
 
     case 'update':
       // Generation update: update the output text.
-      codeOutput.value = e.data.output
+      const language = e.data.output.language as string
+      if (!languages.value.includes(language)) {
+        languages.value.push(language)
+      }
+
+      codeOutput.value = e.data.output.data
       break
 
     case 'complete':
-      handleDownload(JSON.stringify(e.data.output), 'i18n.json')
+      handleDownload(JSON.stringify(e.data.output.data), 'i18n.json')
 
       disabled.value = false
       break
@@ -146,7 +162,25 @@ const translate = () => {
       </div>
 
       <div class="flex gap-5 mt-10">
-        <div class="w-1/2 h-full">
+        <div class="w-1/2 h-full flex flex-col">
+          <div class="flex">
+            <div class="relative w-full md:pr-0">
+              <div class="mx-auto w-full max-w-2xl md:mx-0 md:max-w-none">
+                <div class="w-full overflow-hidden rounded-t-xl bg-[#282C34]">
+                  <div class="flex bg-gray-800/40 ring-1 ring-white/5">
+                    <div
+                      class="-mb-px flex text-sm font-medium leading-6 text-gray-400"
+                    ></div>
+                    <button
+                      class="bg-[#282C34] border-b border-r border-b-white/20 border-r-white/10 bg-white/5 px-4 py-2 text-white"
+                    >
+                      eng_Latn
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <Codemirror
             v-model="code"
             placeholder="Code goes here..."
@@ -159,7 +193,35 @@ const translate = () => {
           />
         </div>
 
-        <div class="w-1/2 h-full">
+        <div class="w-1/2 h-full flex flex-col">
+          <div class="flex">
+            <div class="relative md:pr-0">
+              <div class="mx-auto max-w-2xl md:mx-0 md:max-w-none">
+                <div
+                  class="w-screen overflow-hidden rounded-tl-xl bg-[#282C34]"
+                >
+                  <div class="flex bg-gray-800/40 ring-1 ring-white/5">
+                    <div
+                      class="-mb-px flex text-sm font-medium leading-6 text-gray-400"
+                    ></div>
+                    <button
+                      v-for="(l, index) in languages"
+                      @click="() => setL(l)"
+                      :class="{
+                        'rounded-tl-md': index === 0,
+                        'bg-[#282C34] border-b border-r border-b-white/20 border-r-white/10 bg-white/5 px-4 py-2 text-white':
+                          language === l,
+                        'bg-[#282C34] border-r border-gray-600/10 px-4 py-2 text-white':
+                          language !== l,
+                      }"
+                    >
+                      {{ l }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <Codemirror
             :model-value="formattedCodeOutput"
             placeholder="Output"

@@ -61,7 +61,10 @@ self.addEventListener('message', async event => {
           )
           self.postMessage({
             status: 'update',
-            output: JSON.stringify(returnedObj),
+            output: {
+              language: LANGUAGES[language],
+              data: JSON.stringify(returnedObj),
+            },
           })
         },
       })
@@ -70,7 +73,10 @@ self.addEventListener('message', async event => {
     }
     self.postMessage({
       status: 'complete',
-      output: returnedObj[LANGUAGES[language]],
+      output: {
+        language: LANGUAGES[language],
+        data: returnedObj[LANGUAGES[language]],
+      },
     })
   }
 })
