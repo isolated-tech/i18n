@@ -26,6 +26,10 @@ const setL = (l: string) => {
   otherCode.value = JSON.stringify(JSON.parse(codeOutput.value)[language.value])
 }
 
+const checkedLanguages = computed(() => {
+  return selectedLanguages.value.filter(language => language.checked)
+})
+
 const formattedCodeOutput = computed(() => {
   if (otherCode.value) {
     return js_beautify(otherCode.value, {
@@ -226,7 +230,7 @@ const translate = () => {
           </div>
 
           <div class="flex flex-col h-full justify-around">
-            <div v-if="!language">
+            <div v-if="checkedLanguages.length <= 0">
               <LanguageSelector v-model="selectedLanguages" />
             </div>
             <div class="flex flex-col">
