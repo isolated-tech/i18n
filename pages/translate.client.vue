@@ -1,25 +1,114 @@
 <script setup lang="ts">
 import { ArrowLeftIcon } from '@heroicons/vue/20/solid'
 import { languages, type Language } from '@/lib/constants'
-
-import { Codemirror } from 'vue-codemirror'
-import { json } from '@codemirror/lang-json'
-import { oneDark } from '@codemirror/theme-one-dark'
+import MyWorker from '@/lib/worker?worker'
 
 const { t } = useI18n()
-const route = useRoute()
-const router = useRouter()
-const extensions = [json(), oneDark]
+const worker = ref<Worker>()
+const ready = ref()
 const code = ref<string | undefined>()
-const view = shallowRef()
+const progressItems = ref([])
 const selectedLanguages = ref<Language[]>(languages)
 
-const handleReady = (payload: any) => {
-  view.value = payload.view
+const checkedLanguages = computed(() => {
+  return selectedLanguages.value.filter(language => language.checked)
+})
+
+const handleDownload = (fileContent: string, fileName: string) => {
+  const element = document.createElement('a')
+  const file = new Blob([fileContent], { type: 'text/plain' })
+  element.href = URL.createObjectURL(file)
+  element.download = fileName
+  document.body.appendChild(element) // Required for Firefox
+  element.click()
+  document.body.removeChild(element)
 }
 
-const handleFileContents = (e: any) => {
-  code.value = e
+const onMessageReceived = e => {
+  switch (e.data.status) {
+    case 'initiate':
+      // Model file start load: add a new progress item to the list.
+      ready.value = false
+      // setProgressItems(prev => [...prev, e.data])
+      progressItems.value = [...progressItems.value, e.data]
+      break
+
+    case 'progress':
+      // Model file progress: update one of the progress items.
+      progressItems.value = progressItems.value.map(item => {
+        if (item.file === e.data.file) {
+          return { ...item, progress: e.data.progress }
+        }
+        return item
+      })
+
+      // console.log('progress: ', e.data.progress)
+      break
+
+    case 'done':
+      // Model file loaded: remove the progress item from the list.
+      progressItems.value = progressItems.value.filter(
+        item => item.file !== e.data.file
+      )
+      break
+
+    case 'ready':
+      // Pipeline ready: the worker is ready to accept messages.
+
+      ready.value = true
+      break
+
+    case 'update':
+      // Generation update: update the output text.
+      const language = e.data.output.language as string
+      if (!languages.value.includes(language)) {
+        languages.value.push(language)
+      }
+
+      codeOutput.value = e.data.output.data
+      break
+
+    case 'complete':
+      handleDownload(JSON.stringify(e.data.output.data), 'i18n.json')
+
+      disabled.value = false
+      break
+
+    case 'log':
+      console.log('log: ', e)
+  }
+}
+
+onMounted(() => {
+  selectedLanguages.value.forEach(l => {
+    l.checked = false
+  })
+
+  // worker.value = new Worker(new URL('../lib/worker.js', import.meta.url), {
+  //   type: 'module',
+  // })
+  worker.value = new MyWorker()
+
+  worker.value.addEventListener('error', error => {
+    console.error('Error creating worker:', error)
+  })
+
+  // Attach the callback function as an event listener.
+  worker.value.addEventListener('message', onMessageReceived)
+})
+
+onUnmounted(() => {
+  // Define a cleanup function for when the component is unmounted.
+  worker.value?.removeEventListener('message', onMessageReceived)
+})
+
+const translate = () => {
+  worker.value?.postMessage({
+    text: code.value,
+    src_lang: 'eng_Latn',
+    tgt_lang: 'fra_Latn',
+    targetLanguages: languages,
+  })
 }
 </script>
 
@@ -57,6 +146,14 @@ const handleFileContents = (e: any) => {
                 number of languages you wish to translate to.
               </p>
             </div>
+
+            <Button
+              class="mt-10"
+              :disabled="checkedLanguages.length <= 0"
+              @click="translate"
+            >
+              {{ t('translate') }}
+            </Button>
           </div>
         </div>
 

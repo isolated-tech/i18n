@@ -52,6 +52,8 @@ watch(languages, () => {
       </p>
     </legend>
 
+    <!-- <LanguageSearch :languages /> -->
+
     <div
       class="max-h-96 overflow-y-scroll mt-4 divide-y divide-gray-200 border-b border-t border-gray-200 pr-5"
     >
