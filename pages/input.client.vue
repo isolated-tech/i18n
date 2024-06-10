@@ -1,15 +1,20 @@
 <script setup lang="ts">
 import { ArrowLeftIcon } from '@heroicons/vue/20/solid'
+import { storeToRefs } from 'pinia'
 
 import { Codemirror } from 'vue-codemirror'
 import { json } from '@codemirror/lang-json'
 import { oneDark } from '@codemirror/theme-one-dark'
+import { useCodeStore } from '~/store/code'
 
 const { t } = useI18n()
+const codeStore = useCodeStore()
+const { setCode } = codeStore
+const { code } = storeToRefs(codeStore)
+
 const route = useRoute()
 const router = useRouter()
 const extensions = [json(), oneDark]
-const code = ref<string | undefined>()
 const view = shallowRef()
 
 const handleReady = (payload: any) => {
@@ -17,7 +22,7 @@ const handleReady = (payload: any) => {
 }
 
 const handleFileContents = (e: any) => {
-  code.value = e
+  setCode(e)
 }
 
 const handleNav = () => {

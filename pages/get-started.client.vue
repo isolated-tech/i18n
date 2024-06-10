@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { type Language, languages as languagesConst } from '@/lib/constants'
 
-const { t } = useI18n()
 const router = useRouter()
 
 const selectedLanguages = ref<Language[]>(languagesConst)

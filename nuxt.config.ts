@@ -8,9 +8,9 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   modules: [
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/i18n',
-    // '@sidebase/nuxt-auth',
+    '@nuxtjs/i18n', // '@sidebase/nuxt-auth',
     'shadcn-nuxt',
+    '@pinia/nuxt',
   ],
   i18n: {
     vueI18n: './i18n.config.ts',

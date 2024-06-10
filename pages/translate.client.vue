@@ -2,13 +2,20 @@
 import { ArrowLeftIcon } from '@heroicons/vue/20/solid'
 import { languages, type Language } from '@/lib/constants'
 import MyWorker from '@/lib/worker?worker'
+import { useCodeStore } from '~/store/code'
+import { storeToRefs } from 'pinia'
 
 const { t } = useI18n()
+const codeStore = useCodeStore()
+const { code } = storeToRefs(codeStore)
+
 const worker = ref<Worker>()
 const ready = ref()
-const code = ref<string | undefined>()
+
 const progressItems = ref([])
 const selectedLanguages = ref<Language[]>(languages)
+const route = useRoute()
+const langCode = ref()
 
 const checkedLanguages = computed(() => {
   return selectedLanguages.value.filter(language => language.checked)
@@ -29,7 +36,7 @@ const onMessageReceived = e => {
     case 'initiate':
       // Model file start load: add a new progress item to the list.
       ready.value = false
-      // setProgressItems(prev => [...prev, e.data])
+
       progressItems.value = [...progressItems.value, e.data]
       break
 
@@ -42,7 +49,7 @@ const onMessageReceived = e => {
         return item
       })
 
-      // console.log('progress: ', e.data.progress)
+      console.log('progress: ', e.data.progress)
       break
 
     case 'done':
@@ -66,6 +73,7 @@ const onMessageReceived = e => {
       }
 
       codeOutput.value = e.data.output.data
+      console.log(e.data.output.data)
       break
 
     case 'complete':
@@ -84,29 +92,24 @@ onMounted(() => {
     l.checked = false
   })
 
-  // worker.value = new Worker(new URL('../lib/worker.js', import.meta.url), {
-  //   type: 'module',
-  // })
-  worker.value = new MyWorker()
+  langCode.value = route.query.lang
 
+  worker.value = new MyWorker()
   worker.value.addEventListener('error', error => {
     console.error('Error creating worker:', error)
   })
 
-  // Attach the callback function as an event listener.
   worker.value.addEventListener('message', onMessageReceived)
 })
 
 onUnmounted(() => {
-  // Define a cleanup function for when the component is unmounted.
   worker.value?.removeEventListener('message', onMessageReceived)
 })
 
 const translate = () => {
   worker.value?.postMessage({
     text: code.value,
-    src_lang: 'eng_Latn',
-    tgt_lang: 'fra_Latn',
+    src_lang: langCode.value,
     targetLanguages: languages,
   })
 }
@@ -154,6 +157,16 @@ const translate = () => {
             >
               {{ t('translate') }}
             </Button>
+
+            <div class="mt-10">
+              <label v-if="ready === false">
+                Loading models... (only run once)
+              </label>
+
+              <div v-for="data in progressItems" :key="data.file">
+                <Progress :model-value="data.progress" />
+              </div>
+            </div>
           </div>
         </div>
 
