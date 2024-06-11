@@ -10,7 +10,7 @@ import { useCodeStore } from '~/store/code'
 const { t } = useI18n()
 const codeStore = useCodeStore()
 const { setCode } = codeStore
-const { code } = storeToRefs(codeStore)
+const { code, inputLang } = storeToRefs(codeStore)
 
 const route = useRoute()
 const router = useRouter()
@@ -71,7 +71,7 @@ const handleNav = () => {
                 />
 
                 <Button :disabled="!code?.length" @click="handleNav">
-                  {{ t('translate') }}
+                  Submit
                 </Button>
               </div>
             </div>
@@ -105,7 +105,7 @@ const handleNav = () => {
                           <button
                             class="bg-[#282C34] border-b border-r border-b-white/20 border-r-white/10 bg-white/5 px-4 py-2 text-white"
                           >
-                            {{ route.query.lang }}
+                            {{ inputLang?.code }}
                           </button>
                         </div>
                       </div>
@@ -116,7 +116,7 @@ const handleNav = () => {
                   v-model="code"
                   :placeholder="`${t('pasteYourJsonHere')}...`"
                   :style="{
-                    height: '94svh',
+                    height: '50svh',
                     borderBottomLeftRadius: '20px',
                     borderBottomRightRadius: '20px',
                   }"
