@@ -1,6 +1,6 @@
 <template>
-  <html class="h-full">
-    <body class="h-full">
+  <html class="h-screen overflow-scroll">
+    <body>
       <NuxtPage />
     </body>
   </html>
