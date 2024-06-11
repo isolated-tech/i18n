@@ -1,21 +1,29 @@
 <script setup lang="ts">
 import { type Language, languages as languagesConst } from '@/lib/constants'
+import { useCodeStore } from '~/store/code'
 
 const router = useRouter()
+const codeStore = useCodeStore()
+const { setInputLang } = codeStore
+const { inputLang } = storeToRefs(codeStore)
 
 const selectedLanguages = ref<Language[]>(languagesConst)
-const checkedLanguages = computed(() => {
+const checkedLanguage = computed(() => {
   return selectedLanguages.value.filter(language => language.checked)
 })
 
-watch(checkedLanguages, (newVal, _oldVal) => {
-  router.push({
-    path: '/input',
-    query: {
-      lang: newVal[0].code,
-    },
-  })
-})
+const handleNav = () => {
+  setInputLang(checkedLanguage.value[0])
+
+  if (inputLang.value) {
+    router.push({
+      path: '/input',
+      query: {
+        lang: inputLang?.value.code,
+      },
+    })
+  }
+}
 </script>
 
 <template>
@@ -44,6 +52,11 @@ watch(checkedLanguages, (newVal, _oldVal) => {
                 from. This is typically your base i18n file that you work with
                 within your native tongue.
               </p>
+            </div>
+            <div class="flex flex-col mt-20">
+              <div>
+                <Button @click="handleNav"> Submit </Button>
+              </div>
             </div>
           </div>
         </div>
