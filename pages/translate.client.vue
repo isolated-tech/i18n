@@ -229,52 +229,74 @@ const setL = (l: Language) => {
           </div>
         </div>
 
-        <div v-if="isTranslating" class="mt-2">
-          <div class="flex">
-            <div class="relative md:pr-0">
-              <div class="mx-auto max-w-2xl md:mx-0 md:max-w-none">
-                <div
-                  class="w-screen overflow-hidden rounded-tl-xl bg-[#282C34]"
-                >
-                  <div class="flex bg-gray-800/40 ring-1 ring-white/5">
-                    <div
-                      class="-mb-px flex text-sm font-medium leading-6 text-gray-400"
-                    ></div>
-                    <button
-                      v-for="(l, index) in checkedLanguages"
-                      @click="() => setL(l)"
-                      :class="{
-                        'rounded-tl-md': index === 0,
-                        'bg-[#282C34] border-b border-r border-b-white/20 border-r-white/10 bg-white/5 px-4 py-2 text-white':
-                          viewedLanguage === l,
-                        'bg-[#282C34] border-r border-gray-600/10 px-4 py-2 text-white':
-                          viewedLanguage !== l,
-                      }"
-                    >
-                      {{ l.code }}
-                    </button>
+        <div
+          v-if="isTranslating"
+          class="mt-20 sm:mt-24 md:mx-auto md:max-w-2xl lg:mx-0 lg:mt-0"
+        >
+          <div
+            class="absolute inset-y-0 right-1/2 -z-10 -mr-10 w-[200%] skew-x-[-30deg] bg-white md:shadow-xl md:shadow-indigo-600/10 ring-1 ring-indigo-50 md:-mr-20 lg:-mr-36"
+            aria-hidden="true"
+          />
+          <div class="md:shadow-lg md:rounded-3xl">
+            <div
+              class="bg-white [clip-path:inset(0)] md:[clip-path:inset(0_round_theme(borderRadius.3xl))]"
+            >
+              <div
+                class="absolute -inset-y-px left-1/2 -z-10 ml-10 w-[200%] skew-x-[-30deg] bg-indigo-100 opacity-20 ring-1 ring-inset ring-white md:ml-20 lg:ml-36"
+                aria-hidden="true"
+              />
+              <div class="h-full flex flex-col my-2">
+                <div class="flex bg-[#282C34]">
+                  <div class="relative md:pr-0">
+                    <div class="mx-auto max-w-2xl md:mx-0 md:max-w-none">
+                      <div
+                        class="w-full overflow-hidden rounded-tl-xl bg-[#282C34]"
+                      >
+                        <div class="flex bg-gray-800/40 ring-1 ring-white/5">
+                          <div
+                            class="-mb-px flex text-sm font-medium leading-6 text-gray-400"
+                          >
+                            <button
+                              v-for="(l, index) in checkedLanguages"
+                              @click="() => setL(l)"
+                              :class="{
+                                'rounded-tl-md': index === 0,
+                                'bg-[#282C34] border-b border-r border-b-white/20 border-r-white/10 bg-white/5 px-4 py-2 text-white':
+                                  viewedLanguage === l,
+                                'bg-[#282C34] border-r border-gray-600/10 px-4 py-2 text-white':
+                                  viewedLanguage !== l,
+                              }"
+                            >
+                              {{ l.code }}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
+                <Codemirror
+                  :model-value="formattedCodeOutput"
+                  placeholder="Output"
+                  :style="{
+                    height: '100vh',
+                    borderBottomLeftRadius: '20px',
+                    borderBottomRightRadius: '20px',
+                    overflow: 'scroll',
+                  }"
+                  :autofocus="true"
+                  :indent-with-tab="true"
+                  :tab-size="2"
+                  :extensions="extensions"
+                />
               </div>
             </div>
+            <div
+              class="absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-white sm:h-32"
+            />
           </div>
-          <Codemirror
-            :model-value="formattedCodeOutput"
-            placeholder="Output"
-            :style="{ height: '100vh', width: '100vw' }"
-            :autofocus="true"
-            :indent-with-tab="true"
-            :tab-size="2"
-            :extensions="extensions"
-            :class="{
-              'rounded-bl': true,
-            }"
-          />
         </div>
       </div>
-      <div
-        class="absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-white sm:h-32"
-      />
     </div>
   </div>
 </template>
