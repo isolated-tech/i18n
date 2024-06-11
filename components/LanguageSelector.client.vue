@@ -52,14 +52,12 @@ watch(languages, () => {
       </p>
     </legend>
 
-    <!-- <LanguageSearch :languages /> -->
-
     <div
-      class="max-h-96 overflow-y-scroll mt-4 divide-y divide-gray-200 border-b border-t border-gray-200 pr-5"
+      class="max-h-screen overflow-y-scroll mt-4 divide-y divide-gray-200 border-b border-t border-gray-200 pr-5"
     >
       <div
         v-for="(language, index) in single
-          ? languages?.slice(1, languages.length - 1)
+          ? languages?.slice(1, languages.length)
           : languages"
         :key="language.code"
         class="relative flex items-start py-4"
