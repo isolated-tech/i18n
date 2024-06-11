@@ -77,10 +77,6 @@
   }
 }
 
-.cm-editor {
-  @apply !w-full;
-}
-
 .ͼo.cm-gutter {
   border-bottom-left-radius: 20px !important;
 }
