@@ -25,6 +25,7 @@ const formattedCodeOutput = computed(() => {
 
 const worker = ref<Worker>()
 const ready = ref()
+const isTranslating = ref(false)
 const disabled = ref(false)
 
 const progressItems = ref([])
@@ -91,12 +92,14 @@ const onMessageReceived = e => {
       }
 
       setCodeOutput(e.data.output.data)
+      isTranslating.value = true
       break
 
     case 'complete':
-      handleDownload(JSON.stringify(e.data.output.data), 'i18n.json')
+      // handleDownload(JSON.stringify(e.data.output.data), 'i18n.json')
 
       disabled.value = false
+      // isTranslating.value = false
       break
 
     case 'log':
@@ -129,6 +132,14 @@ const translate = () => {
     src_lang: langCode.value,
     targetLanguages: checkedLanguages.value.map(toRaw),
   })
+}
+
+const viewedLanguage = ref(
+  checkedLanguages.value.length ? checkedLanguages.value[0] : null
+)
+
+const setL = (l: Language) => {
+  viewedLanguage.value = l
 }
 </script>
 
@@ -187,7 +198,10 @@ const translate = () => {
           </div>
         </div>
 
-        <div class="mt-20 sm:mt-24 md:mx-auto md:max-w-2xl lg:mx-0 lg:mt-0">
+        <div
+          v-if="!isTranslating"
+          class="mt-20 sm:mt-24 md:mx-auto md:max-w-2xl lg:mx-0 lg:mt-0"
+        >
           <div
             class="absolute inset-y-0 right-1/2 -z-10 -mr-10 w-[200%] skew-x-[-30deg] bg-white md:shadow-xl md:shadow-indigo-600/10 ring-1 ring-indigo-50 md:-mr-20 lg:-mr-36"
             aria-hidden="true"
@@ -215,7 +229,7 @@ const translate = () => {
           </div>
         </div>
 
-        <div v-if="codeOutput" class="mt-2">
+        <div v-if="isTranslating" class="mt-2">
           <div class="flex">
             <div class="relative md:pr-0">
               <div class="mx-auto max-w-2xl md:mx-0 md:max-w-none">
@@ -226,19 +240,19 @@ const translate = () => {
                     <div
                       class="-mb-px flex text-sm font-medium leading-6 text-gray-400"
                     ></div>
-                    <!-- <button
-                        v-for="(l, index) in languages"
-                        @click="() => setL(l)"
-                        :class="{
-                          'rounded-tl-md': index === 0,
-                          'bg-[#282C34] border-b border-r border-b-white/20 border-r-white/10 bg-white/5 px-4 py-2 text-white':
-                            language === l,
-                          'bg-[#282C34] border-r border-gray-600/10 px-4 py-2 text-white':
-                            language !== l,
-                        }"
-                      >
-                        {{ l }}
-                      </button> -->
+                    <button
+                      v-for="(l, index) in checkedLanguages"
+                      @click="() => setL(l)"
+                      :class="{
+                        'rounded-tl-md': index === 0,
+                        'bg-[#282C34] border-b border-r border-b-white/20 border-r-white/10 bg-white/5 px-4 py-2 text-white':
+                          viewedLanguage === l,
+                        'bg-[#282C34] border-r border-gray-600/10 px-4 py-2 text-white':
+                          viewedLanguage !== l,
+                      }"
+                    >
+                      {{ l.code }}
+                    </button>
                   </div>
                 </div>
               </div>
@@ -247,7 +261,7 @@ const translate = () => {
           <Codemirror
             :model-value="formattedCodeOutput"
             placeholder="Output"
-            :style="{ height: '100vh' }"
+            :style="{ height: '100vh', width: '100vw' }"
             :autofocus="true"
             :indent-with-tab="true"
             :tab-size="2"
