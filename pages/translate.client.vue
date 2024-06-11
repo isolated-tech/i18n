@@ -4,18 +4,36 @@ import { languages, type Language } from '@/lib/constants'
 import MyWorker from '@/lib/worker?worker'
 import { useCodeStore } from '~/store/code'
 import { storeToRefs } from 'pinia'
+import { Codemirror } from 'vue-codemirror'
+import { json } from '@codemirror/lang-json'
+import { oneDark } from '@codemirror/theme-one-dark'
+import { js_beautify } from 'js-beautify'
 
 const { t } = useI18n()
 const codeStore = useCodeStore()
-const { code } = storeToRefs(codeStore)
+const { setCodeOutput } = codeStore
+const { code, codeOutput } = storeToRefs(codeStore)
+
+const formattedCodeOutput = computed(() => {
+  if (codeOutput.value) {
+    return js_beautify(JSON.stringify(codeOutput.value), {
+      indent_size: 2,
+      space_in_empty_paren: true,
+    })
+  }
+})
 
 const worker = ref<Worker>()
 const ready = ref()
+const disabled = ref(false)
 
 const progressItems = ref([])
 const selectedLanguages = ref<Language[]>(languages)
+const translatedLanguages = ref<string[]>([])
 const route = useRoute()
 const langCode = ref()
+
+const extensions = [json(), oneDark]
 
 const checkedLanguages = computed(() => {
   return selectedLanguages.value.filter(language => language.checked)
@@ -68,12 +86,11 @@ const onMessageReceived = e => {
     case 'update':
       // Generation update: update the output text.
       const language = e.data.output.language as string
-      if (!languages.value.includes(language)) {
-        languages.value.push(language)
+      if (!translatedLanguages.value.includes(language)) {
+        translatedLanguages.value.push(language)
       }
 
-      codeOutput.value = e.data.output.data
-      console.log(e.data.output.data)
+      setCodeOutput(e.data.output.data)
       break
 
     case 'complete':
@@ -110,7 +127,7 @@ const translate = () => {
   worker.value?.postMessage({
     text: code.value,
     src_lang: langCode.value,
-    targetLanguages: languages,
+    targetLanguages: checkedLanguages.value.map(toRaw),
   })
 }
 </script>
@@ -152,7 +169,7 @@ const translate = () => {
 
             <Button
               class="mt-10"
-              :disabled="checkedLanguages.length <= 0"
+              :disabled="checkedLanguages.length <= 0 && !disabled"
               @click="translate"
             >
               {{ t('translate') }}
@@ -196,6 +213,49 @@ const translate = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        <div v-if="codeOutput" class="mt-2">
+          <div class="flex">
+            <div class="relative md:pr-0">
+              <div class="mx-auto max-w-2xl md:mx-0 md:max-w-none">
+                <div
+                  class="w-screen overflow-hidden rounded-tl-xl bg-[#282C34]"
+                >
+                  <div class="flex bg-gray-800/40 ring-1 ring-white/5">
+                    <div
+                      class="-mb-px flex text-sm font-medium leading-6 text-gray-400"
+                    ></div>
+                    <!-- <button
+                        v-for="(l, index) in languages"
+                        @click="() => setL(l)"
+                        :class="{
+                          'rounded-tl-md': index === 0,
+                          'bg-[#282C34] border-b border-r border-b-white/20 border-r-white/10 bg-white/5 px-4 py-2 text-white':
+                            language === l,
+                          'bg-[#282C34] border-r border-gray-600/10 px-4 py-2 text-white':
+                            language !== l,
+                        }"
+                      >
+                        {{ l }}
+                      </button> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <Codemirror
+            :model-value="formattedCodeOutput"
+            placeholder="Output"
+            :style="{ height: '100vh' }"
+            :autofocus="true"
+            :indent-with-tab="true"
+            :tab-size="2"
+            :extensions="extensions"
+            :class="{
+              'rounded-bl': true,
+            }"
+          />
         </div>
       </div>
       <div
