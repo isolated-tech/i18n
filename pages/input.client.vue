@@ -33,10 +33,16 @@ const handleNav = () => {
     },
   })
 }
+
+onMounted(() => {
+  if (!inputLang.value) {
+    navigateTo('/get-started')
+  }
+})
 </script>
 
 <template>
-  <div class="bg-white">
+  <div class="bg-white overflow-scroll h-screen">
     <div
       class="relative isolate overflow-hidden bg-gradient-to-b from-indigo-100/20"
     >
@@ -91,7 +97,7 @@ const handleNav = () => {
                 class="absolute -inset-y-px left-1/2 -z-10 ml-10 w-[200%] skew-x-[-30deg] bg-indigo-100 opacity-20 ring-1 ring-inset ring-white md:ml-20 lg:ml-36"
                 aria-hidden="true"
               />
-              <div class="h-full flex flex-col my-2 ml-2">
+              <div class="h-full flex flex-col my-2">
                 <div class="flex">
                   <div class="relative w-full md:pr-0">
                     <div class="mx-auto w-full max-w-2xl md:mx-0 md:max-w-none">
@@ -116,9 +122,11 @@ const handleNav = () => {
                   v-model="code"
                   :placeholder="`${t('pasteYourJsonHere')}...`"
                   :style="{
-                    height: '50svh',
+                    height: '100vh',
+                    width: '100vw',
                     borderBottomLeftRadius: '20px',
                     borderBottomRightRadius: '20px',
+                    overflow: 'hidden',
                   }"
                   :autofocus="true"
                   :indent-with-tab="true"
