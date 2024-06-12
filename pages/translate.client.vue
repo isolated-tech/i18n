@@ -12,6 +12,7 @@ import { useLangStore } from '~/store/language'
 import { useToast } from '@/components/ui/toast/use-toast'
 
 const { toast } = useToast()
+const router = useRouter()
 
 const codeStore = useCodeStore()
 const { setCodeOutput, getCodeOutput } = codeStore
@@ -115,7 +116,10 @@ const onMessageReceived = e => {
         translatedLanguages.value.push(language)
       }
 
-      setL(translatedLanguages.value[translatedLanguages.value.length - 1])
+      if (translatedLanguages.value.length === 1) {
+        setL(translatedLanguages.value[0])
+      }
+
       nextTick(() => {
         const container = document.querySelector('.overflow-x-scroll')
 
@@ -152,6 +156,10 @@ const translate = () => {
 }
 
 onMounted(() => {
+  if (!inputLanguage.value || !checkedLanguages.value) {
+    router.push('/get-started')
+  }
+
   worker.value = new MyWorker()
   worker.value.addEventListener('error', error => {
     console.error('Error creating worker:', error)
