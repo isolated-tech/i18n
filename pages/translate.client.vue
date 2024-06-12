@@ -10,7 +10,6 @@ import { oneDark } from '@codemirror/theme-one-dark'
 import { js_beautify } from 'js-beautify'
 import { useLangStore } from '~/store/language'
 
-const { t } = useI18n()
 const codeStore = useCodeStore()
 const { setCodeOutput } = codeStore
 const { code, codeOutput } = storeToRefs(codeStore)
@@ -104,7 +103,6 @@ const onMessageReceived = e => {
       // handleDownload(JSON.stringify(e.data.output.data), 'i18n.json')
 
       disabled.value = false
-      // isTranslating.value = false
       break
 
     case 'log':
@@ -163,19 +161,12 @@ const setL = (l: Language) => {
                 Translating...
               </h1>
               <p class="mt-6 text-lg leading-8 text-gray-600">
-                Translation has begun. Please keep in mind that the time of task
-                completion will vary depending on the number of languages you
-                wish to translate to.
+                The ability to download each language will appear as they finish
+                being translated. You can download each translation as it
+                appears, or wait until they are all finished and download them
+                in bulk.
               </p>
             </div>
-
-            <Button
-              class="mt-10"
-              :disabled="checkedLanguages.length <= 0 && !disabled"
-              @click="translate"
-            >
-              {{ t('translate') }}
-            </Button>
 
             <div class="mt-10">
               <label v-if="ready === false">
@@ -184,6 +175,45 @@ const setL = (l: Language) => {
 
               <div v-for="data in progressItems" :key="data.file">
                 <Progress :model-value="data.progress" />
+              </div>
+            </div>
+
+            <div class="mt-10">
+              <div
+                class="flex items-center space-x-2 mt-1"
+                v-for="l in checkedLanguages"
+              >
+                <Checkbox
+                  v-if="translatedLanguages.some(lang => lang.code === l.code)"
+                  id="terms"
+                />
+                <svg
+                  v-else
+                  class="animate-spin -ml-1 h-5 w-5 text-black"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  ></circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                <label
+                  for="terms"
+                  class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {{ l.title }}
+                </label>
               </div>
             </div>
           </div>
@@ -216,6 +246,7 @@ const setL = (l: Language) => {
                             <button
                               v-for="(l, index) in translatedLanguages"
                               @click="() => setL(l)"
+                              class="text-nowrap"
                               :class="{
                                 'rounded-tl-md': index === 0,
                                 'bg-[#282C34] border-b border-r border-b-white/20 border-r-white/10 bg-white/5 px-4 py-2 text-white':
@@ -224,7 +255,7 @@ const setL = (l: Language) => {
                                   viewedLanguage !== l,
                               }"
                             >
-                              {{ l.code }}
+                              {{ l.title }}
                             </button>
                           </div>
                         </div>
