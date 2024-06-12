@@ -1,11 +1,11 @@
-import en_US from './i18n/en_US.json'
-import fr_FR from './i18n/fr_FR.json'
+import eng_Latn from './i18n/eng_Latn.json'
+import fra_Latn from './i18n/fra_Latn.json'
 
 export default defineI18nConfig(() => ({
   legacy: false,
   locale: 'en',
   messages: {
-    en: en_US,
-    fr: fr_FR,
+    en: eng_Latn,
+    fr: fra_Latn,
   },
 }))

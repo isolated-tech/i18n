@@ -1,9 +1,10 @@
 {
   "whatsNew": "What's new",
   "justShipped": "Just shipped",
-  "hero": "Internationalize with Local AI",
-  "description": "Say goodbye to language barriers and hello to new opportunities with our efficient localization solution. Automate internationalization and localization translations using advanced local AI models.",
-  "cta": "Only $5",
+  "hero": "Effortless i18n Translation",
+  "description": "Translate your application's content into multiple languages with our powerful AI-powered translation tool.",
+  "cta": "Get Started",
+  "learnMore": "Learn More",
   "login": "Login",
   "signIn": "Sign in",
   "signInToYourAccount": "Sign in to your account",
