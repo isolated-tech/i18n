@@ -17,11 +17,6 @@ const { inputLanguage } = storeToRefs(langStore)
 
 const router = useRouter()
 const extensions = [json(), oneDark]
-const view = shallowRef()
-
-const handleReady = (payload: any) => {
-  view.value = payload.view
-}
 
 const handleFileContents = (e: any) => {
   setCode(e)
@@ -110,7 +105,7 @@ onMounted(() => {
                           <button
                             class="bg-[#282C34] border-b border-r border-b-white/20 border-r-white/10 bg-white/5 px-4 py-2 text-white"
                           >
-                            {{ inputLanguage?.code }}
+                            {{ inputLanguage?.title }}
                           </button>
                         </div>
                       </div>
@@ -131,7 +126,6 @@ onMounted(() => {
                   :indent-with-tab="true"
                   :tab-size="2"
                   :extensions="extensions"
-                  @ready="handleReady"
                 />
               </div>
             </div>
