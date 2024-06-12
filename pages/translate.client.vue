@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ArrowLeftIcon } from '@heroicons/vue/20/solid'
-import { type Language } from '@/lib/constants'
+import { languages as baseLanguages, type Language } from '@/lib/constants'
 import MyWorker from '@/lib/worker?worker'
 import { useCodeStore } from '~/store/code'
 import { storeToRefs } from 'pinia'
@@ -40,6 +40,27 @@ const disabled = ref(false)
 const progressItems = ref([])
 const translatedLanguages = ref<Language[]>([])
 const extensions = [json(), oneDark]
+
+const downloadableTranscripts = computed(() => {
+  if (
+    checkedLanguages.value.length > 0 &&
+    checkedLanguages.value[0].code === 'all'
+  ) {
+    return checkedLanguages.value
+  } else {
+    return [baseLanguages[0], ...checkedLanguages.value]
+  }
+})
+
+const handleDownloadClick = (l: Language) => {
+  if (l.code === 'all') {
+    checkedLanguages.value.forEach(lang =>
+      handleDownload(getCodeOutput(lang), `${lang.code}.json`)
+    )
+  } else {
+    handleDownload(getCodeOutput(l), `${l.code}.json`)
+  }
+}
 
 const handleDownload = (fileContent: string, fileName: string) => {
   const element = document.createElement('a')
@@ -108,8 +129,6 @@ const onMessageReceived = e => {
       break
 
     case 'complete':
-      // handleDownload(JSON.stringify(e.data.output.data), 'i18n.json')
-
       disabled.value = false
       break
 
@@ -195,15 +214,16 @@ const setL = (l: Language) => {
             <div class="mt-10 max-h-[65vh] overflow-scroll p-2">
               <div
                 class="flex items-center space-x-2 mt-1"
-                v-for="l in checkedLanguages"
+                v-for="l in downloadableTranscripts"
               >
                 <Icon
-                  v-if="translatedLanguages.some(lang => lang.code === l.code)"
-                  class="cursor-pointer"
-                  name="material-symbols:download"
-                  @click="
-                    () => handleDownload(getCodeOutput(l), `${l.code}.json`)
+                  v-if="
+                    translatedLanguages.some(lang => lang.code === l.code) ||
+                    l.code === 'all'
                   "
+                  class="cursor-pointer hover:text-gray-500"
+                  name="material-symbols:download"
+                  @click="() => handleDownloadClick(l)"
                 />
                 <svg
                   v-else
