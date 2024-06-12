@@ -94,9 +94,14 @@ const onMessageReceived = e => {
         translatedLanguages.value.push(language)
       }
 
-      if (translatedLanguages.value.length === 1) {
-        setL(language)
-      }
+      setL(translatedLanguages.value[translatedLanguages.value.length - 1])
+      nextTick(() => {
+        const container = document.querySelector('.overflow-x-scroll')
+
+        if (container) {
+          container.scrollLeft = container.scrollWidth
+        }
+      })
 
       setCodeOutput(language, outputText)
       isTranslating.value = true
@@ -114,7 +119,7 @@ const onMessageReceived = e => {
     case 'error':
       toast({
         title: 'Error',
-        description: e.data.output.data,
+        description: e.data.output.error,
       })
   }
 }
@@ -242,14 +247,16 @@ const setL = (l: Language) => {
                 aria-hidden="true"
               />
               <div class="h-full flex flex-col my-2">
-                <div class="flex bg-[#282C34] overflow-scroll">
+                <div class="flex bg-[#282C34] overflow-x-scroll">
                   <div class="relative md:pr-0">
                     <div class="mx-auto max-w-2xl md:mx-0 md:max-w-none">
-                      <div
-                        class="w-full overflow-x-scroll rounded-tl-xl bg-[#282C34]"
-                      >
-                        <div class="flex bg-gray-800/40 ring-1 ring-white/5">
+                      <div id="1" class="w-full rounded-tl-xl bg-[#282C34]">
+                        <div
+                          id="2"
+                          class="flex bg-gray-800/40 ring-1 ring-white/5"
+                        >
                           <div
+                            id="3"
                             class="-mb-px flex text-sm font-medium leading-6 text-gray-400"
                           >
                             <button
