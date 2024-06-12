@@ -37,11 +37,6 @@ const handleNav = () => {
         <div class="px-6 lg:px-0 lg:pt-4">
           <div class="mx-auto max-w-2xl">
             <div class="max-w-lg">
-              <img
-                class="h-11"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&amp;shade=600"
-                alt="Your Company"
-              />
               <h1
                 class="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
               >
@@ -55,7 +50,12 @@ const handleNav = () => {
             </div>
             <div class="flex flex-col mt-20">
               <div>
-                <Button @click="handleNav"> Submit </Button>
+                <Button
+                  :disabled="checkedLanguage.length <= 0"
+                  @click="handleNav"
+                >
+                  Submit
+                </Button>
               </div>
             </div>
           </div>
