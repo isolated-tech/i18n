@@ -16,10 +16,13 @@ const { code, codeOutput } = storeToRefs(codeStore)
 
 const formattedCodeOutput = computed(() => {
   if (codeOutput.value) {
-    return js_beautify(JSON.stringify(codeOutput.value), {
-      indent_size: 2,
-      space_in_empty_paren: true,
-    })
+    return js_beautify(
+      JSON.stringify(codeOutput.value[viewedLanguage.value?.code as string]),
+      {
+        indent_size: 2,
+        space_in_empty_paren: true,
+      }
+    )
   }
 })
 
@@ -30,7 +33,7 @@ const disabled = ref(false)
 
 const progressItems = ref([])
 const selectedLanguages = ref<Language[]>(languages)
-const translatedLanguages = ref<string[]>([])
+const translatedLanguages = ref<Language[]>([])
 const route = useRoute()
 const langCode = ref()
 
@@ -55,6 +58,7 @@ const onMessageReceived = e => {
     case 'initiate':
       // Model file start load: add a new progress item to the list.
       ready.value = false
+      translatedLanguages.value = []
 
       progressItems.value = [...progressItems.value, e.data]
       break
@@ -86,12 +90,14 @@ const onMessageReceived = e => {
 
     case 'update':
       // Generation update: update the output text.
-      const language = e.data.output.language as string
-      if (!translatedLanguages.value.includes(language)) {
+      const language = e.data.output.language as Language
+      const outputText = e.data.output.data
+
+      if (!translatedLanguages.value.find(l => l.code === language.code)) {
         translatedLanguages.value.push(language)
       }
 
-      setCodeOutput(e.data.output.data)
+      setCodeOutput(language, outputText)
       isTranslating.value = true
       break
 
@@ -246,18 +252,18 @@ const setL = (l: Language) => {
                 aria-hidden="true"
               />
               <div class="h-full flex flex-col my-2">
-                <div class="flex bg-[#282C34]">
+                <div class="flex bg-[#282C34] overflow-scroll">
                   <div class="relative md:pr-0">
                     <div class="mx-auto max-w-2xl md:mx-0 md:max-w-none">
                       <div
-                        class="w-full overflow-hidden rounded-tl-xl bg-[#282C34]"
+                        class="w-full overflow-x-scroll rounded-tl-xl bg-[#282C34]"
                       >
                         <div class="flex bg-gray-800/40 ring-1 ring-white/5">
                           <div
                             class="-mb-px flex text-sm font-medium leading-6 text-gray-400"
                           >
                             <button
-                              v-for="(l, index) in checkedLanguages"
+                              v-for="(l, index) in translatedLanguages"
                               @click="() => setL(l)"
                               :class="{
                                 'rounded-tl-md': index === 0,
