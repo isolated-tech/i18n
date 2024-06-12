@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n', // '@sidebase/nuxt-auth',
     'shadcn-nuxt',
     '@pinia/nuxt',
+    'nuxt-icon',
   ],
   i18n: {
     vueI18n: './i18n.config.ts',

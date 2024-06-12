@@ -17,5 +17,9 @@ export const useCodeStore = defineStore('codeStore', () => {
     codeOutput.value[l.code] = c
   }
 
-  return { code, setCode, codeOutput, setCodeOutput }
+  const getCodeOutput = (l: Language) => {
+    return JSON.stringify(codeOutput.value[l.code])
+  }
+
+  return { code, setCode, codeOutput, setCodeOutput, getCodeOutput }
 })

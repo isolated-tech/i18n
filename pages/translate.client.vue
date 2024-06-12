@@ -14,7 +14,7 @@ import { useToast } from '@/components/ui/toast/use-toast'
 const { toast } = useToast()
 
 const codeStore = useCodeStore()
-const { setCodeOutput } = codeStore
+const { setCodeOutput, getCodeOutput } = codeStore
 const { code, codeOutput } = storeToRefs(codeStore)
 
 const langStore = useLangStore()
@@ -197,9 +197,13 @@ const setL = (l: Language) => {
                 class="flex items-center space-x-2 mt-1"
                 v-for="l in checkedLanguages"
               >
-                <Checkbox
+                <Icon
                   v-if="translatedLanguages.some(lang => lang.code === l.code)"
-                  id="terms"
+                  class="cursor-pointer"
+                  name="material-symbols:download"
+                  @click="
+                    () => handleDownload(getCodeOutput(l), `${l.code}.json`)
+                  "
                 />
                 <svg
                   v-else
