@@ -97,6 +97,10 @@ const onMessageReceived = e => {
         translatedLanguages.value.push(language)
       }
 
+      if (translatedLanguages.value.length === 1) {
+        setL(language)
+      }
+
       setCodeOutput(language, outputText)
       isTranslating.value = true
       break
@@ -140,9 +144,7 @@ const translate = () => {
   })
 }
 
-const viewedLanguage = ref(
-  checkedLanguages.value.length ? checkedLanguages.value[0] : null
-)
+const viewedLanguage = ref<Language>()
 
 const setL = (l: Language) => {
   viewedLanguage.value = l

@@ -1,25 +1,21 @@
 <script setup lang="ts">
-import { type Language } from '@/lib/constants'
 import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
+import type { Language } from '~/lib/constants'
+import { useLangStore } from '~/store/language'
 
 interface Props {
   single?: boolean
 }
 
+const langStore = useLangStore()
+const { resetOutputLanguages, toggleAllLanguages } = langStore
+const { languages, checkedLanguages } = storeToRefs(langStore)
+
 const { single } = defineProps<Props>()
-const languages = defineModel<Language[]>()
 const emit = defineEmits(['languagesUpdated'])
 const searchTerm = ref()
 
-const toggleAllLanguages = (checkTo: boolean) => {
-  languages.value.forEach(language => {
-    language.checked = checkTo
-  })
-}
-
-const handleToggle = (code: string) => {
-  const language = languages.value?.find(l => l.code === code)
-
+const handleToggle = (language: Language) => {
   if (language) {
     if (language.code === 'all' && !single) {
       toggleAllLanguages(!language.checked)
@@ -31,12 +27,6 @@ const handleToggle = (code: string) => {
     }
   }
 }
-
-const checkedCount = computed(() => {
-  if (languages.value && languages.value.length) {
-    return languages.value.filter(l => l.checked).length
-  }
-})
 
 const renderedLanguages = computed(() => {
   const searchedLanguages = languages.value?.filter(language =>
@@ -50,11 +40,9 @@ const renderedLanguages = computed(() => {
     : languages.value
 })
 
-watch(languages, () => {
-  emit('languagesUpdated', languages)
+onMounted(() => {
+  resetOutputLanguages()
 })
-
-onMounted(() => toggleAllLanguages(false))
 </script>
 
 <template>
@@ -90,7 +78,7 @@ onMounted(() => toggleAllLanguages(false))
         </div>
       </form>
       <p class="text-gray-500 font-medium text-xs" v-if="languages && !single">
-        {{ `${checkedCount} / ${languages.length}` }}
+        {{ `${checkedLanguages.length} / ${languages.length}` }}
       </p>
     </legend>
 
@@ -117,7 +105,7 @@ onMounted(() => toggleAllLanguages(false))
             :checked="language.checked"
             type="checkbox"
             class="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
-            @change="() => handleToggle(language.code)"
+            @change="() => handleToggle(language)"
           />
         </div>
       </div>
