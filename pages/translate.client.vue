@@ -9,6 +9,9 @@ import { json } from '@codemirror/lang-json'
 import { oneDark } from '@codemirror/theme-one-dark'
 import { js_beautify } from 'js-beautify'
 import { useLangStore } from '~/store/language'
+import { useToast } from '@/components/ui/toast/use-toast'
+
+const { toast } = useToast()
 
 const codeStore = useCodeStore()
 const { setCodeOutput } = codeStore
@@ -107,6 +110,12 @@ const onMessageReceived = e => {
 
     case 'log':
       console.log('log: ', e)
+
+    case 'error':
+      toast({
+        title: 'Error',
+        description: e.data.output.data,
+      })
   }
 }
 
@@ -178,7 +187,7 @@ const setL = (l: Language) => {
               </div>
             </div>
 
-            <div class="mt-10">
+            <div class="mt-10 max-h-[65vh] overflow-scroll p-2">
               <div
                 class="flex items-center space-x-2 mt-1"
                 v-for="l in checkedLanguages"
