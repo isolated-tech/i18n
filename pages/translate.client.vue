@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ArrowLeftIcon } from '@heroicons/vue/20/solid'
-import { languages, type Language } from '@/lib/constants'
+import { type Language } from '@/lib/constants'
 import MyWorker from '@/lib/worker?worker'
 import { useCodeStore } from '~/store/code'
 import { storeToRefs } from 'pinia'
@@ -8,11 +8,15 @@ import { Codemirror } from 'vue-codemirror'
 import { json } from '@codemirror/lang-json'
 import { oneDark } from '@codemirror/theme-one-dark'
 import { js_beautify } from 'js-beautify'
+import { useLangStore } from '~/store/language'
 
 const { t } = useI18n()
 const codeStore = useCodeStore()
 const { setCodeOutput } = codeStore
 const { code, codeOutput } = storeToRefs(codeStore)
+
+const langStore = useLangStore()
+const { checkedLanguages, inputLanguage } = storeToRefs(langStore)
 
 const formattedCodeOutput = computed(() => {
   if (codeOutput.value) {
@@ -32,16 +36,8 @@ const isTranslating = ref(false)
 const disabled = ref(false)
 
 const progressItems = ref([])
-const selectedLanguages = ref<Language[]>(languages)
 const translatedLanguages = ref<Language[]>([])
-const route = useRoute()
-const langCode = ref()
-
 const extensions = [json(), oneDark]
-
-const checkedLanguages = computed(() => {
-  return selectedLanguages.value.filter(language => language.checked)
-})
 
 const handleDownload = (fileContent: string, fileName: string) => {
   const element = document.createElement('a')
@@ -72,7 +68,6 @@ const onMessageReceived = e => {
         return item
       })
 
-      console.log('progress: ', e.data.progress)
       break
 
     case 'done':
@@ -117,32 +112,28 @@ const onMessageReceived = e => {
   }
 }
 
-onMounted(() => {
-  selectedLanguages.value.forEach(l => {
-    l.checked = false
+const translate = () => {
+  worker.value?.postMessage({
+    text: code.value,
+    src_lang: toRaw(inputLanguage.value),
+    targetLanguages: checkedLanguages.value.map(toRaw),
   })
+}
 
-  langCode.value = route.query.lang
-
+onMounted(() => {
   worker.value = new MyWorker()
   worker.value.addEventListener('error', error => {
     console.error('Error creating worker:', error)
   })
 
   worker.value.addEventListener('message', onMessageReceived)
+
+  nextTick(() => translate())
 })
 
 onUnmounted(() => {
   worker.value?.removeEventListener('message', onMessageReceived)
 })
-
-const translate = () => {
-  worker.value?.postMessage({
-    text: code.value,
-    src_lang: langCode.value,
-    targetLanguages: checkedLanguages.value.map(toRaw),
-  })
-}
 
 const viewedLanguage = ref<Language>()
 
@@ -163,26 +154,18 @@ const setL = (l: Language) => {
           <div class="mx-auto max-w-2xl">
             <div class="max-w-lg">
               <!-- TODO: This should pass query as well -->
-              <NuxtLink to="input">
+              <NuxtLink to="output">
                 <ArrowLeftIcon class="h-11 cursor-pointer" />
               </NuxtLink>
               <h1
                 class="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
               >
-                Select output languages
+                Translating...
               </h1>
               <p class="mt-6 text-lg leading-8 text-gray-600">
-                Now select that language(s) to translate to. Our
-                <a
-                  class="underline"
-                  href="https://huggingface.co/facebook/nllb-200-distilled-600M"
-                  target="_blank"
-                >
-                  model
-                </a>
-                supports {{ languages.length }} languages. Please keep in mind
-                that the time of task completion will vary depending on the
-                number of languages you wish to translate to.
+                Translation has begun. Please keep in mind that the time of task
+                completion will vary depending on the number of languages you
+                wish to translate to.
               </p>
             </div>
 
@@ -206,41 +189,7 @@ const setL = (l: Language) => {
           </div>
         </div>
 
-        <div
-          v-if="!isTranslating"
-          class="mt-20 sm:mt-24 md:mx-auto md:max-w-2xl lg:mx-0 lg:mt-0"
-        >
-          <div
-            class="absolute inset-y-0 right-1/2 -z-10 -mr-10 w-[200%] skew-x-[-30deg] bg-white md:shadow-xl md:shadow-indigo-600/10 ring-1 ring-indigo-50 md:-mr-20 lg:-mr-36"
-            aria-hidden="true"
-          />
-          <div class="md:shadow-lg md:rounded-3xl">
-            <div
-              class="bg-white [clip-path:inset(0)] md:[clip-path:inset(0_round_theme(borderRadius.3xl))]"
-            >
-              <div
-                class="absolute -inset-y-px left-1/2 -z-10 ml-10 w-[200%] skew-x-[-30deg] bg-indigo-100 opacity-20 ring-1 ring-inset ring-white md:ml-20 lg:ml-36"
-                aria-hidden="true"
-              />
-              <div class="relative px-6 pt-8 sm:pt-16 md:pl-16 md:pr-0">
-                <div
-                  class="mx-auto max-w-2xl bg-opacity-95 md:mx-0 md:max-w-none"
-                >
-                  <LanguageSelector v-model="selectedLanguages" />
-                </div>
-                <div
-                  class="pointer-events-none absolute inset-0 ring-1 ring-inset ring-black/10 md:rounded-3xl"
-                  aria-hidden="true"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div
-          v-if="isTranslating"
-          class="mt-20 sm:mt-24 md:mx-auto md:max-w-2xl lg:mx-0 lg:mt-0"
-        >
+        <div class="mt-20 sm:mt-24 md:mx-auto md:max-w-2xl lg:mx-0 lg:mt-0">
           <div
             class="absolute inset-y-0 right-1/2 -z-10 -mr-10 w-[200%] skew-x-[-30deg] bg-white md:shadow-xl md:shadow-indigo-600/10 ring-1 ring-indigo-50 md:-mr-20 lg:-mr-36"
             aria-hidden="true"

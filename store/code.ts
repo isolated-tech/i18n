@@ -8,7 +8,6 @@ interface CodeOutput {
 export const useCodeStore = defineStore('codeStore', () => {
   const code = ref<string | undefined>()
   const codeOutput = ref<CodeOutput>({})
-  const inputLang = ref<Language>()
 
   const setCode = (c: string) => {
     code.value = c
@@ -18,17 +17,5 @@ export const useCodeStore = defineStore('codeStore', () => {
     codeOutput.value[l.code] = c
   }
 
-  const setInputLang = (lang: Language) => {
-    inputLang.value = lang
-  }
-
-  onMounted(() => {
-    if (!inputLang.value) {
-      navigateTo('/get-started')
-    } else if (inputLang.value && !code) {
-      navigateTo('/input')
-    }
-  })
-
-  return { code, setCode, codeOutput, setCodeOutput, inputLang, setInputLang }
+  return { code, setCode, codeOutput, setCodeOutput }
 })
