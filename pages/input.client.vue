@@ -6,13 +6,15 @@ import { Codemirror } from 'vue-codemirror'
 import { json } from '@codemirror/lang-json'
 import { oneDark } from '@codemirror/theme-one-dark'
 import { useCodeStore } from '~/store/code'
+import { useLangStore } from '~/store/language'
 
-const { t } = useI18n()
 const codeStore = useCodeStore()
 const { setCode } = codeStore
-const { code, inputLang } = storeToRefs(codeStore)
+const { code } = storeToRefs(codeStore)
 
-const route = useRoute()
+const langStore = useLangStore()
+const { inputLanguage } = storeToRefs(langStore)
+
 const router = useRouter()
 const extensions = [json(), oneDark]
 const view = shallowRef()
@@ -28,14 +30,11 @@ const handleFileContents = (e: any) => {
 const handleNav = () => {
   router.push({
     path: '/output',
-    query: {
-      lang: route.query.lang,
-    },
   })
 }
 
 onMounted(() => {
-  if (!inputLang.value) {
+  if (!inputLanguage.value) {
     navigateTo('/get-started')
   }
 })
@@ -111,7 +110,7 @@ onMounted(() => {
                           <button
                             class="bg-[#282C34] border-b border-r border-b-white/20 border-r-white/10 bg-white/5 px-4 py-2 text-white"
                           >
-                            {{ inputLang?.code }}
+                            {{ inputLanguage?.code }}
                           </button>
                         </div>
                       </div>
@@ -120,7 +119,7 @@ onMounted(() => {
                 </div>
                 <Codemirror
                   v-model="code"
-                  :placeholder="`${t('pasteYourJsonHere')}...`"
+                  :placeholder="`${$t('pasteYourJsonHere')}...`"
                   :style="{
                     height: '100vh',
                     width: '100vw',

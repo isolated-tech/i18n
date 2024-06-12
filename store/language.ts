@@ -6,11 +6,11 @@ export const useLangStore = defineStore('langStore', () => {
   const inputLanguage = ref<Language>()
   const outputLanguages = ref<Language[]>([])
 
-  const setInputLanguage = (lang: Language) => {
-    inputLanguage.value = lang
+  const setLanguage = (r: Ref<any>, lang: Language) => {
+    r.value = lang
   }
 
-  const setOutputLanguages = (languages: Language[]) => {
+  const setLanguages = (languages: Language[]) => {
     outputLanguages.value = languages
   }
 
@@ -31,9 +31,9 @@ export const useLangStore = defineStore('langStore', () => {
   return {
     languages,
     inputLanguage,
-    setInputLanguage,
+    setLanguage,
     outputLanguages,
-    setOutputLanguages,
+    setLanguages,
     checkedLanguages,
     resetOutputLanguages,
     toggleAllLanguages,

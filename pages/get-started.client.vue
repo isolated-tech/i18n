@@ -1,26 +1,18 @@
 <script setup lang="ts">
-import { type Language, languages as languagesConst } from '@/lib/constants'
-import { useCodeStore } from '~/store/code'
+import { useLangStore } from '~/store/language'
 
 const router = useRouter()
-const codeStore = useCodeStore()
-const { setInputLang } = codeStore
-const { inputLang } = storeToRefs(codeStore)
 
-const selectedLanguages = ref<Language[]>(languagesConst)
-const checkedLanguage = computed(() => {
-  return selectedLanguages.value.filter(language => language.checked)
-})
+const langStore = useLangStore()
+const { setLanguage } = langStore
+const { inputLanguage, checkedLanguages } = storeToRefs(langStore)
 
 const handleNav = () => {
-  setInputLang(checkedLanguage.value[0])
+  setLanguage(inputLanguage, checkedLanguages.value[0])
 
-  if (inputLang.value) {
+  if (inputLanguage.value) {
     router.push({
       path: '/input',
-      query: {
-        lang: inputLang?.value.code,
-      },
     })
   }
 }
@@ -51,7 +43,7 @@ const handleNav = () => {
             <div class="flex flex-col mt-20">
               <div>
                 <Button
-                  :disabled="checkedLanguage.length <= 0"
+                  :disabled="checkedLanguages.length <= 0"
                   @click="handleNav"
                 >
                   Submit
@@ -78,10 +70,7 @@ const handleNav = () => {
                 <div
                   class="mx-auto max-w-2xl bg-opacity-95 md:mx-0 md:max-w-none"
                 >
-                  <LanguageSelector
-                    v-model="selectedLanguages"
-                    :single="true"
-                  />
+                  <LanguageSelector :single="true" />
                 </div>
                 <div
                   class="pointer-events-none absolute inset-0 ring-1 ring-inset ring-black/10 md:rounded-3xl"
