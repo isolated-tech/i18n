@@ -207,6 +207,11 @@ const setL = (l: Language) => {
                 appears, or wait until they are all finished and download them
                 in bulk.
               </p>
+              <p class="mt-8 text-xs text-gray-600">
+                * Our translations are local and only stored in the browser
+                state. This still does not persist. So do not refresh your
+                browser.
+              </p>
             </div>
 
             <div class="mt-10">
