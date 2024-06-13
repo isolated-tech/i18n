@@ -2,12 +2,16 @@
 import { ChevronRightIcon } from '@heroicons/vue/20/solid'
 import eng_Latn from '../i18n/eng_Latn.json'
 import fra_Latn from '../i18n/fra_Latn.json'
+import { json } from '@codemirror/lang-json'
+import { oneDark } from '@codemirror/theme-one-dark'
+import { Codemirror } from 'vue-codemirror'
 
 const showUS = ref(true)
 const { t, setLocale } = useI18n()
 // const { data: authData } = useAuth()
 // const isLoggedIn = computed(() => authData.value?.user)
 const isLoggedIn = true
+const extensions = [json(), oneDark]
 
 const renderedJSON = computed(() => {
   return showUS.value ? eng_Latn : fra_Latn
@@ -35,7 +39,7 @@ watch(showUS, (newVal, _oldVal) => {
             <div class="mt-24 sm:mt-32 lg:mt-16">
               <a href="#" class="inline-flex space-x-6">
                 <span
-                  class="rounded-full bg-indigo-600/10 px-3 py-1 text-sm font-semibold leading-6 text-indigo-600 ring-1 ring-inset ring-indigo-600/10"
+                  class="rounded-full bg-gray-600/10 px-3 py-1 text-sm font-semibold leading-6 text-gray-600 ring-1 ring-inset ring-gray-600/10"
                 >
                   {{ t('whatsNew') }}
                 </span>
@@ -77,10 +81,8 @@ watch(showUS, (newVal, _oldVal) => {
           class="absolute inset-y-0 right-1/2 -z-10 -mr-10 w-[200%] skew-x-[-30deg] bg-white shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 md:-mr-20 lg:-mr-36"
           aria-hidden="true"
         />
-        <div class="shadow-lg md:rounded-3xl">
-          <div
-            class="bg-indigo-500 [clip-path:inset(0)] md:[clip-path:inset(0_round_theme(borderRadius.3xl))]"
-          >
+        <div class="h-screen shadow-lg md:rounded-3xl">
+          <div class="">
             <div
               class="absolute -inset-y-px left-1/2 -z-10 ml-10 w-[200%] skew-x-[-30deg] bg-indigo-100 opacity-20 ring-1 ring-inset ring-white md:ml-20 lg:ml-36"
               aria-hidden="true"
@@ -115,7 +117,22 @@ watch(showUS, (newVal, _oldVal) => {
                     </div>
                   </div>
                   <div class="px-6 pb-14 pt-6 text-white">
-                    <JsonViewer :json-data="renderedJSON" />
+                    <!-- <JsonViewer :json-data="renderedJSON" /> -->
+                    <Codemirror
+                      placeholder="Output"
+                      :style="{
+                        height: '100vh',
+                        width: '100vw',
+                        borderBottomLeftRadius: '20px',
+                        borderBottomRightRadius: '20px',
+                        overflow: 'scroll',
+                      }"
+                      :disabled="true"
+                      :autofocus="true"
+                      :indent-with-tab="true"
+                      :tab-size="2"
+                      :extensions="extensions"
+                    />
                   </div>
                 </div>
               </div>
