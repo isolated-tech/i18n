@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { languages as baseLanguages } from '@/lib/constants'
 import { ChevronRightIcon } from '@heroicons/vue/20/solid'
 import eng_Latn from '../i18n/eng_Latn.json'
 import fra_Latn from '../i18n/fra_Latn.json'
@@ -33,6 +34,14 @@ const isActive = (itemName: string) => {
   return activeMenuItems.value.find(item => item.name === itemName)?.active
 }
 
+function smoothScroll(event) {
+  event.preventDefault()
+  const target = document.getElementById('key-features')
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth' })
+  }
+}
+
 watch(showUS, (newVal, _oldVal) => {
   if (newVal) {
     setLocale('en')
@@ -44,7 +53,7 @@ watch(showUS, (newVal, _oldVal) => {
 
 <template>
   <div
-    class="relative isolate overflow-hidden bg-gradient-to-b from-indigo-100/20"
+    class="relative isolate overflow-hidden bg-gradient-to-b from-indigo-100/20 scroll-smooth"
   >
     <section
       class="mx-auto max-w-7xl pb-24 pt-10 sm:pb-32 lg:grid lg:grid-cols-2 lg:gap-x-8 lg:px-8 lg:py-40"
@@ -85,7 +94,9 @@ watch(showUS, (newVal, _oldVal) => {
                   {{ t('cta') }}
                 </Button>
               </NuxtLink>
-              <Button variant="outline">{{ t('learnMore') }}</Button>
+              <a href="#key-features" @click="event => smoothScroll(event)">
+                <Button variant="outline">{{ t('learnMore') }}</Button>
+              </a>
             </div>
           </div>
         </div>
@@ -169,6 +180,7 @@ watch(showUS, (newVal, _oldVal) => {
     />
 
     <section
+      id="key-features"
       class="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800"
     >
       <div class="container px-4 md:px-6">
@@ -222,6 +234,9 @@ watch(showUS, (newVal, _oldVal) => {
               <li>
                 <div
                   class="grid gap-1 cursor-pointer hover:bg-gray-50 p-2.5 rounded"
+                  :class="{
+                    'bg-gray-50 shadow-sm': isActive('languages'),
+                  }"
                   @click="setActiveMenuItem('languages')"
                 >
                   <h3 class="text-xl font-bold">Multiple Languages</h3>
@@ -234,6 +249,9 @@ watch(showUS, (newVal, _oldVal) => {
               <li>
                 <div
                   class="grid gap-1 cursor-pointer hover:bg-gray-50 p-2.5 rounded"
+                  :class="{
+                    'bg-gray-50 shadow-sm': isActive('huggingface'),
+                  }"
                   @click="setActiveMenuItem('huggingface')"
                 >
                   <h3 class="text-xl font-bold">Local-first Translation</h3>
@@ -247,6 +265,9 @@ watch(showUS, (newVal, _oldVal) => {
               <li>
                 <div
                   class="grid gap-1 cursor-pointer hover:bg-gray-50 p-2.5 rounded"
+                  :class="{
+                    'bg-gray-50 shadow-sm': isActive('json'),
+                  }"
                   @click="setActiveMenuItem('json')"
                 >
                   <h3 class="text-xl font-bold">File Format Support</h3>
@@ -309,7 +330,7 @@ watch(showUS, (newVal, _oldVal) => {
                   name="material-symbols:check"
                   class="h-5 w-5 text-gray-500 dark:text-gray-400"
                 />
-                <span>205 supported languages</span>
+                <span>{{ baseLanguages.length }} supported languages</span>
               </li>
               <li class="flex items-center gap-2">
                 <Icon
