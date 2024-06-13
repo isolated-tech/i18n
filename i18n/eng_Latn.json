@@ -15,5 +15,6 @@
   "orContinueWith": "Or continue with",
   "app": "App",
   "translate": "Translate",
-  "pasteYourJsonHere": "Paste your JSON here"
+  "pasteYourJsonHere": "Paste your JSON here",
+  "sendMagicLink": "Send magic link"
 }

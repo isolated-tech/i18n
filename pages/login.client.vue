@@ -45,8 +45,10 @@ const { signIn } = useAuth()
           </div>
 
           <div>
-            <Button class="w-full" type="submit">
-              {{ t('signIn') }}
+            <Button class="w-full" type="submit" @click="() => signIn('email', {
+              
+            })">
+              {{ t('sendMagicLink') }}
             </Button>
           </div>
         </form>
