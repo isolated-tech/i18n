@@ -4,11 +4,11 @@ import EmailProvider from 'next-auth/providers/email'
 
 import { NuxtAuthHandler } from '#auth'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import { getAccountsByEmail } from '~/server/utils/queries/getAccountsByEmail'
 import { PrismaClient } from '@prisma/client'
+import { withAccelerate } from '@prisma/extension-accelerate'
 
 const runtimeConfig = useRuntimeConfig()
-const prisma = new PrismaClient()
+const prisma = new PrismaClient().$extends(withAccelerate())
 
 export function mapExpiresAt(account: any): any {
   const expires_at: number = parseInt(account.expires_at)
@@ -87,7 +87,14 @@ export default NuxtAuthHandler({
     // Adding subscription status to default useAuth data object.
     async session({ session }) {
       if (session.user?.email) {
-        const accounts = await getAccountsByEmail(session.user.email)
+        const accounts = await prisma.account.findMany({
+          where: {
+            user: {
+              email: session.user?.email,
+            },
+          },
+          cacheStrategy: { ttl: 60 },
+        })
 
         return {
           ...session,
