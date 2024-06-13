@@ -2,20 +2,36 @@
 import { ChevronRightIcon } from '@heroicons/vue/20/solid'
 import eng_Latn from '../i18n/eng_Latn.json'
 import fra_Latn from '../i18n/fra_Latn.json'
-import { json } from '@codemirror/lang-json'
-import { oneDark } from '@codemirror/theme-one-dark'
-import { Codemirror } from 'vue-codemirror'
+// import { json } from '@codemirror/lang-json'
+// import { oneDark } from '@codemirror/theme-one-dark'
+// import { Codemirror } from 'vue-codemirror'
 
 const showUS = ref(true)
 const { t, setLocale } = useI18n()
 // const { data: authData } = useAuth()
 // const isLoggedIn = computed(() => authData.value?.user)
-const isLoggedIn = true
-const extensions = [json(), oneDark]
+// const isLoggedIn = true
+// const extensions = [json(), oneDark]
 
 const renderedJSON = computed(() => {
   return showUS.value ? eng_Latn : fra_Latn
 })
+
+const activeMenuItems = ref([
+  { name: 'languages', active: true },
+  { name: 'huggingface', active: false },
+  { name: 'json', active: false },
+])
+
+const setActiveMenuItem = (itemName: string) => {
+  activeMenuItems.value.forEach(item => {
+    item.active = item.name === itemName
+  })
+}
+
+const isActive = (itemName: string) => {
+  return activeMenuItems.value.find(item => item.name === itemName)?.active
+}
 
 watch(showUS, (newVal, _oldVal) => {
   if (newVal) {
@@ -81,8 +97,10 @@ watch(showUS, (newVal, _oldVal) => {
           class="absolute inset-y-0 right-1/2 -z-10 -mr-10 w-[200%] skew-x-[-30deg] bg-white shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 md:-mr-20 lg:-mr-36"
           aria-hidden="true"
         />
-        <div class="h-screen shadow-lg md:rounded-3xl">
-          <div class="">
+        <div class="shadow-lg md:rounded-3xl">
+          <div
+            class="bg-indigo-500 [clip-path:inset(0)] md:[clip-path:inset(0_round_theme(borderRadius.3xl))]"
+          >
             <div
               class="absolute -inset-y-px left-1/2 -z-10 ml-10 w-[200%] skew-x-[-30deg] bg-indigo-100 opacity-20 ring-1 ring-inset ring-white md:ml-20 lg:ml-36"
               aria-hidden="true"
@@ -117,8 +135,8 @@ watch(showUS, (newVal, _oldVal) => {
                     </div>
                   </div>
                   <div class="px-6 pb-14 pt-6 text-white">
-                    <!-- <JsonViewer :json-data="renderedJSON" /> -->
-                    <Codemirror
+                    <JsonViewer :json-data="renderedJSON" />
+                    <!-- <Codemirror
                       placeholder="Output"
                       :style="{
                         height: '100vh',
@@ -132,7 +150,7 @@ watch(showUS, (newVal, _oldVal) => {
                       :indent-with-tab="true"
                       :tab-size="2"
                       :extensions="extensions"
-                    />
+                    /> -->
                   </div>
                 </div>
               </div>
@@ -178,17 +196,34 @@ watch(showUS, (newVal, _oldVal) => {
         <div
           class="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12"
         >
-          <img
-            src="#"
-            width="550"
-            height="310"
-            alt="Image"
-            class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
+          <div
+            class="overflow-scroll h-64 lg:order-last"
+            v-if="isActive('languages')"
+          >
+            <LanguageSelector />
+          </div>
+          <HuggingFaceLogo
+            v-if="isActive('huggingface')"
+            class="w-full lg:order-last"
           />
+          <div
+            v-if="isActive('json')"
+            class="flex flex-col items-center justify-center space-y-2 lg:order-last"
+          >
+            <Icon
+              name="streamline:programming-script-file-code-1-code-files-angle-programming-file-bracket"
+              class="h-10 w-10 text-gray-500 dark:text-gray-400"
+            />
+            <h4 class="text-lg font-bold">Code Files</h4>
+            <p class="text-gray-500 dark:text-gray-400">.json</p>
+          </div>
           <div class="flex flex-col justify-center space-y-4">
             <ul class="grid gap-6">
               <li>
-                <div class="grid gap-1">
+                <div
+                  class="grid gap-1 cursor-pointer hover:bg-gray-50 p-2.5 rounded"
+                  @click="setActiveMenuItem('languages')"
+                >
                   <h3 class="text-xl font-bold">Multiple Languages</h3>
                   <p class="text-gray-500 dark:text-gray-400">
                     Translate your content into 200+ languages with our
@@ -197,7 +232,10 @@ watch(showUS, (newVal, _oldVal) => {
                 </div>
               </li>
               <li>
-                <div class="grid gap-1">
+                <div
+                  class="grid gap-1 cursor-pointer hover:bg-gray-50 p-2.5 rounded"
+                  @click="setActiveMenuItem('huggingface')"
+                >
                   <h3 class="text-xl font-bold">Local-first Translation</h3>
                   <p class="text-gray-500 dark:text-gray-400">
                     Keep your translation files safe and fully in your control.
@@ -207,7 +245,10 @@ watch(showUS, (newVal, _oldVal) => {
                 </div>
               </li>
               <li>
-                <div class="grid gap-1">
+                <div
+                  class="grid gap-1 cursor-pointer hover:bg-gray-50 p-2.5 rounded"
+                  @click="setActiveMenuItem('json')"
+                >
                   <h3 class="text-xl font-bold">File Format Support</h3>
                   <p class="text-gray-500 dark:text-gray-400">
                     Translate content into the popular file format JSON.
@@ -224,45 +265,7 @@ watch(showUS, (newVal, _oldVal) => {
       </div>
     </section>
 
-    <section class="w-full py-12 md:py-24 lg:py-32">
-      <div class="container px-4 md:px-6">
-        <div
-          class="flex flex-col items-center justify-center space-y-4 text-center"
-        >
-          <div class="space-y-2">
-            <div
-              class="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm dark:bg-gray-800"
-            >
-              Supported File Formats
-            </div>
-            <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl">
-              Translate JSON Files
-            </h2>
-            <p
-              class="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
-            >
-              Our AI-powered translation platform supports the JSON file
-              formats, ensuring your content is seamlessly translated across all
-              your digital assets.
-            </p>
-          </div>
-        </div>
-        <div class="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:gap-8">
-          <div class="flex flex-col items-center justify-center space-y-2">
-            <Icon
-              name="streamline:programming-script-file-code-1-code-files-angle-programming-file-bracket"
-              class="h-10 w-10 text-gray-500 dark:text-gray-400"
-            />
-            <h4 class="text-lg font-bold">Code Files</h4>
-            <p class="text-gray-500 dark:text-gray-400">.json</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section
-      class="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800"
-    >
+    <section class="w-full py-12 md:py-24 lg:py-32 dark:bg-gray-800">
       <div class="container px-4 md:px-6">
         <div
           class="flex flex-col items-center justify-center space-y-4 text-center"
@@ -327,7 +330,7 @@ watch(showUS, (newVal, _oldVal) => {
       </div>
     </section>
 
-    <section class="w-full py-12 md:py-24 lg:py-32">
+    <section class="w-full py-12 bg-gray-100 md:py-24 lg:py-32">
       <div
         class="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10"
       >

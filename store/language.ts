@@ -20,7 +20,7 @@ export const useLangStore = defineStore('langStore', () => {
     })
   }
 
-  const resetOutputLanguages = () => {
+  const resetLanguages = () => {
     toggleAllLanguages(false)
   }
 
@@ -35,7 +35,7 @@ export const useLangStore = defineStore('langStore', () => {
     outputLanguages,
     setLanguages,
     checkedLanguages,
-    resetOutputLanguages,
+    resetLanguages,
     toggleAllLanguages,
   }
 })

@@ -8,7 +8,7 @@ interface Props {
 }
 
 const langStore = useLangStore()
-const { resetOutputLanguages, toggleAllLanguages } = langStore
+const { resetLanguages, toggleAllLanguages } = langStore
 const { languages, checkedLanguages } = storeToRefs(langStore)
 
 const { single } = defineProps<Props>()
@@ -41,7 +41,7 @@ const renderedLanguages = computed(() => {
 })
 
 onMounted(() => {
-  resetOutputLanguages()
+  resetLanguages()
 })
 </script>
 
