@@ -71,7 +71,7 @@ watch(showUS, (newVal, _oldVal) => {
                 <span
                   class="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600"
                 >
-                  <span>{{ t('justShipped') }} v0.1.0</span>
+                  <span>{{ t('justShipped') }} v1.0.0</span>
                   <ChevronRightIcon
                     class="h-5 w-5 text-gray-400"
                     aria-hidden="true"
@@ -116,7 +116,7 @@ watch(showUS, (newVal, _oldVal) => {
               class="absolute -inset-y-px left-1/2 -z-10 ml-10 w-[200%] skew-x-[-30deg] bg-indigo-100 opacity-20 ring-1 ring-inset ring-white md:ml-20 lg:ml-36"
               aria-hidden="true"
             />
-            <div class="relative px-6 pt-8 md:pr-0">
+            <div class="relative md:pr-0">
               <div class="mx-auto max-w-2xl md:mx-0 md:max-w-none">
                 <div class="w-screen overflow-hidden rounded-tl-xl bg-gray-900">
                   <div class="flex bg-gray-800/40 ring-1 ring-white/5">
@@ -340,12 +340,7 @@ watch(showUS, (newVal, _oldVal) => {
                 <span>Customer support</span>
               </li>
             </ul>
-            <NuxtLink
-              href="#"
-              class="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-            >
-              Buy Now
-            </NuxtLink>
+            <Button> Buy Now </Button>
           </div>
         </div>
       </div>
