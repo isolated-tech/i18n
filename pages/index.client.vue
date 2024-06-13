@@ -209,10 +209,10 @@ watch(showUS, (newVal, _oldVal) => {
           class="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12"
         >
           <div
-            class="overflow-scroll h-64 lg:order-last"
+            class="overflow-scroll h-80 lg:order-last"
             v-if="isActive('languages')"
           >
-            <LanguageSelector />
+            <LanguageSelector class="my-2" />
           </div>
           <HuggingFaceLogo
             v-if="isActive('huggingface')"
