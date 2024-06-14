@@ -40,7 +40,6 @@ export default NuxtAuthHandler({
           stripe_customer_id: customer.id,
         },
         select: {
-          id: true,
           userId: true,
           provider: true,
           type: true,
@@ -63,16 +62,19 @@ export default NuxtAuthHandler({
   providers: [
     // @ts-expect-error
     GithubProvider.default({
+      allowDangerousEmailAccountLinking: true,
       clientId: runtimeConfig.GITHUB_CLIENT_ID,
       clientSecret: runtimeConfig.GITHUB_CLIENT_SECRET,
     }),
     // @ts-expect-error
     TwitterProvider.default({
+      allowDangerousEmailAccountLinking: true,
       clientId: runtimeConfig.TWITTER_API_KEY,
       clientSecret: runtimeConfig.TWITTER_API_SECRET_KEY,
     }),
     // @ts-expect-error
     EmailProvider.default({
+      allowDangerousEmailAccountLinking: true,
       server: {
         host: runtimeConfig.EMAIL_SERVER_HOST,
         port: parseInt(runtimeConfig.EMAIL_SERVER_PORT),
