@@ -8,8 +8,8 @@ import { PrismaClient } from '@prisma/client'
 import { withAccelerate } from '@prisma/extension-accelerate'
 
 const runtimeConfig = useRuntimeConfig()
-const prisma = new PrismaClient().$extends(withAccelerate())
-// const prisma = new PrismaClient()
+// const prisma = new PrismaClient().$extends(withAccelerate())
+const prisma = new PrismaClient()
 
 export function mapExpiresAt(account: any): any {
   const expires_at: number = parseInt(account.expires_at)
@@ -57,9 +57,9 @@ export default NuxtAuthHandler({
       return mapExpiresAt(result)
     },
   },
-  pages: {
-    signIn: '/login',
-  },
+  // pages: {
+  //   signIn: '/login',
+  // },
   providers: [
     // @ts-expect-error
     GithubProvider.default({
@@ -94,15 +94,16 @@ export default NuxtAuthHandler({
               email: session.user?.email,
             },
           },
-          cacheStrategy: { ttl: 60 },
+          // cacheStrategy: { ttl: 60 },
         })
 
         return {
           ...session,
           user: {
             ...session.user,
-            is_subscribed: accounts[0].is_subscribed,
-            subscription_expiration: accounts[0].subscription_expiration,
+            is_subscribed: false,
+            // is_subscribed: accounts[0].is_subscribed ?? false,
+            // subscription_expiration: accounts[0].subscription_expiration ?? '',
           },
         }
       }
@@ -111,7 +112,7 @@ export default NuxtAuthHandler({
         ...session,
         user: {
           ...session.user,
-          is_subscribed: undefined,
+          is_subscribed: false,
         },
       }
     },

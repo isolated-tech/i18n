@@ -8,6 +8,7 @@ definePageMeta({
 
 const { t } = useI18n()
 const { signIn } = useAuth()
+const email = ref<string>()
 </script>
 
 <template>
@@ -34,6 +35,7 @@ const { signIn } = useAuth()
             </label>
             <div class="mt-2">
               <input
+                v-model="email"
                 id="email"
                 name="email"
                 type="email"
@@ -45,9 +47,11 @@ const { signIn } = useAuth()
           </div>
 
           <div>
-            <Button class="w-full" type="submit" @click="() => signIn('email', {
-              
-            })">
+            <Button
+              class="w-full"
+              type="submit"
+              @click="() => signIn('email', { email })"
+            >
               {{ t('sendMagicLink') }}
             </Button>
           </div>
