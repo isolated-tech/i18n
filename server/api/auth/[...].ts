@@ -57,9 +57,9 @@ export default NuxtAuthHandler({
       return mapExpiresAt(result)
     },
   },
-  // pages: {
-  //   signIn: '/login',
-  // },
+  pages: {
+    signIn: '/',
+  },
   providers: [
     // @ts-expect-error
     GithubProvider.default({

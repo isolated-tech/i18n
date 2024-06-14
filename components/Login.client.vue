@@ -23,6 +23,7 @@ const handleMagicLink = () => {
     signIn('email', {
       email: emailInput.value,
       callbackUrl: useRoute().fullPath,
+      redirect: false,
     })
 
     toast({
@@ -97,7 +98,11 @@ const handleMagicLink = () => {
               variant="outline"
               class="flex gap-3"
               @click="
-                () => signIn('github', { callbackUrl: useRoute().fullPath })
+                () =>
+                  signIn('github', {
+                    callbackUrl: useRoute().fullPath,
+                    redirect: false,
+                  })
               "
             >
               <Icon name="mdi:github" class="h-5 w-5" />
@@ -107,7 +112,11 @@ const handleMagicLink = () => {
             <Button
               variant="outline"
               @click="
-                () => signIn('twitter', { callbackUrl: useRoute().fullPath })
+                () =>
+                  signIn('twitter', {
+                    callbackUrl: useRoute().fullPath,
+                    redirect: false,
+                  })
               "
             >
               <Icon name="fa6-brands:x-twitter" class="h-5 w-5"></Icon>
