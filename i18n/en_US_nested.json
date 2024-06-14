@@ -1,0 +1,11 @@
+{
+  "whatsNew": "What's new",
+  "nested": {
+    "this": "this is nested"
+  },
+  "double": {
+    "nested": {
+      "this": "this is also nested"
+    }
+  }
+}
