@@ -68,8 +68,8 @@ export default NuxtAuthHandler({
     }),
     // @ts-expect-error
     TwitterProvider.default({
-      clientId: runtimeConfig.TWITTER_CLIENT_ID,
-      clientSecret: runtimeConfig.TWITTER_CLIENT_SECRET,
+      clientId: runtimeConfig.TWITTER_API_KEY,
+      clientSecret: runtimeConfig.TWITTER_API_SECRET_KEY,
     }),
     // @ts-expect-error
     EmailProvider.default({

@@ -100,7 +100,6 @@ const handleMagicLink = () => {
               @click="
                 () =>
                   signIn('github', {
-                    callbackUrl: useRoute().fullPath,
                     redirect: false,
                   })
               "
@@ -114,7 +113,6 @@ const handleMagicLink = () => {
               @click="
                 () =>
                   signIn('twitter', {
-                    callbackUrl: useRoute().fullPath,
                     redirect: false,
                   })
               "
