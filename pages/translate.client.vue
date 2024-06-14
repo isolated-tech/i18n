@@ -120,13 +120,13 @@ const onMessageReceived = e => {
         setL(translatedLanguages.value[0])
       }
 
-      nextTick(() => {
-        const container = document.querySelector('.overflow-x-scroll')
+      // nextTick(() => {
+      //   const container = document.querySelector('.overflow-x-scroll')
 
-        if (container) {
-          container.scrollLeft = container.scrollWidth
-        }
-      })
+      //   if (container) {
+      //     container.scrollLeft = container.scrollWidth
+      //   }
+      // })
 
       setCodeOutput(language, outputText)
       isTranslating.value = true
