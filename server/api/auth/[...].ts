@@ -97,13 +97,15 @@ export default NuxtAuthHandler({
           cacheStrategy: { ttl: 60 },
         })
 
-        return {
-          ...session,
-          user: {
-            ...session.user,
-            is_subscribed: accounts[0].is_subscribed,
-            subscription_expiration: accounts[0].subscription_expiration,
-          },
+        if (accounts.length) {
+          return {
+            ...session,
+            user: {
+              ...session.user,
+              is_subscribed: accounts[0].is_subscribed,
+              subscription_expiration: accounts[0].subscription_expiration,
+            },
+          }
         }
       }
 
