@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ArrowLeftIcon } from '@heroicons/vue/20/solid'
+
 definePageMeta({
   auth: {
     unauthenticatedOnly: true,
@@ -11,18 +13,24 @@ const { signIn } = useAuth()
 </script>
 
 <template>
+  <NuxtLink class="absolute top-4 left-4 sm:top-10 sm:left-10" to="/">
+    <ArrowLeftIcon
+      class="h-5 sm:h-11 cursor-pointer text-white hover:text-gray-300"
+    />
+  </NuxtLink>
+
   <div
-    class="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8"
+    class="bg-black flex h-screen flex-1 flex-col justify-center items-center"
   >
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
       <h2
-        class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
+        class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-white"
       >
         {{ t('signInToYourAccount') }}
       </h2>
     </div>
 
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
+    <div class="mt-10 w-screen sm:mx-auto sm:w-full sm:max-w-[480px]">
       <div class="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
         <form class="space-y-6" action="#" method="POST">
           <div>
@@ -45,9 +53,11 @@ const { signIn } = useAuth()
           </div>
 
           <div>
-            <Button class="w-full" type="submit" @click="() => signIn('email', {
-              
-            })">
+            <Button
+              class="w-full"
+              type="submit"
+              @click="() => signIn('email', {})"
+            >
               {{ t('sendMagicLink') }}
             </Button>
           </div>
