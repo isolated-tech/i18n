@@ -40,7 +40,6 @@ model Account {
   stripe_customer_id String? @unique
   is_subscribed Boolean @default(false)
   subscription_expiration String?
-  stream_url String?
 
   user               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   
@@ -62,7 +61,7 @@ model Session {
   @@map("sessions")
 }
 
-model VerificationToken {
+model VerificationRequest {
   id         String   @id @default(cuid())
   identifier String
   token      String   @unique
