@@ -7,6 +7,7 @@
   "learnMore": "Learn More",
   "login": "Login",
   "signIn": "Sign in",
+  "signOut": "Sign out",
   "signInToYourAccount": "Sign in to your account",
   "emailAddress": "Email address",
   "password": "Password",
@@ -16,5 +17,10 @@
   "app": "App",
   "translate": "Translate",
   "pasteYourJsonHere": "Paste your JSON here",
-  "sendMagicLink": "Send magic link"
+  "sendMagicLink": "Send magic link",
+  "linkSent": "Link sent",
+  "checkYourEmailForLoginLink": "Check your email for your login link!",
+  "accountSettings": "Account Settings",
+  "emailRequired": "Email required",
+  "emailRequiredDescription": "Please input a valid email and retry."
 }

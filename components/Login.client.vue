@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useToast } from '@/components/ui/toast/use-toast'
-import { ArrowLeftIcon } from '@heroicons/vue/20/solid'
 
 definePageMeta({
   auth: {
@@ -11,27 +10,31 @@ definePageMeta({
 
 const { t } = useI18n()
 const { signIn } = useAuth()
-const email = ref<string>()
 const { toast } = useToast()
+const emailInput = ref<string>()
 
 const handleMagicLink = () => {
-  signIn('email')
+  if (!emailInput.value?.length) {
+    toast({
+      title: t('emailRequired'),
+      description: t('checkYourEmailForLoginLink'),
+    })
+  } else {
+    signIn('email', {
+      email: emailInput.value,
+      callbackUrl: useRoute().fullPath,
+    })
 
-  toast({
-    title: t('linkSent'),
-    description: t('checkYourEmailForLoginLink'),
-  })
+    toast({
+      title: t('linkSent'),
+      description: t('checkYourEmailForLoginLink'),
+    })
+  }
 }
 </script>
 
 <template>
-  <NuxtLink class="absolute top-4 left-4 sm:top-10 sm:left-10" to="/">
-    <ArrowLeftIcon
-      class="h-5 sm:h-11 cursor-pointer text-black hover:text-gray-300"
-    />
-  </NuxtLink>
-
-  <div class="flex h-screen flex-1 flex-col justify-center items-center">
+  <div class="flex flex-1 flex-col justify-center items-center">
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
       <h2
         class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-black"
@@ -40,9 +43,14 @@ const handleMagicLink = () => {
       </h2>
     </div>
 
-    <div class="mt-10 w-screen sm:mx-auto sm:w-full sm:max-w-[480px]">
-      <div class="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-        <form class="space-y-6" action="#" method="POST">
+    <div class="mt-5 w-screen sm:mx-auto sm:w-full sm:max-w-[480px]">
+      <div class="bg-white px-6 py-5 sm:rounded-lg sm:px-12">
+        <form
+          class="space-y-6"
+          action="#"
+          method="POST"
+          @submit.prevent="handleMagicLink"
+        >
           <div>
             <label
               for="email"
@@ -52,7 +60,7 @@ const handleMagicLink = () => {
             </label>
             <div class="mt-2">
               <input
-                v-model="email"
+                v-model="emailInput"
                 id="email"
                 name="email"
                 type="email"
@@ -64,7 +72,7 @@ const handleMagicLink = () => {
           </div>
 
           <div>
-            <Button class="w-full" type="submit" @click="handleMagicLink">
+            <Button class="w-full" type="submit">
               {{ t('sendMagicLink') }}
             </Button>
           </div>
@@ -88,13 +96,20 @@ const handleMagicLink = () => {
             <Button
               variant="outline"
               class="flex gap-3"
-              @click="() => signIn('github')"
+              @click="
+                () => signIn('github', { callbackUrl: useRoute().fullPath })
+              "
             >
               <Icon name="mdi:github" class="h-5 w-5" />
               <span class="text-sm font-semibold leading-6">GitHub</span>
             </Button>
 
-            <Button variant="outline" @click="() => signIn('twitter')">
+            <Button
+              variant="outline"
+              @click="
+                () => signIn('twitter', { callbackUrl: useRoute().fullPath })
+              "
+            >
               <Icon name="fa6-brands:x-twitter" class="h-5 w-5"></Icon>
             </Button>
           </div>

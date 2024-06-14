@@ -10,6 +10,8 @@ import { useLangStore } from '~/store/language'
 
 const codeStore = useCodeStore()
 const { setCode } = codeStore
+// TODO: Ensure code is validate JSON
+// TODO: Error/Toast if not
 const { code } = storeToRefs(codeStore)
 
 const langStore = useLangStore()
