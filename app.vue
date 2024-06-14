@@ -6,6 +6,7 @@ import Toaster from '@/components/ui/toast/Toaster.vue'
   <html class="h-screen overflow-scroll">
     <body>
       <NuxtPage />
+      <LoginDialog class="absolute top-0 right-0" />
       <Toaster />
     </body>
   </html>
