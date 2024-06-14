@@ -1,4 +1,5 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import { languages } from './lib/constants'
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
@@ -10,6 +11,20 @@ export default defineNuxtConfig({
     'nuxt-icon',
   ],
   i18n: {
+    strategy: 'no_prefix',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'nuxt_i18n',
+    },
+    defaultLocale: 'eng_Latn',
+    locales: languages
+      .filter(l => l.code !== 'all')
+      .map(l => {
+        return {
+          code: l.code,
+          name: l.title,
+        }
+      }),
     vueI18n: './i18n.config.ts',
   },
   runtimeConfig: {

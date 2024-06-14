@@ -7,7 +7,10 @@ const { signOut } = useAuth()
   <DialogHeader>
     <DialogTitle>{{ t('accountSettings') }}</DialogTitle>
   </DialogHeader>
-  <div className="grid grid-cols-1 gap-6"></div>
+  <div className="grid grid-cols-1 gap-6">
+    <ManageBilling />
+    <I18nLanguageSelector />
+  </div>
 
   <DialogFooter class="pt-4">
     <Button @click="() => signOut({ redirect: false })">

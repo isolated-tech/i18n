@@ -5,7 +5,7 @@ export default defineI18nConfig(() => ({
   legacy: false,
   locale: 'en',
   messages: {
-    en: eng_Latn,
-    fr: fra_Latn,
+    eng_Latn: eng_Latn,
+    fra_Latn: fra_Latn,
   },
 }))

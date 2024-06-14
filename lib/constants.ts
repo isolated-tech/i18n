@@ -215,3 +215,5 @@ export const languages: Language[] = [
   { title: 'Yue Chinese', code: 'yue_Hant', checked: false },
   { title: 'Zulu', code: 'zul_Latn', checked: false },
 ]
+
+export const PRICE_LOOKUP_KEY = 'i18n-base-product'

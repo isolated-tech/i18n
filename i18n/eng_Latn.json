@@ -22,5 +22,12 @@
   "checkYourEmailForLoginLink": "Check your email for your login link!",
   "accountSettings": "Account Settings",
   "emailRequired": "Email required",
-  "emailRequiredDescription": "Please input a valid email and retry."
+  "emailRequiredDescription": "Please input a valid email and retry.",
+  "subscription": "Subscription",
+  "paid": "Paid",
+  "buyNow": "Buy now",
+  "currentStatus": "Current status:",
+  "free": "Free",
+  "pro": "Pro",
+  "language": "Language"
 }
