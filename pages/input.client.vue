@@ -12,6 +12,7 @@ const codeStore = useCodeStore()
 const { setCode } = codeStore
 // TODO: Ensure code is validate JSON
 // TODO: Error/Toast if not
+// TODO: Error out if JSON is nested.
 const { code } = storeToRefs(codeStore)
 
 const langStore = useLangStore()
