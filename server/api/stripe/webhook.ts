@@ -6,7 +6,6 @@ export default eventHandler(async event => {
   const body = await readRawBody(event, false)
   let stripeEvent: any = body
   let subscription
-  let status
 
   const signature = getHeader(event, 'stripe-signature')
 
@@ -32,29 +31,10 @@ export default eventHandler(async event => {
     return sendError(event, error)
   }
 
-  const currentDate = new Date()
-  currentDate.setDate(currentDate.getDate() + 30)
-  const thirtyDaysFromNow = currentDate.toISOString().split('T')[0]
-
   // Handle the event
   switch (stripeEvent.type) {
-    case 'customer.subscription.deleted':
+    case 'invoice.payment_succeeded':
       subscription = stripeEvent.data.object
-      status = subscription.status
-
-      await prisma.account.update({
-        where: {
-          stripe_customer_id: subscription.customer,
-        },
-        data: {
-          is_subscribed: false,
-        },
-      })
-
-      break
-    case 'customer.subscription.created':
-      subscription = stripeEvent.data.object
-      status = subscription.status
 
       await prisma.account.update({
         where: {
@@ -62,30 +42,6 @@ export default eventHandler(async event => {
         },
         data: {
           is_subscribed: true,
-          subscription_expiration: thirtyDaysFromNow,
-        },
-      })
-
-      break
-    case 'customer.subscription.updated':
-      subscription = stripeEvent.data.object
-      status = subscription.status
-
-      console.log('subscription: ', subscription)
-      console.log('status: ', status)
-
-      // TODO: SET is_subscribed to true/false based on possible status values.
-      break
-    case 'invoice.payment_succeeded':
-      subscription = stripeEvent.data.object
-      status = subscription.status
-
-      await prisma.account.update({
-        where: {
-          stripe_customer_id: subscription.customer,
-        },
-        data: {
-          subscription_expiration: thirtyDaysFromNow,
         },
       })
     default:
