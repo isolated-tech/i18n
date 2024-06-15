@@ -3,6 +3,7 @@ import { stripe } from '~/server/utils/stripe'
 
 const prisma = new PrismaClient()
 export default eventHandler(async event => {
+  console.log('in webhook endpoint')
   const body = await readRawBody(event, false)
   let stripeEvent: any = body
   let subscription
@@ -33,7 +34,8 @@ export default eventHandler(async event => {
 
   // Handle the event
   switch (stripeEvent.type) {
-    case 'invoice.payment_succeeded':
+    case 'checkout.session.completed':
+      console.log(stripeEvent.data.object)
       subscription = stripeEvent.data.object
 
       await prisma.account.update({
