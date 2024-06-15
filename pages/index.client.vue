@@ -7,7 +7,9 @@ import { useToast } from '@/components/ui/toast'
 
 const showUS = ref(true)
 const { t, setLocale } = useI18n()
-const { signIn } = useAuth()
+const { data, signIn } = useAuth()
+const isLoggedIn = computed(() => data.value?.user)
+const isSubbed = computed(() => data.value?.user.is_subscribed)
 const { toast } = useToast()
 const emailSignUp = ref<string>()
 
@@ -322,7 +324,7 @@ const handleEmailSignUp = () => {
               class="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
             >
               Our AI-powered translation platform is available for a one-time
-              purchase of $99.
+              purchase of $20.
             </p>
           </div>
         </div>
@@ -333,7 +335,7 @@ const handleEmailSignUp = () => {
             class="flex flex-col items-center justify-center space-y-4 rounded-lg border p-6 shadow-sm"
           >
             <h3 class="text-2xl font-bold">Translate AI</h3>
-            <p class="text-4xl font-bold">$99</p>
+            <p class="text-4xl font-bold">$20</p>
             <p class="text-gray-500 dark:text-gray-400">One-time purchase</p>
             <ul class="grid gap-2 text-left">
               <li class="flex items-center gap-2">
@@ -358,7 +360,8 @@ const handleEmailSignUp = () => {
                 <span>Customer support</span>
               </li>
             </ul>
-            <Button> Buy Now </Button>
+            <BuyNowDialog v-if="!isLoggedIn" />
+            <StripeCheckoutButton v-else-if="isLoggedIn && !isSubbed" />
           </div>
         </div>
       </div>

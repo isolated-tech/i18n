@@ -10,9 +10,7 @@ const isDesktop = useMediaQuery('(min-width: 768px)')
 <template>
   <Dialog v-if="isDesktop" v-model:open="isOpen">
     <DialogTrigger as-child>
-      <Avatar class="fixed top-5 right-5 cursor-pointer">
-        <Icon size="20" name="lucide:user-round" />
-      </Avatar>
+      <Button>Buy Now</Button>
     </DialogTrigger>
     <DialogContent class="sm:max-w-[425px]">
       <Login v-if="!isLoggedIn" />
