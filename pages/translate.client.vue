@@ -2,13 +2,13 @@
 import { ArrowLeftIcon } from '@heroicons/vue/20/solid'
 import { languages as baseLanguages, type Language } from '@/lib/constants'
 import MyWorker from '@/lib/worker?worker'
-import { useCodeStore } from '~/store/code'
+import { useCodeStore } from '@/store/code'
 import { storeToRefs } from 'pinia'
 import { Codemirror } from 'vue-codemirror'
 import { json } from '@codemirror/lang-json'
 import { oneDark } from '@codemirror/theme-one-dark'
 import { js_beautify } from 'js-beautify'
-import { useLangStore } from '~/store/language'
+import { useLangStore } from '@/store/language'
 import { useToast } from '@/components/ui/toast/use-toast'
 
 const { toast } = useToast()
@@ -37,6 +37,9 @@ const worker = ref<Worker>()
 const ready = ref()
 const isTranslating = ref(false)
 const disabled = ref(false)
+const buyNowDialogOpen = ref(false)
+const { data } = useAuth()
+const isSubbed = computed(() => data.value?.user.is_subscribed)
 
 const progressItems = ref([])
 const translatedLanguages = ref<Language[]>([])
@@ -167,7 +170,13 @@ onMounted(() => {
 
   worker.value.addEventListener('message', onMessageReceived)
 
-  nextTick(() => translate())
+  nextTick(() => {
+    if (isSubbed.value) {
+      translate()
+    } else {
+      buyNowDialogOpen.value = true
+    }
+  })
 })
 
 onUnmounted(() => {
@@ -339,4 +348,5 @@ const setL = (l: Language) => {
       </div>
     </div>
   </div>
+  <BuyNowDialog v-if="buyNowDialogOpen" :open="buyNowDialogOpen" />
 </template>

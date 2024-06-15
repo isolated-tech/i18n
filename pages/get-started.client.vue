@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { useLangStore } from '~/store/language'
+import { useLangStore } from '@/store/language'
+import { ArrowLeftIcon } from '@heroicons/vue/20/solid'
 
 const router = useRouter()
 
@@ -29,6 +30,9 @@ const handleNav = () => {
         <div class="px-6 lg:px-0 lg:pt-4">
           <div class="mx-auto max-w-2xl">
             <div class="max-w-lg">
+              <NuxtLink to="/">
+                <ArrowLeftIcon class="h-11 cursor-pointer" />
+              </NuxtLink>
               <h1
                 class="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
               >

@@ -5,8 +5,8 @@ import { storeToRefs } from 'pinia'
 import { Codemirror } from 'vue-codemirror'
 import { json } from '@codemirror/lang-json'
 import { oneDark } from '@codemirror/theme-one-dark'
-import { useCodeStore } from '~/store/code'
-import { useLangStore } from '~/store/language'
+import { useCodeStore } from '@/store/code'
+import { useLangStore } from '@/store/language'
 
 const codeStore = useCodeStore()
 const { setCode } = codeStore

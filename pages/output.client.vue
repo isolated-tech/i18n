@@ -2,7 +2,7 @@
 import { ArrowLeftIcon } from '@heroicons/vue/20/solid'
 import { languages } from '@/lib/constants'
 import { storeToRefs } from 'pinia'
-import { useLangStore } from '~/store/language'
+import { useLangStore } from '@/store/language'
 
 const langStore = useLangStore()
 const { checkedLanguages } = storeToRefs(langStore)
