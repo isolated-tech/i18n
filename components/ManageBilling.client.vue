@@ -7,20 +7,6 @@ const isSubbed = computed(() => data.value?.user.is_subscribed)
 const plan = computed(() => {
   return isSubbed.value ? t('pro') : t('free')
 })
-
-const navigateToStripeDashboard = async () => {
-  loading.value = true
-  const res = await $fetch('/api/stripe/create-portal-session', {
-    method: 'POST',
-  })
-
-  if (res) {
-    loading.value = false
-    await navigateTo(res.url, {
-      external: true,
-    })
-  }
-}
 </script>
 
 <template>
@@ -37,6 +23,6 @@ const navigateToStripeDashboard = async () => {
       class="animate-spin"
     />
 
-    <StripeCheckoutButton v-else />
+    <StripeCheckoutButton v-else-if="!isSubbed" />
   </div>
 </template>
