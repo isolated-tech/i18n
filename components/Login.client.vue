@@ -22,7 +22,6 @@ const handleMagicLink = () => {
   } else {
     signIn('email', {
       email: emailInput.value,
-      callbackUrl: useRoute().fullPath,
       redirect: false,
     })
 

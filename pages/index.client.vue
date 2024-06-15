@@ -3,16 +3,13 @@ import { languages as baseLanguages } from '@/lib/constants'
 import { ChevronRightIcon } from '@heroicons/vue/20/solid'
 import eng_Latn from '../i18n/eng_Latn.json'
 import fra_Latn from '../i18n/fra_Latn.json'
-// import { json } from '@codemirror/lang-json'
-// import { oneDark } from '@codemirror/theme-one-dark'
-// import { Codemirror } from 'vue-codemirror'
+import { useToast } from '@/components/ui/toast'
 
 const showUS = ref(true)
 const { t, setLocale } = useI18n()
-// const { data: authData } = useAuth()
-// const isLoggedIn = computed(() => authData.value?.user)
-// const isLoggedIn = true
-// const extensions = [json(), oneDark]
+const { signIn } = useAuth()
+const { toast } = useToast()
+const emailSignUp = ref<string>()
 
 const renderedJSON = computed(() => {
   return showUS.value ? eng_Latn : fra_Latn
@@ -34,7 +31,7 @@ const isActive = (itemName: string) => {
   return activeMenuItems.value.find(item => item.name === itemName)?.active
 }
 
-function smoothScroll(event) {
+function smoothScroll(event: any) {
   event.preventDefault()
   const target = document.getElementById('key-features')
   if (target) {
@@ -49,6 +46,27 @@ watch(showUS, (newVal, _oldVal) => {
     setLocale('fra_Latn')
   }
 })
+
+const handleEmailSignUp = () => {
+  if (!emailSignUp.value?.length) {
+    toast({
+      title: t('emailRequired'),
+      description: t('checkYourEmailForLoginLink'),
+    })
+  } else {
+    signIn('email', {
+      email: emailSignUp.value,
+      redirect: false,
+    })
+
+    toast({
+      title: t('linkSent'),
+      description: t('checkYourEmailForLoginLink'),
+    })
+
+    emailSignUp.value = ''
+  }
+}
 </script>
 
 <template>
@@ -362,8 +380,9 @@ watch(showUS, (newVal, _oldVal) => {
           </p>
         </div>
         <div class="mx-auto w-full max-w-sm space-y-2">
-          <form class="flex space-x-2">
+          <form class="flex space-x-2" @submit.prevent="handleEmailSignUp">
             <Input
+              v-model="emailSignUp"
               type="email"
               placeholder="Enter your email"
               class="max-w-lg flex-1"
@@ -376,5 +395,6 @@ watch(showUS, (newVal, _oldVal) => {
         </div>
       </div>
     </section>
+    <FooterCentered />
   </div>
 </template>
