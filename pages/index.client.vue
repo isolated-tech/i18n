@@ -44,9 +44,9 @@ function smoothScroll(event) {
 
 watch(showUS, (newVal, _oldVal) => {
   if (newVal) {
-    setLocale('en')
+    setLocale('eng_Latn')
   } else {
-    setLocale('fr')
+    setLocale('fra_Latn')
   }
 })
 </script>

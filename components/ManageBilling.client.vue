@@ -30,26 +30,13 @@ const navigateToStripeDashboard = async () => {
         <span className="text-sm font-medium">{{ t('currentStatus') }}</span>
         <span className="text-sm">{{ plan }}</span>
       </div>
-      <div v-if="isSubbed" className="flex items-center justify-between">
-        <span className="text-sm font-medium">{{ t('paid') }}</span>
-      </div>
     </div>
     <Icon
       v-if="loading"
       name="line-md:loading-twotone-loop"
       class="animate-spin"
     />
-    <div v-else>
-      <Button
-        v-if="isSubbed"
-        size="sm"
-        variant="outline"
-        @click="navigateToStripeDashboard"
-      >
-        {{ t('manageSubscription') }}
-      </Button>
 
-      <StripeCheckoutButton v-else />
-    </div>
+    <StripeCheckoutButton v-else />
   </div>
 </template>
