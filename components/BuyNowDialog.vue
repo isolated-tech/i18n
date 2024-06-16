@@ -26,6 +26,9 @@ const handleUpdateOpen = (value: boolean) => {
     :default-open="defaultOpen"
     @update:open="handleUpdateOpen"
   >
+    <DialogTrigger v-show="!defaultOpen">
+      <Button>Buy now</Button>
+    </DialogTrigger>
     <DialogContent class="sm:max-w-[425px]">
       <DialogClose
         as-child
@@ -38,11 +41,13 @@ const handleUpdateOpen = (value: boolean) => {
     </DialogContent>
   </Dialog>
 
-  <Drawer v-else-if="!isDesktop" :default-open="defaultOpen">
-    <DrawerTrigger as-child>
-      <Avatar class="fixed top-5 right-5 cursor-pointer">
-        <Icon size="20" name="lucide:user-round" />
-      </Avatar>
+  <Drawer
+    v-else-if="!isDesktop"
+    :default-open="defaultOpen"
+    @update:open="handleUpdateOpen"
+  >
+    <DrawerTrigger v-show="!defaultOpen">
+      <Button>Buy now</Button>
     </DrawerTrigger>
     <DrawerContent class="p-4">
       <DrawerClose
