@@ -8,6 +8,7 @@ import { oneDark } from '@codemirror/theme-one-dark'
 import { useCodeStore } from '@/store/code'
 import { useLangStore } from '@/store/language'
 
+definePageMeta({ middleware: 'auth' })
 const codeStore = useCodeStore()
 const { setCode } = codeStore
 // TODO: Ensure code is validate JSON

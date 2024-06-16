@@ -4,6 +4,7 @@ import { languages } from '@/lib/constants'
 import { storeToRefs } from 'pinia'
 import { useLangStore } from '@/store/language'
 
+definePageMeta({ middleware: 'auth' })
 const langStore = useLangStore()
 const { checkedLanguages } = storeToRefs(langStore)
 

@@ -57,7 +57,7 @@ export default NuxtAuthHandler({
     },
   },
   pages: {
-    signIn: '/',
+    signIn: '/login',
   },
   providers: [
     // @ts-expect-error

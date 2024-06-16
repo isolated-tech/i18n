@@ -11,6 +11,8 @@ import { js_beautify } from 'js-beautify'
 import { useLangStore } from '@/store/language'
 import { useToast } from '@/components/ui/toast/use-toast'
 
+definePageMeta({ middleware: 'auth' })
+
 const { toast } = useToast()
 const router = useRouter()
 
@@ -37,9 +39,9 @@ const worker = ref<Worker>()
 const ready = ref()
 const isTranslating = ref(false)
 const disabled = ref(false)
-const buyNowDialogOpen = ref(false)
-const { data } = useAuth()
-const isSubbed = computed(() => data.value?.user.is_subscribed)
+// const buyNowDialogOpen = ref(false)
+// const { data } = useAuth()
+// const isSubbed = computed(() => data.value?.user.is_subscribed)
 
 const progressItems = ref([])
 const translatedLanguages = ref<Language[]>([])
@@ -171,11 +173,11 @@ onMounted(() => {
   worker.value.addEventListener('message', onMessageReceived)
 
   nextTick(() => {
-    if (isSubbed.value) {
-      translate()
-    } else {
-      buyNowDialogOpen.value = true
-    }
+    // if (isSubbed.value) {
+    translate()
+    // } else {
+    //   buyNowDialogOpen.value = true
+    // }
   })
 })
 
@@ -348,5 +350,5 @@ const setL = (l: Language) => {
       </div>
     </div>
   </div>
-  <BuyNowDialog v-if="buyNowDialogOpen" :open="buyNowDialogOpen" />
+  <!-- <BuyNowDialog v-if="buyNowDialogOpen" :open="buyNowDialogOpen" /> -->
 </template>

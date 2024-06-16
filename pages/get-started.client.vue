@@ -2,8 +2,8 @@
 import { useLangStore } from '@/store/language'
 import { ArrowLeftIcon } from '@heroicons/vue/20/solid'
 
+definePageMeta({ middleware: 'auth' })
 const router = useRouter()
-
 const langStore = useLangStore()
 const { setLanguage } = langStore
 const { inputLanguage, checkedLanguages } = storeToRefs(langStore)
