@@ -359,5 +359,5 @@ const setL = (l: Language) => {
       </div>
     </div>
   </div>
-  <BuyNowDialog v-if="buyNowDialogOpen" :open="buyNowDialogOpen" />
+  <BuyNowDialog v-if="buyNowDialogOpen" :default-open="true" />
 </template>

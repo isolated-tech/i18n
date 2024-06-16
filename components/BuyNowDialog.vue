@@ -1,16 +1,31 @@
 <script setup lang="ts">
 import { useMediaQuery } from '@vueuse/core'
 
+interface Props {
+  defaultOpen?: boolean
+}
+
+defineProps<Props>()
 const emit = defineEmits(['close'])
 
-const isOpen = ref(false)
 const { data } = useAuth()
 const isLoggedIn = computed(() => data.value?.user)
+const isSubbed = computed(() => data.value?.user.is_subscribed)
 const isDesktop = useMediaQuery('(min-width: 768px)')
+
+const handleUpdateOpen = (value: boolean) => {
+  if (value === false && !isSubbed.value) {
+    navigateTo('/')
+  }
+}
 </script>
 
 <template>
-  <Dialog v-if="isDesktop" v-model:open="isOpen">
+  <Dialog
+    v-if="isDesktop"
+    :default-open="defaultOpen"
+    @update:open="handleUpdateOpen"
+  >
     <DialogContent class="sm:max-w-[425px]">
       <DialogClose
         as-child
@@ -23,7 +38,7 @@ const isDesktop = useMediaQuery('(min-width: 768px)')
     </DialogContent>
   </Dialog>
 
-  <Drawer v-else-if="!isDesktop" v-model:open="isOpen">
+  <Drawer v-else-if="!isDesktop" :default-open="defaultOpen">
     <DrawerTrigger as-child>
       <Avatar class="fixed top-5 right-5 cursor-pointer">
         <Icon size="20" name="lucide:user-round" />

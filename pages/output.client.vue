@@ -111,4 +111,6 @@ onMounted(() => {
       </div>
     </div>
   </div>
+
+  <BuyNowDialog v-if="buyNowDialogOpen" :default-open="true" />
 </template>
