@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { useMediaQuery } from '@vueuse/core'
 
-const isOpen = ref(false)
 const { data } = useAuth()
 const isLoggedIn = computed(() => data.value?.user)
 const isDesktop = useMediaQuery('(min-width: 768px)')
 </script>
 
 <template>
-  <Dialog v-if="isDesktop" v-model:open="isOpen">
+  <Dialog v-if="isDesktop">
     <DialogTrigger as-child>
       <Avatar class="fixed top-5 right-5 cursor-pointer">
         <Icon size="20" name="lucide:user-round" />
@@ -20,7 +19,7 @@ const isDesktop = useMediaQuery('(min-width: 768px)')
     </DialogContent>
   </Dialog>
 
-  <Drawer v-else-if="!isDesktop" v-model:open="isOpen">
+  <Drawer v-else-if="!isDesktop">
     <DrawerTrigger as-child>
       <Avatar class="fixed top-5 right-5 cursor-pointer">
         <Icon size="20" name="lucide:user-round" />

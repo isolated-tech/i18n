@@ -8,13 +8,15 @@ import { oneDark } from '@codemirror/theme-one-dark'
 import { useCodeStore } from '@/store/code'
 import { useLangStore } from '@/store/language'
 
-definePageMeta({ middleware: 'auth' })
 const codeStore = useCodeStore()
 const { setCode } = codeStore
 // TODO: Ensure code is validate JSON
 // TODO: Error/Toast if not
 // TODO: Error out if JSON is nested.
 const { code } = storeToRefs(codeStore)
+const { data } = useAuth()
+const isSubbed = computed(() => data.value?.user.is_subscribed)
+const buyNowDialogOpen = ref(false)
 
 const langStore = useLangStore()
 const { inputLanguage } = storeToRefs(langStore)
@@ -35,6 +37,9 @@ const handleNav = () => {
 onMounted(() => {
   if (!inputLanguage.value) {
     navigateTo('/get-started')
+  }
+  if (!isSubbed.value) {
+    buyNowDialogOpen.value = true
   }
 })
 </script>
@@ -141,4 +146,5 @@ onMounted(() => {
       />
     </div>
   </div>
+  <BuyNowDialog v-if="buyNowDialogOpen" :open="buyNowDialogOpen" />
 </template>

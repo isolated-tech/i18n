@@ -2,11 +2,14 @@
 import { useLangStore } from '@/store/language'
 import { ArrowLeftIcon } from '@heroicons/vue/20/solid'
 
-definePageMeta({ middleware: 'auth' })
 const router = useRouter()
 const langStore = useLangStore()
 const { setLanguage } = langStore
 const { inputLanguage, checkedLanguages } = storeToRefs(langStore)
+
+const { data } = useAuth()
+const isSubbed = computed(() => data.value?.user.is_subscribed)
+const buyNowDialogOpen = ref(false)
 
 const handleNav = () => {
   setLanguage(inputLanguage, checkedLanguages.value[0])
@@ -17,6 +20,12 @@ const handleNav = () => {
     })
   }
 }
+
+onMounted(() => {
+  if (!isSubbed.value) {
+    buyNowDialogOpen.value = true
+  }
+})
 </script>
 
 <template>
@@ -90,4 +99,5 @@ const handleNav = () => {
       />
     </div>
   </div>
+  <BuyNowDialog v-if="buyNowDialogOpen" :open="buyNowDialogOpen" />
 </template>

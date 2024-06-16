@@ -3,10 +3,17 @@ import { ArrowLeftIcon } from '@heroicons/vue/20/solid'
 import { languages } from '@/lib/constants'
 import { storeToRefs } from 'pinia'
 import { useLangStore } from '@/store/language'
+import { useCodeStore } from '@/store/code'
 
-definePageMeta({ middleware: 'auth' })
 const langStore = useLangStore()
-const { checkedLanguages } = storeToRefs(langStore)
+const { inputLanguage, checkedLanguages } = storeToRefs(langStore)
+
+const codeStore = useCodeStore()
+const { code } = storeToRefs(codeStore)
+
+const { data } = useAuth()
+const isSubbed = computed(() => data.value?.user.is_subscribed)
+const buyNowDialogOpen = ref(false)
 
 const router = useRouter()
 
@@ -15,6 +22,18 @@ const handleNav = () => {
     path: '/translate',
   })
 }
+
+onMounted(() => {
+  if (!inputLanguage.value && !code.value) {
+    navigateTo('/get-started')
+  } else if (inputLanguage.value && !code.value) {
+    navigateTo('/input')
+  }
+
+  if (!isSubbed.value) {
+    buyNowDialogOpen.value = true
+  }
+})
 </script>
 
 <template>

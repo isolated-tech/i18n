@@ -21,7 +21,8 @@ const { setCodeOutput, getCodeOutput } = codeStore
 const { code, codeOutput } = storeToRefs(codeStore)
 
 const langStore = useLangStore()
-const { checkedLanguages, inputLanguage } = storeToRefs(langStore)
+const { checkedLanguages, inputLanguage, outputLanguages } =
+  storeToRefs(langStore)
 
 const formattedCodeOutput = computed(() => {
   if (codeOutput.value) {
@@ -39,9 +40,9 @@ const worker = ref<Worker>()
 const ready = ref()
 const isTranslating = ref(false)
 const disabled = ref(false)
-// const buyNowDialogOpen = ref(false)
-// const { data } = useAuth()
-// const isSubbed = computed(() => data.value?.user.is_subscribed)
+const { data } = useAuth()
+const isSubbed = computed(() => data.value?.user.is_subscribed)
+const buyNowDialogOpen = ref(false)
 
 const progressItems = ref([])
 const translatedLanguages = ref<Language[]>([])
@@ -161,8 +162,20 @@ const translate = () => {
 }
 
 onMounted(() => {
-  if (!inputLanguage.value || !checkedLanguages.value) {
-    router.push('/get-started')
+  if (!inputLanguage.value && !code.value) {
+    navigateTo('/get-started')
+  } else if (inputLanguage.value && !code.value) {
+    navigateTo('/input')
+  } else if (
+    inputLanguage.value &&
+    code.value &&
+    !outputLanguages.value.length
+  ) {
+    navigateTo('/output')
+  }
+
+  if (!isSubbed.value) {
+    buyNowDialogOpen.value = true
   }
 
   worker.value = new MyWorker()
@@ -173,11 +186,7 @@ onMounted(() => {
   worker.value.addEventListener('message', onMessageReceived)
 
   nextTick(() => {
-    // if (isSubbed.value) {
     translate()
-    // } else {
-    //   buyNowDialogOpen.value = true
-    // }
   })
 })
 
@@ -350,5 +359,5 @@ const setL = (l: Language) => {
       </div>
     </div>
   </div>
-  <!-- <BuyNowDialog v-if="buyNowDialogOpen" :open="buyNowDialogOpen" /> -->
+  <BuyNowDialog v-if="buyNowDialogOpen" :open="buyNowDialogOpen" />
 </template>
