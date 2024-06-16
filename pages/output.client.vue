@@ -6,6 +6,7 @@ import { useLangStore } from '@/store/language'
 import { useCodeStore } from '@/store/code'
 
 const langStore = useLangStore()
+const { setLanguages } = langStore
 const { inputLanguage, checkedLanguages } = storeToRefs(langStore)
 
 const codeStore = useCodeStore()
@@ -18,6 +19,8 @@ const buyNowDialogOpen = ref(false)
 const router = useRouter()
 
 const handleNav = () => {
+  setLanguages(checkedLanguages.value)
+
   router.push({
     path: '/translate',
   })
