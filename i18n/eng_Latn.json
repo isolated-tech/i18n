@@ -29,5 +29,8 @@
   "currentStatus": "Current status:",
   "free": "Free",
   "pro": "Pro",
-  "language": "Language"
+  "language": "Language",
+  "premiumRequired": "Premium required",
+  "limitReached": "Limit reached",
+  "limitedToThree": "Free users are limited to translating three languages at a time."
 }

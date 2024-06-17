@@ -10,7 +10,6 @@ import { oneDark } from '@codemirror/theme-one-dark'
 import { js_beautify } from 'js-beautify'
 import { useLangStore } from '@/store/language'
 import { useToast } from '@/components/ui/toast/use-toast'
-import nestedMock from '../i18n/en_US_nested.json'
 
 const { toast } = useToast()
 const router = useRouter()
@@ -39,9 +38,6 @@ const worker = ref<Worker>()
 const ready = ref()
 const isTranslating = ref(false)
 const disabled = ref(false)
-const { data } = useAuth()
-const isSubbed = computed(() => data.value?.user.is_subscribed)
-const buyNowDialogOpen = ref(false)
 
 const progressItems = ref([])
 const translatedLanguages = ref<Language[]>([])
@@ -159,28 +155,23 @@ const onMessageReceived = e => {
 
 const translate = () => {
   worker.value?.postMessage({
-    // text: code.value,
-    text: JSON.stringify(nestedMock),
+    text: code.value,
     src_lang: toRaw(inputLanguage.value),
     targetLanguages: checkedLanguages.value.map(toRaw),
   })
 }
 
 onMounted(() => {
-  // if (!inputLanguage.value && !code.value) {
-  //   navigateTo('/get-started')
-  // } else if (inputLanguage.value && !code.value) {
-  //   navigateTo('/input')
-  // } else if (
-  //   inputLanguage.value &&
-  //   code.value &&
-  //   !outputLanguages.value.length
-  // ) {
-  //   navigateTo('/output')
-  // }
-
-  if (!isSubbed.value) {
-    // buyNowDialogOpen.value = true
+  if (!inputLanguage.value && !code.value) {
+    navigateTo('/get-started')
+  } else if (inputLanguage.value && !code.value) {
+    navigateTo('/input')
+  } else if (
+    inputLanguage.value &&
+    code.value &&
+    !outputLanguages.value.length
+  ) {
+    navigateTo('/output')
   }
 
   worker.value = new MyWorker()
@@ -364,5 +355,4 @@ const setL = (l: Language) => {
       </div>
     </div>
   </div>
-  <BuyNowDialog v-if="buyNowDialogOpen" :default-open="true" />
 </template>

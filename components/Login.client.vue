@@ -1,13 +1,6 @@
 <script setup lang="ts">
 import { useToast } from '@/components/ui/toast/use-toast'
 
-definePageMeta({
-  auth: {
-    unauthenticatedOnly: true,
-    navigateAuthenticatedTo: '/',
-  },
-})
-
 const { t } = useI18n()
 const { signIn } = useAuth()
 const { toast } = useToast()

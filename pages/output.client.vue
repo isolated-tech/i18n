@@ -12,10 +12,6 @@ const { inputLanguage, checkedLanguages } = storeToRefs(langStore)
 const codeStore = useCodeStore()
 const { code } = storeToRefs(codeStore)
 
-const { data } = useAuth()
-const isSubbed = computed(() => data.value?.user.is_subscribed)
-const buyNowDialogOpen = ref(false)
-
 const router = useRouter()
 
 const handleNav = () => {
@@ -31,10 +27,6 @@ onMounted(() => {
     navigateTo('/get-started')
   } else if (inputLanguage.value && !code.value) {
     navigateTo('/input')
-  }
-
-  if (!isSubbed.value) {
-    buyNowDialogOpen.value = true
   }
 })
 </script>
@@ -114,6 +106,4 @@ onMounted(() => {
       </div>
     </div>
   </div>
-
-  <BuyNowDialog v-if="buyNowDialogOpen" :default-open="true" />
 </template>
