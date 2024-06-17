@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
-import type { Language } from '~/lib/constants'
+import type { Language } from '@/lib/constants'
 import { useLangStore } from '@/store/language'
 
 interface Props {
