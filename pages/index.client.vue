@@ -283,7 +283,7 @@ const handleEmailSignUp = () => {
                     {{ $t('landing.fileFormatDescription') }}
                   </p>
                   <p class="text-gray-500 dark:text-gray-400 text-xs">
-                    {{ $t('landing.fileFormatNote') }}
+                    * {{ $t('landing.fileFormatNote') }}
                   </p>
                 </div>
               </li>
