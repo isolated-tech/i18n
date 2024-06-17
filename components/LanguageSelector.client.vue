@@ -2,10 +2,14 @@
 import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 import type { Language } from '@/lib/constants'
 import { useLangStore } from '@/store/language'
+import { useToast } from '@/components/ui/toast/use-toast'
 
 interface Props {
   single?: boolean
 }
+
+const { toast } = useToast()
+const { t } = useI18n()
 
 const langStore = useLangStore()
 const { resetLanguages, toggleAllLanguages } = langStore
@@ -15,6 +19,12 @@ const { single } = defineProps<Props>()
 const emit = defineEmits(['languagesUpdated'])
 const searchTerm = ref()
 
+const { data } = useAuth()
+const isSubbed = computed(() => data.value?.user.is_subscribed)
+const freeTierLimit = computed(
+  () => !isSubbed.value && checkedLanguages.value.length >= 3
+)
+
 const handleToggle = (language: Language) => {
   if (language) {
     if (language.code === 'all' && !single) {
@@ -22,10 +32,21 @@ const handleToggle = (language: Language) => {
     } else if (single) {
       toggleAllLanguages(false)
       language.checked = !language.checked
+    } else if (!language.checked && freeTierLimit.value) {
+      freeTierToast()
+      language.checked = false
     } else {
+      console.log('here')
       language.checked = !language.checked
     }
   }
+}
+
+const freeTierToast = () => {
+  toast({
+    title: t('limitReached'),
+    description: t('limitedToThree'),
+  })
 }
 
 const renderedLanguages = computed(() => {
@@ -42,6 +63,12 @@ const renderedLanguages = computed(() => {
 
 onMounted(() => {
   resetLanguages()
+})
+
+watch(freeTierLimit, (newVal, oldVal) => {
+  if (newVal === true) {
+    freeTierToast()
+  }
 })
 </script>
 
@@ -103,8 +130,12 @@ onMounted(() => {
             :id="language.code"
             :name="language.code"
             :checked="language.checked"
+            :disabled="!language.checked && freeTierLimit"
             type="checkbox"
             class="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
+            :class="{
+              'cursor-pointer': language.checked && freeTierLimit,
+            }"
             @change="() => handleToggle(language)"
           />
         </div>
