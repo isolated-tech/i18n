@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     'shadcn-nuxt',
     '@pinia/nuxt',
     'nuxt-icon',
+    'nuxt-gtag',
   ],
   i18n: {
     strategy: 'no_prefix',
@@ -52,6 +53,17 @@ export default defineNuxtConfig({
     EMAIL_FROM: process.env.EMAIL_FROM,
     public: {
       BASE_URL: process.env.BASE_URL,
+    },
+  },
+  routeRules: {
+    '/blog': { prerender: true },
+  },
+  gtag: {
+    id: 'G-PCC7Y485VW',
+  },
+  vite: {
+    server: {
+      hmr: false,
     },
   },
 })
