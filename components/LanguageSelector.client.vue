@@ -22,12 +22,14 @@ const searchTerm = ref()
 const { data } = useAuth()
 const isSubbed = computed(() => data.value?.user.is_subscribed)
 const freeTierLimit = computed(
-  () => !isSubbed.value && checkedLanguages.value.length >= 3
+  () => !isSubbed.value && checkedLanguages.value.length >= 2
 )
 
 const handleToggle = (language: Language) => {
   if (language) {
-    if (language.code === 'all' && !single) {
+    if (language.code === 'all' && !isSubbed.value) {
+      allDisabledToast()
+    } else if (language.code === 'all' && !single) {
       toggleAllLanguages(!language.checked)
     } else if (single) {
       toggleAllLanguages(false)
@@ -36,7 +38,6 @@ const handleToggle = (language: Language) => {
       freeTierToast()
       language.checked = false
     } else {
-      console.log('here')
       language.checked = !language.checked
     }
   }
@@ -46,6 +47,13 @@ const freeTierToast = () => {
   toast({
     title: t('limitReached'),
     description: t('limitedToThree'),
+  })
+}
+
+const allDisabledToast = () => {
+  toast({
+    title: 'Disabled',
+    description: 'Translating all languages at once requires a paid plan.',
   })
 }
 
