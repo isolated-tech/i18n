@@ -86,12 +86,12 @@ const handleEmailSignUp = () => {
                 <span
                   class="rounded-full bg-gray-600/10 px-3 py-1 text-sm font-semibold leading-6 text-gray-600 ring-1 ring-inset ring-gray-600/10"
                 >
-                  {{ t('whatsNew') }}
+                  {{ $t('landing.whatsNew') }}
                 </span>
                 <span
                   class="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600"
                 >
-                  <span>{{ t('justShipped') }} v1.0.0</span>
+                  <span>{{ $t('landing.justShipped') }} v1.0.0</span>
                   <ChevronRightIcon
                     class="h-5 w-5 text-gray-400"
                     aria-hidden="true"
@@ -102,20 +102,20 @@ const handleEmailSignUp = () => {
             <h1
               class="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
             >
-              {{ t('hero') }}
+              {{ $t('landing.hero') }}
             </h1>
             <p class="mt-5 text-lg leading-8 text-gray-600">
-              {{ t('description') }}
+              {{ $t('landing.description') }}
             </p>
 
             <div class="mt-5 flex items-center gap-x-2.5">
               <NuxtLink to="get-started">
                 <Button>
-                  {{ t('cta') }}
+                  {{ $t('landing.cta') }}
                 </Button>
               </NuxtLink>
               <a href="#key-features" @click="event => smoothScroll(event)">
-                <Button variant="outline">{{ t('learnMore') }}</Button>
+                <Button variant="outline">{{ $t('landing.learnMore') }}</Button>
               </a>
             </div>
           </div>
@@ -167,21 +167,6 @@ const handleEmailSignUp = () => {
                   </div>
                   <div class="px-6 pb-14 pt-6 text-white">
                     <JsonViewer :json-data="renderedJSON" />
-                    <!-- <Codemirror
-                      placeholder="Output"
-                      :style="{
-                        height: '100vh',
-                        width: '100vw',
-                        borderBottomLeftRadius: '20px',
-                        borderBottomRightRadius: '20px',
-                        overflow: 'scroll',
-                      }"
-                      :disabled="true"
-                      :autofocus="true"
-                      :indent-with-tab="true"
-                      :tab-size="2"
-                      :extensions="extensions"
-                    /> -->
                   </div>
                 </div>
               </div>
@@ -211,17 +196,15 @@ const handleEmailSignUp = () => {
             <div
               class="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm dark:bg-gray-800"
             >
-              Key Features
+              {{ $t('landing.keyFeatures') }}
             </div>
             <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl">
-              Powerful Translation Capabilities
+              {{ $t('landing.powerfulTranslation') }}
             </h2>
             <p
               class="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
             >
-              Our AI-powered translation tool supports multiple languages,
-              provides local-first translations, never touching a server, and
-              integrates seamlessly with JSON.
+              {{ $t('landing.powerfulTranslationDescription') }}
             </p>
           </div>
         </div>
@@ -259,10 +242,11 @@ const handleEmailSignUp = () => {
                   }"
                   @click="setActiveMenuItem('languages')"
                 >
-                  <h3 class="text-xl font-bold">Multiple Languages</h3>
+                  <h3 class="text-xl font-bold">
+                    {{ $t('landing.multipleLanguages') }}
+                  </h3>
                   <p class="text-gray-500 dark:text-gray-400">
-                    Translate your content into 200+ languages with our
-                    comprehensive language support.
+                    {{ $t('landing.multipleLanguagesDescription') }}
                   </p>
                 </div>
               </li>
@@ -274,11 +258,11 @@ const handleEmailSignUp = () => {
                   }"
                   @click="setActiveMenuItem('huggingface')"
                 >
-                  <h3 class="text-xl font-bold">Local-first Translation</h3>
+                  <h3 class="text-xl font-bold">
+                    {{ $t('landing.localFirstTranslation') }}
+                  </h3>
                   <p class="text-gray-500 dark:text-gray-400">
-                    Keep your translation files safe and fully in your control.
-                    Our service only uses local-first models and will never
-                    communicate with a server.
+                    {{ $t('landing.localFirstTranslationDescription') }}
                   </p>
                 </div>
               </li>
@@ -290,13 +274,14 @@ const handleEmailSignUp = () => {
                   }"
                   @click="setActiveMenuItem('json')"
                 >
-                  <h3 class="text-xl font-bold">File Format Support</h3>
+                  <h3 class="text-xl font-bold">
+                    {{ $t('landing.fileFormatSupport') }}
+                  </h3>
                   <p class="text-gray-500 dark:text-gray-400">
-                    Translate content into the popular file format JSON.
+                    {{ $t('landing.fileFormatDescription') }}
                   </p>
                   <p class="text-gray-500 dark:text-gray-400 text-xs">
-                    * If there is a file format you prefer, let us know and we
-                    can discuss building it.
+                    {{ $t('landing.fileFormatNote') }}
                   </p>
                 </div>
               </li>
@@ -315,16 +300,15 @@ const handleEmailSignUp = () => {
             <div
               class="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm dark:bg-gray-800"
             >
-              Pricing
+              {{ $t('landing.pricing') }}
             </div>
             <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl">
-              Affordable Pricing
+              {{ $t('landing.affordablePricing') }}
             </h2>
             <p
               class="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
             >
-              Our AI-powered translation platform is available for a one-time
-              purchase of $20.
+              {{ $t('landing.affordablePricingDescription') }}
             </p>
           </div>
         </div>
@@ -334,30 +318,35 @@ const handleEmailSignUp = () => {
           <div
             class="flex flex-col items-center justify-center space-y-4 rounded-lg border p-6 shadow-sm"
           >
-            <h3 class="text-2xl font-bold">Translate AI</h3>
+            <h3 class="text-2xl font-bold">{{ $t('landing.translateAi') }}</h3>
             <p class="text-4xl font-bold">$20</p>
-            <p class="text-gray-500 dark:text-gray-400">One-time purchase</p>
+            <p class="text-gray-500 dark:text-gray-400">
+              {{ $t('landing.oneTimePurchase') }}
+            </p>
             <ul class="grid gap-2 text-left">
               <li class="flex items-center gap-2">
                 <Icon
                   name="material-symbols:check"
                   class="h-5 w-5 text-gray-500 dark:text-gray-400"
                 />
-                <span>Unlimited translations</span>
+                <span>{{ $t('landing.unlimitedTranslations') }}</span>
               </li>
               <li class="flex items-center gap-2">
                 <Icon
                   name="material-symbols:check"
                   class="h-5 w-5 text-gray-500 dark:text-gray-400"
                 />
-                <span>{{ baseLanguages.length }} supported languages</span>
+                <span
+                  >{{ baseLanguages.length }}
+                  {{ $t('landing.supportedLanguages') }}</span
+                >
               </li>
               <li class="flex items-center gap-2">
                 <Icon
                   name="material-symbols:check"
                   class="h-5 w-5 text-gray-500 dark:text-gray-400"
                 />
-                <span>Customer support</span>
+                <span>{{ $t('landing.customerSupport') }}</span>
               </li>
             </ul>
             <BuyNowDialog v-if="!isLoggedIn" />
@@ -373,13 +362,12 @@ const handleEmailSignUp = () => {
       >
         <div class="space-y-2">
           <h2 class="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-            Get Started with Our Translation Tool
+            {{ $t('landing.getStartedWithOurTranslationTool') }}
           </h2>
           <p
             class="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
           >
-            Sign up for a free trial or request a demo to see how our
-            translation tool can help your business.
+            {{ $t('landing.signUpForFreeTrial') }}
           </p>
         </div>
         <div class="mx-auto w-full max-w-sm space-y-2">
@@ -390,10 +378,10 @@ const handleEmailSignUp = () => {
               placeholder="Enter your email"
               class="max-w-lg flex-1"
             />
-            <Button type="submit">Sign Up</Button>
+            <Button type="submit">{{ $t('landing.signUp') }}</Button>
           </form>
           <p class="text-xs text-gray-500 dark:text-gray-400">
-            Sign up to get started or request a demo.
+            {{ $t('landing.signUpToGetStarted') }}
           </p>
         </div>
       </div>
