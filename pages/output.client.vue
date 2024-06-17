@@ -49,20 +49,10 @@ onMounted(() => {
               <h1
                 class="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
               >
-                Select output languages
+                {{ $t('output.header') }}
               </h1>
               <p class="mt-6 text-lg leading-8 text-gray-600">
-                Now select that language(s) to translate to. Our
-                <a
-                  class="underline"
-                  href="https://huggingface.co/facebook/nllb-200-distilled-600M"
-                  target="_blank"
-                >
-                  model
-                </a>
-                supports {{ languages.length }} languages. Please keep in mind
-                that the time of task completion will vary depending on the
-                number of languages you wish to translate to.
+                {{ $t('output.description') }}
               </p>
             </div>
 
@@ -71,7 +61,7 @@ onMounted(() => {
               :disabled="checkedLanguages.length <= 0"
               @click="handleNav"
             >
-              Submit
+              {{ $t('submit') }}
             </Button>
           </div>
         </div>

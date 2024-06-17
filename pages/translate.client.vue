@@ -215,23 +215,19 @@ const setL = (l: Language) => {
               <h1
                 class="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
               >
-                Translating...
+                {{ $t('translate.header') }}
               </h1>
               <p class="mt-6 text-lg leading-8 text-gray-600">
-                The ability to download each language will appear as they finish
-                being translated. You can download each translation as it
-                appears, or wait until they are all finished and download them
-                in bulk.
+                {{ $t('translate.description') }}
               </p>
               <p class="mt-8 text-xs text-gray-600">
-                * Do not refresh your browser. Our translations are local and
-                only stored in the browser state. This still does not persist.
+                * {{ $t('translate.note') }}
               </p>
             </div>
 
             <div class="mt-10">
               <label v-if="ready === false">
-                Loading models... (only run once)
+                {{ $t('loadingModels') }}
               </label>
 
               <div v-for="data in progressItems" :key="data.file">

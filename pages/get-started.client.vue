@@ -35,12 +35,10 @@ const handleNav = () => {
               <h1
                 class="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
               >
-                Select your input language
+                {{ $t('getStarted.header') }}
               </h1>
               <p class="mt-6 text-lg leading-8 text-gray-600">
-                Get started by selecting the language you plan on translating
-                from. This is typically your base i18n file that you work with
-                within your native tongue.
+                {{ $t('getStarted.description') }}
               </p>
             </div>
             <div class="flex flex-col mt-20">
@@ -49,7 +47,7 @@ const handleNav = () => {
                   :disabled="checkedLanguages.length <= 0"
                   @click="handleNav"
                 >
-                  Submit
+                  {{ $t('submit') }}
                 </Button>
               </div>
             </div>

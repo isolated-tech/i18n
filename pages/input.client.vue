@@ -55,14 +55,10 @@ onMounted(() => {
               <h1
                 class="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
               >
-                Import your JSON
+                {{ $t('input.header') }}
               </h1>
               <p class="mt-6 text-lg leading-8 text-gray-600">
-                To import your JSON file, you have two options: either paste the
-                file contents into the editor by copying from a text editor and
-                pasting here, or use the file input to select your JSON file
-                directly from your computer, which will automatically load the
-                contents into the editor for you.
+                {{ $t('input.description') }}
               </p>
             </div>
 
@@ -74,7 +70,7 @@ onMounted(() => {
                 />
 
                 <Button :disabled="!code?.length" @click="handleNav">
-                  Submit
+                  {{ $t('submit') }}
                 </Button>
               </div>
             </div>

@@ -29,6 +29,24 @@
     "signUp": "Sign Up",
     "signUpToGetStarted": "Sign up to get started or request a demo."
   },
+  "getStarted": {
+    "header": "Select your input language",
+    "description": "Get started by selecting the language you plan on translating from. This is typically your base i18n file that you work with within your native tongue."
+  },
+  "input": {
+    "header": "Import your JSON",
+    "description": "To import your JSON file, you have two options: either paste the file contents into the editor by copying from a text editor and pasting here, or use the file input to select your JSON file directly from your computer, which will automatically load the contents into the editor for you."
+  },
+  "output": {
+    "header": "Select output languages",
+    "description": "Now select that language(s) to translate to. Our model supports 230 languages. Please keep in mind that the time of task completion will vary depending on the number of languages you wish to translate to."
+  },
+  "translate": {
+    "header": "Translating...",
+    "description": "The ability to download each language will appear as they finish being translated. You can download each translation as it appears, or wait until they are all finished and download them in bulk.",
+    "note": "Do not refresh your browser. Our translations are local and only stored in the browser state. This still does not persist.",
+    "loadingModels": "Loading models... (only run once)"
+  },
   "login": "Login",
   "signIn": "Sign in",
   "signOut": "Sign out",
@@ -39,7 +57,6 @@
   "forgotPassword": "Forgot password",
   "orContinueWith": "Or continue with",
   "app": "App",
-  "translate": "Translate",
   "pasteYourJsonHere": "Paste your JSON here",
   "sendMagicLink": "Send magic link",
   "linkSent": "Link sent",
@@ -56,5 +73,6 @@
   "language": "Language",
   "premiumRequired": "Premium required",
   "limitReached": "Limit reached",
-  "limitedToThree": "Free users are limited to translating two languages at a time."
+  "limitedToThree": "Free users are limited to translating two languages at a time.",
+  "submit": "Submit"
 }
