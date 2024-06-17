@@ -10,8 +10,7 @@ import { oneDark } from '@codemirror/theme-one-dark'
 import { js_beautify } from 'js-beautify'
 import { useLangStore } from '@/store/language'
 import { useToast } from '@/components/ui/toast/use-toast'
-
-definePageMeta({ middleware: 'auth' })
+import nestedMock from '../i18n/en_US_nested.json'
 
 const { toast } = useToast()
 const router = useRouter()
@@ -116,7 +115,8 @@ const onMessageReceived = e => {
     case 'update':
       // Generation update: update the output text.
       const language = e.data.output.language as Language
-      const outputText = e.data.output.data
+      // const outputText = e.data.output.data
+      // console.log(e.data.output.data)
 
       if (!translatedLanguages.value.find(l => l.code === language.code)) {
         translatedLanguages.value.push(language)
@@ -134,16 +134,20 @@ const onMessageReceived = e => {
       //   }
       // })
 
-      setCodeOutput(language, outputText)
+      // setCodeOutput(language, outputText)
       isTranslating.value = true
       break
 
     case 'complete':
       disabled.value = false
+      const l = e.data.output.language as Language
+      const outputText = e.data.output.data
+
+      setCodeOutput(l, outputText)
       break
 
     case 'log':
-      console.log('log: ', e)
+      console.log('log: ', toRaw(e.data.output))
 
     case 'error':
       toast({
@@ -155,27 +159,28 @@ const onMessageReceived = e => {
 
 const translate = () => {
   worker.value?.postMessage({
-    text: code.value,
+    // text: code.value,
+    text: JSON.stringify(nestedMock),
     src_lang: toRaw(inputLanguage.value),
     targetLanguages: checkedLanguages.value.map(toRaw),
   })
 }
 
 onMounted(() => {
-  if (!inputLanguage.value && !code.value) {
-    navigateTo('/get-started')
-  } else if (inputLanguage.value && !code.value) {
-    navigateTo('/input')
-  } else if (
-    inputLanguage.value &&
-    code.value &&
-    !outputLanguages.value.length
-  ) {
-    navigateTo('/output')
-  }
+  // if (!inputLanguage.value && !code.value) {
+  //   navigateTo('/get-started')
+  // } else if (inputLanguage.value && !code.value) {
+  //   navigateTo('/input')
+  // } else if (
+  //   inputLanguage.value &&
+  //   code.value &&
+  //   !outputLanguages.value.length
+  // ) {
+  //   navigateTo('/output')
+  // }
 
   if (!isSubbed.value) {
-    buyNowDialogOpen.value = true
+    // buyNowDialogOpen.value = true
   }
 
   worker.value = new MyWorker()

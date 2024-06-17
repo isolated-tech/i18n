@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { Language } from '~/lib/constants'
+import type { Language } from '@/lib/constants'
 
 interface CodeOutput {
   [key: string]: string

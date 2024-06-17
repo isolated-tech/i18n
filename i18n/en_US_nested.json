@@ -1,11 +1,11 @@
 {
   "whatsNew": "What's new",
-  "nested": {
-    "this": "this is nested"
+  "nestedOne": {
+    "keyOne": "this is the first nested object"
   },
-  "double": {
-    "nested": {
-      "this": "this is also nested"
+  "doubleNested": {
+    "nestedTwo": {
+      "keyDeep": "This is a deeply nested object"
     }
   }
 }
