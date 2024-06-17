@@ -107,7 +107,7 @@ watch(freeTierLimit, (newVal, oldVal) => {
             type="search"
             id="default-search"
             class="block w-full ps-10 text-sm font-normal text-black border border-gray-300 rounded-lg bg-white focus:ring-black focus:border-black"
-            :placeholder="$t('searchLanguages')"
+            :placeholder="$t('languageSelector.searchLanguages')"
             autocomplete="off"
             required
           />

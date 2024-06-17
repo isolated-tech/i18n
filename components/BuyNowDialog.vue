@@ -27,7 +27,7 @@ const handleUpdateOpen = (value: boolean) => {
     @update:open="handleUpdateOpen"
   >
     <DialogTrigger v-show="!defaultOpen">
-      <Button>{{ $t('buyNowDialog') }}</Button>
+      <Button>{{ $t('buyNowDialog.buyNow') }}</Button>
     </DialogTrigger>
     <DialogContent class="sm:max-w-[425px]">
       <DialogClose
@@ -47,7 +47,7 @@ const handleUpdateOpen = (value: boolean) => {
     @update:open="handleUpdateOpen"
   >
     <DrawerTrigger v-show="!defaultOpen">
-      <Button>{{ $t('buyNowDialog') }}</Button>
+      <Button>{{ $t('buyNowDialog.buyNow') }}</Button>
     </DrawerTrigger>
     <DrawerContent class="p-4">
       <DrawerClose

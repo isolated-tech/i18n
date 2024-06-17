@@ -31,16 +31,19 @@
   },
   "getStarted": {
     "header": "Select your input language",
-    "description": "Get started by selecting the language you plan on translating from. This is typically your base i18n file that you work with within your native tongue."
+    "description": "Get started by selecting the language you plan on translating from. This is typically your base i18n file that you work with within your native tongue.",
+    "submit": "Submit"
   },
   "input": {
     "header": "Import your JSON",
     "description": "To import your JSON file, you have two options: either paste the file contents into the editor by copying from a text editor and pasting here, or use the file input to select your JSON file directly from your computer, which will automatically load the contents into the editor for you.",
-    "pasteYourJsonHere": "Paste your JSON here"
+    "pasteYourJsonHere": "Paste your JSON here",
+    "submit": "Submit"
   },
   "output": {
     "header": "Select output languages",
-    "description": "Now select that language(s) to translate to. Our model supports 230 languages. Please keep in mind that the time of task completion will vary depending on the number of languages you wish to translate to."
+    "description": "Now select that language(s) to translate to. Our model supports 230 languages. Please keep in mind that the time of task completion will vary depending on the number of languages you wish to translate to.",
+    "submit": "Submit"
   },
   "translate": {
     "header": "Translating...",

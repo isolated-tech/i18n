@@ -47,7 +47,7 @@ const handleNav = () => {
                   :disabled="checkedLanguages.length <= 0"
                   @click="handleNav"
                 >
-                  {{ $t('submit') }}
+                  {{ $t('getStarted.submit') }}
                 </Button>
               </div>
             </div>

@@ -227,7 +227,7 @@ const setL = (l: Language) => {
 
             <div class="mt-10">
               <label v-if="ready === false">
-                {{ $t('loadingModels') }}
+                {{ $t('translate.loadingModels') }}
               </label>
 
               <div v-for="data in progressItems" :key="data.file">

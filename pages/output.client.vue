@@ -61,7 +61,7 @@ onMounted(() => {
               :disabled="checkedLanguages.length <= 0"
               @click="handleNav"
             >
-              {{ $t('submit') }}
+              {{ $t('output.submit') }}
             </Button>
           </div>
         </div>

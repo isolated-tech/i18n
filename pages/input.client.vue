@@ -70,7 +70,7 @@ onMounted(() => {
                 />
 
                 <Button :disabled="!code?.length" @click="handleNav">
-                  {{ $t('submit') }}
+                  {{ $t('input.submit') }}
                 </Button>
               </div>
             </div>
