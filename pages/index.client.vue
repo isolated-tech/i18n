@@ -165,7 +165,9 @@ const handleEmailSignUp = () => {
                       </button>
                     </div>
                   </div>
-                  <div class="px-6 pb-14 pt-6 text-white">
+                  <div
+                    class="px-6 pb-14 pt-6 text-white max-h-[920px] overflow-y-scroll overflow-x-hidden"
+                  >
                     <JsonViewer :json-data="renderedJSON" />
                   </div>
                 </div>
