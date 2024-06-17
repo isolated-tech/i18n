@@ -9,8 +9,8 @@ const emailInput = ref<string>()
 const handleMagicLink = () => {
   if (!emailInput.value?.length) {
     toast({
-      title: t('emailRequired'),
-      description: t('checkYourEmailForLoginLink'),
+      title: t('login.emailRequired'),
+      description: t('login.checkYourEmailForLoginLink'),
     })
   } else {
     signIn('email', {
@@ -19,8 +19,8 @@ const handleMagicLink = () => {
     })
 
     toast({
-      title: t('linkSent'),
-      description: t('checkYourEmailForLoginLink'),
+      title: t('login.linkSent'),
+      description: t('login.checkYourEmailForLoginLink'),
     })
   }
 }
@@ -32,7 +32,7 @@ const handleMagicLink = () => {
       <h2
         class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-black"
       >
-        {{ t('signInToYourAccount') }}
+        {{ t('login.signInToYourAccount') }}
       </h2>
     </div>
 
@@ -49,7 +49,7 @@ const handleMagicLink = () => {
               for="email"
               class="block text-sm font-medium leading-6 text-gray-900"
             >
-              {{ t('emailAddress') }}
+              {{ t('login.emailAddress') }}
             </label>
             <div class="mt-2">
               <input
@@ -66,7 +66,7 @@ const handleMagicLink = () => {
 
           <div>
             <Button class="w-full" type="submit">
-              {{ t('sendMagicLink') }}
+              {{ t('login.sendMagicLink') }}
             </Button>
           </div>
         </form>
@@ -80,7 +80,7 @@ const handleMagicLink = () => {
               class="relative flex justify-center text-sm font-medium leading-6"
             >
               <span class="bg-white px-6 text-gray-900">
-                {{ t('orContinueWith') }}
+                {{ t('login.orContinueWith') }}
               </span>
             </div>
           </div>
@@ -109,7 +109,7 @@ const handleMagicLink = () => {
                   })
               "
             >
-              <Icon name="fa6-brands:x-twitter" class="h-5 w-5"></Icon>
+              <Icon name="fa6-brands:x-twitter" class="h-5 w-5" />
             </Button>
           </div>
         </div>

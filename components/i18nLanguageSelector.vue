@@ -16,7 +16,9 @@ const localeName = computed(
 <template>
   <div className="space-y-6">
     <div>
-      <h3 className="text-lg font-medium">{{ t('language') }}</h3>
+      <h3 className="text-lg font-medium">
+        {{ t('i18nLanguageSelector.language') }}
+      </h3>
       <div className="mt-4">
         <Select @update:model-value="setLocale">
           <SelectTrigger

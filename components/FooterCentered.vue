@@ -25,21 +25,21 @@
         </a>
       </div>
       <p class="mt-10 text-center text-xs leading-5 text-gray-500">
-        &copy; 2024 i18n, Inc. All rights reserved.
+        &copy; 2024 i18n, Inc. {{ $t('allRightsReserved') }}
       </p>
     </div>
   </footer>
 </template>
 
 <script setup lang="ts">
-import { defineComponent, h } from 'vue'
+const { t } = useI18n()
 
 const navigation = {
   main: [
-    { name: 'Home', href: '/' },
+    { name: t('footer.home'), href: '/' },
     // { name: 'Blog', href: '/blog' },
-    { name: 'Terms of Service', href: '/tos' },
-    { name: 'Privacy Policy', href: '/privacy' },
+    { name: t('footer.tos'), href: '/tos' },
+    { name: t('footer.privacy'), href: '/privacy' },
   ],
   social: [
     {

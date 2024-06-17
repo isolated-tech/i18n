@@ -5,7 +5,7 @@ const { data } = useAuth()
 const isSubbed = computed(() => data.value?.user.is_subscribed)
 
 const plan = computed(() => {
-  return isSubbed.value ? t('pro') : t('free')
+  return isSubbed.value ? t('manageBilling.pro') : t('manageBilling.free')
 })
 </script>
 
@@ -13,7 +13,9 @@ const plan = computed(() => {
   <div className="flex flex-col justify-between gap-y-4">
     <div class="space-y-2 mt-4">
       <div className="flex items-center justify-between">
-        <span className="text-sm font-medium">{{ t('currentStatus') }}</span>
+        <span className="text-sm font-medium">{{
+          t('manageBilling.currentStatus')
+        }}</span>
         <span className="text-sm">{{ plan }}</span>
       </div>
     </div>

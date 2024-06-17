@@ -5,7 +5,7 @@ const { signOut } = useAuth()
 
 <template>
   <DialogHeader>
-    <DialogTitle>{{ t('accountSettings') }}</DialogTitle>
+    <DialogTitle>{{ t('userSettings.accountSettings') }}</DialogTitle>
   </DialogHeader>
   <div className="grid grid-cols-1 gap-6">
     <ManageBilling />
@@ -14,7 +14,7 @@ const { signOut } = useAuth()
 
   <DialogFooter class="pt-4">
     <Button @click="() => signOut({ redirect: false })">
-      {{ t('signOut') }}
+      {{ t('userSettings.signOut') }}
     </Button>
   </DialogFooter>
 </template>

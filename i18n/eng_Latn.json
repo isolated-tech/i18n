@@ -35,7 +35,8 @@
   },
   "input": {
     "header": "Import your JSON",
-    "description": "To import your JSON file, you have two options: either paste the file contents into the editor by copying from a text editor and pasting here, or use the file input to select your JSON file directly from your computer, which will automatically load the contents into the editor for you."
+    "description": "To import your JSON file, you have two options: either paste the file contents into the editor by copying from a text editor and pasting here, or use the file input to select your JSON file directly from your computer, which will automatically load the contents into the editor for you.",
+    "pasteYourJsonHere": "Paste your JSON here"
   },
   "output": {
     "header": "Select output languages",
@@ -47,32 +48,101 @@
     "note": "Do not refresh your browser. Our translations are local and only stored in the browser state. This still does not persist.",
     "loadingModels": "Loading models... (only run once)"
   },
-  "login": "Login",
-  "signIn": "Sign in",
-  "signOut": "Sign out",
-  "signInToYourAccount": "Sign in or create your account",
-  "emailAddress": "Email address",
-  "password": "Password",
-  "rememberMe": "Remember me",
-  "forgotPassword": "Forgot password",
-  "orContinueWith": "Or continue with",
-  "app": "App",
-  "pasteYourJsonHere": "Paste your JSON here",
-  "sendMagicLink": "Send magic link",
-  "linkSent": "Link sent",
-  "checkYourEmailForLoginLink": "Check your email for your login link!",
-  "accountSettings": "Account Settings",
-  "emailRequired": "Email required",
-  "emailRequiredDescription": "Please input a valid email and retry.",
-  "subscription": "Subscription",
-  "paid": "Paid",
-  "buyNow": "Buy now",
-  "currentStatus": "Current status:",
-  "free": "Free",
-  "pro": "Pro",
-  "language": "Language",
-  "premiumRequired": "Premium required",
-  "limitReached": "Limit reached",
-  "limitedToThree": "Free users are limited to translating two languages at a time.",
-  "submit": "Submit"
+  "buyNowDialog": {
+    "buyNow": "Buy now"
+  },
+  "footer": {
+    "home": "Home",
+    "tos": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "allRightsReserved": "All rights reserved."
+  },
+  "languageSelector": {
+    "inputPlaceholder": "Type a command or search...",
+    "noResults": "No results found.",
+    "limitReached": "Limit reached",
+    "limitedToTwo": "Free users are limited to translating two languages at a time.",
+    "disabled": "Disabled",
+    "translatingAllRequiredPaid": "Translating all languages at once requires a paid plan.",
+    "language": "Language",
+    "search": "Search",
+    "searchLanguages": "Search languages"
+  },
+  "login": {
+    "emailRequired": "Email required",
+    "emailRequiredDescription": "Please input a valid email and retry.",
+    "linkSent": "Link sent",
+    "checkYourEmailForLoginLink": "Check your email for your login link!",
+    "signInToYourAccount": "Sign in or create your account",
+    "emailAddress": "Email address",
+    "sendMagicLink": "Send magic link",
+    "orContinueWith": "Or continue with"
+  },
+  "manageBilling": {
+    "currentStatus": "Current status:",
+    "free": "Free",
+    "pro": "Pro"
+  },
+  "stripeCheckingButton": {
+    "buyNow": "Buy now"
+  },
+  "userSettings": {
+    "signOut": "Sign out",
+    "accountSettings": "Account Settings"
+  },
+  "i18nLanguageSelector": {
+    "language": "Language"
+  },
+  "privacyPolicy": {
+    "header": "Privacy Policy",
+    "paragraph1": "Your privacy is important to us. It is i18n AI's policy to respect your privacy regarding any information we may collect from you across our website, and other sites we own and operate.",
+    "paragraph2": "We only ask for personal information when we truly need it to provide a service to you. We collect it by fair and lawful means, with your knowledge and consent. We also let you know why we're collecting it and how it will be used.",
+    "paragraph3": "You can sign up with your X or Github account so your i18n AI's account email will be prefilled with the value they provide.",
+    "paragraph4": "We only retain collected information for as long as necessary to provide you with your requested service. What data we store, we'll protect within commercially acceptable means to prevent loss and theft, as well as unauthorized access, disclosure, copying, use or modification.",
+    "paragraph5": "We don't share any personally identifying information publicly or with third-parties, except when required to by law.",
+    "paragraph6": "We act in the capacity of a data controller and a data processor with regard to the personal data processed through ShipFast and the services in terms of the applicable data protection laws, including the EU General Data Protection Regulation (GDPR).",
+    "paragraph7": "Our website may link to external sites that are not operated by us. Please be aware that we have no control over the content and practices of these sites, and cannot accept responsibility or liability for their respective privacy policies.",
+    "paragraph8": "You are free to refuse our request for your personal information, with the understanding that we may be unable to provide you with some of your desired services.",
+    "paragraph9": "Your continued use of our website will be regarded as acceptance of our practices around privacy and personal information. If you have any questions about how we handle user data and personal information, feel free to contact us.",
+    "effectiveDate": "This policy is effective as of 15 June 2024."
+  },
+  "tos": {
+    "header": "Terms of Service",
+    "introduction": {
+      "header": "Introduction",
+      "description": "By using i18n you confirm your acceptance of, and agree to be bound by, these terms and conditions."
+    },
+    "agreement": {
+      "header": "Agreement to Terms and Conditions",
+      "description": "This Agreement takes effect on the date on which you first use the i18n application."
+    },
+    "access": {
+      "header": "Unlimited Access Software License with Termination Rights",
+      "description": "The i18n Software License facilitates the acquisition of i18n software through a single purchase, granting users unrestricted and perpetual access to its comprehensive functionalities. Tailored for independent creators, entrepreneurs, and small businesses, i18n empowers users to create compelling web pages and online portfolios. This license entails a straightforward and flexible arrangement, exempting users from recurring fees or subscriptions. However, it is important to acknowledge that the licensor retains the right to terminate the license without conditions or prerequisites. This termination provision enablesthe licensor to exercise control over software distribution and utilization. Opting for the i18n Software License enables users to enjoy the benefits of the software while recognizing the licensor's unrestricted termination rights, which provide adaptability and address potential unforeseen circumstances."
+    },
+    "refunds": {
+      "header": "Refunds",
+      "description": "Due to the nature of digital products, the i18n boilerplate cannot be refunded or exchanged once access is granted."
+    },
+    "disclaimer": {
+      "header": "Disclaimer",
+      "description": "It is not warranted that i18n will meet your requirements or that its operation will be uninterrupted or error free. All express and implied warranties or conditions not stated in this Agreement (including without limitation, loss of profits, loss or corruption of data, business interruption or loss of contracts), so far as such exclusion or disclaimer is permitted under the applicable law are excluded and expressly disclaimed. This Agreement does not affect your statutory rights."
+    },
+    "warranties": {
+      "header": "Warranties and Limitation of Liability",
+      "description": "i18n does not give any warranty, guarantee or other term as to the quality, fitness for purpose or otherwise of the software. i18n shall not be liable to you by reason of any representation (unless fraudulent), or any implied warranty, condition or other term, or any duty at common law, for any loss of profit or any indirect, special or consequential loss, damage, costs, expenses or other claims (whether caused by i18n's negligence or the negligence of its servants or agents or otherwise) which arise out of or in connection with the provision of any goods or services by i18n. i18n shall not be liable or deemed to be in breach of contract by reason of any delay in performing, or failure to perform, any of its obligations if the delay or failure was due to any cause beyond its reasonable control. Notwithstanding contrary clauses in this Agreement, in the event that i18n are deemed liable to you for breach of this Agreement, you agree that i18n's liability is limited to the amount actually paid by you for your services or software, which amount calculated in reliance upon this clause. You hereby release i18n from any and all obligations, liabilities and claims in excess of this limitation."
+    },
+    "responsibilities": {
+      "header": "Responsibilities",
+      "description": "i18n is not responsible for what the user does with the user-generated content."
+    },
+    "generalTerms": {
+      "header": "General Terms and Law",
+      "description": "This Agreement is governed by the laws of Singapore. You acknowledge that no joint venture, partnership, employment, or agency relationship exists between you and i18n as a result of your use of these services. You agree not to hold yourself out as a representative, agent or employee of i18n. You agree that i18n will not be liable by reason of any representation, act or omission to act by you."
+    },
+    "effectiveDate": {
+      "header": "Effective Date",
+      "description": "This policy is effective as of 15 June 2024."
+    }
+  }
 }

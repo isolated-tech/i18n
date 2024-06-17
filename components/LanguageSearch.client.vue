@@ -10,9 +10,9 @@ defineProps<Props>()
 
 <template>
   <Command :default-open="false">
-    <CommandInput placeholder="Type a command or search..." />
+    <CommandInput :placeholder="$t('inputPlaceholder')" />
     <CommandList>
-      <CommandEmpty>No results found.</CommandEmpty>
+      <CommandEmpty>{{ $t('noResults') }}</CommandEmpty>
       <CommandGroup heading="Languages">
         <CommandItem v-for="language in languages" :value="language.code">
           {{ language.title }}

@@ -29,6 +29,6 @@ const createStripeCheckoutSession = async () => {
     class="animate-spin"
   />
   <Button v-else size="sm" @click="createStripeCheckoutSession">
-    {{ t('buyNow') }}
+    {{ t('stripeCheckingButton.buyNow') }}
   </Button>
 </template>

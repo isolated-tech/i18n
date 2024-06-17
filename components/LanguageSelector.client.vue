@@ -45,15 +45,15 @@ const handleToggle = (language: Language) => {
 
 const freeTierToast = () => {
   toast({
-    title: t('limitReached'),
-    description: t('limitedToThree'),
+    title: t('languageSelector.limitReached'),
+    description: t('languageSelector.limitedToTwo'),
   })
 }
 
 const allDisabledToast = () => {
   toast({
-    title: 'Disabled',
-    description: 'Translating all languages at once requires a paid plan.',
+    title: t('languageSelector.disabled'),
+    description: t('languageSelector.translatingAllRequiredPaid'),
   })
 }
 
@@ -85,13 +85,14 @@ watch(freeTierLimit, (newVal, oldVal) => {
     <legend
       class="flex justify-between items-end text-base font-semibold leading-6 text-gray-900 w-full pr-5"
     >
-      <p>Language</p>
+      <p>{{ $t('languageSelector.language') }}</p>
       <form>
         <label
           for="default-search"
           class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-          >Search</label
         >
+          {{ $t('languageSelector.search') }}
+        </label>
         <div class="relative">
           <div
             class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
@@ -106,7 +107,7 @@ watch(freeTierLimit, (newVal, oldVal) => {
             type="search"
             id="default-search"
             class="block w-full ps-10 text-sm font-normal text-black border border-gray-300 rounded-lg bg-white focus:ring-black focus:border-black"
-            placeholder="Search languages"
+            :placeholder="$t('searchLanguages')"
             autocomplete="off"
             required
           />

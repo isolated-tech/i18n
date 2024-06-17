@@ -113,7 +113,7 @@ onMounted(() => {
                 </div>
                 <Codemirror
                   v-model="code"
-                  :placeholder="`${$t('pasteYourJsonHere')}...`"
+                  :placeholder="`${$t('input.pasteYourJsonHere')}...`"
                   :style="{
                     height: '100vh',
                     width: '100vw',
