@@ -34,6 +34,7 @@
     "next-auth": "^4.21.1",
     "nodemailer": "^6.9.13",
     "nuxt": "^3.11.2",
+    "nuxt-gtag": "^2.0.6",
     "pinia": "^2.1.7",
     "prisma": "^5.14.0",
     "prismjs": "^1.29.0",
