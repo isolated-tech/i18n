@@ -69,6 +69,17 @@ const handleEmailSignUp = () => {
     emailSignUp.value = ''
   }
 }
+
+useHead({
+  title: 'Local + Effortless i18n Translation',
+  meta: [
+    {
+      name: 'description',
+      content:
+        "Translate your application's content into multiple languages with our local AI-powered translation tool.",
+    },
+  ],
+})
 </script>
 
 <template>

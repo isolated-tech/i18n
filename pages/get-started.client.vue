@@ -16,6 +16,17 @@ const handleNav = () => {
     })
   }
 }
+
+useHead({
+  title: 'Select your input language',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Get started by selecting the language you plan on translating from. This is typically your base i18n file that you work with within your native tongue.',
+    },
+  ],
+})
 </script>
 
 <template>

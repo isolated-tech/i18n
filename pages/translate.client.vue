@@ -195,6 +195,17 @@ const viewedLanguage = ref<Language>()
 const setL = (l: Language) => {
   viewedLanguage.value = l
 }
+
+useHead({
+  title: 'Translating...',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'The ability to download each language will appear as they finish being translated. You can download each translation as it appears, or wait until they are all finished and download them in bulk.',
+    },
+  ],
+})
 </script>
 
 <template>

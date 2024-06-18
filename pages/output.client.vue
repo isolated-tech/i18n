@@ -29,6 +29,17 @@ onMounted(() => {
     navigateTo('/input')
   }
 })
+
+useHead({
+  title: 'Select output languages',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Select that language(s) to translate to. Our model supports 203 languages.',
+    },
+  ],
+})
 </script>
 
 <template>

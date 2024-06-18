@@ -36,6 +36,17 @@ onMounted(() => {
     navigateTo('/get-started')
   }
 })
+
+useHead({
+  title: 'Import your JSON',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Paste the file contents into the editor by copying from a text editor and pasting here, or use the file input to select your JSON file directly from your computer, which will automatically load the contents into the editor for you.',
+    },
+  ],
+})
 </script>
 
 <template>
