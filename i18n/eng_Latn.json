@@ -151,5 +151,13 @@
       "header": "Effective Date",
       "description": "This policy is effective as of 15 June 2024."
     }
+  },
+  "success": {
+    "hero": "Success!",
+    "description": "Your payment was successful. Thank you for your support. Enjoy your new premium benefits."
+  },
+  "cancelled": {
+    "hero": "Cancelled",
+    "description": "Your payment was cancelled."
   }
 }
