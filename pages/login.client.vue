@@ -12,14 +12,25 @@ definePageMeta({
 const { t } = useI18n()
 const { signIn } = useAuth()
 const { toast } = useToast()
+const emailInput = ref<string>()
 
 const handleMagicLink = () => {
-  signIn('email')
+  if (!emailInput.value?.length) {
+    toast({
+      title: t('login.emailRequired'),
+      description: t('login.checkYourEmailForLoginLink'),
+    })
+  } else {
+    signIn('email', {
+      email: emailInput.value,
+      redirect: false,
+    })
 
-  toast({
-    title: t('linkSent'),
-    description: t('checkYourEmailForLoginLink'),
-  })
+    toast({
+      title: t('login.linkSent'),
+      description: t('login.checkYourEmailForLoginLink'),
+    })
+  }
 }
 </script>
 
@@ -51,6 +62,7 @@ const handleMagicLink = () => {
             </label>
             <div class="mt-2">
               <input
+                v-model="emailInput"
                 id="email"
                 name="email"
                 type="email"
