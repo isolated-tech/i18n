@@ -46,7 +46,7 @@ const handleMagicLink = () => {
       <h2
         class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-black"
       >
-        {{ t('signInToYourAccount') }}
+        {{ t('login.signInToYourAccount') }}
       </h2>
     </div>
 
@@ -58,7 +58,7 @@ const handleMagicLink = () => {
               for="email"
               class="block text-sm font-medium leading-6 text-gray-900"
             >
-              {{ t('emailAddress') }}
+              {{ t('login.emailAddress') }}
             </label>
             <div class="mt-2">
               <input
@@ -75,7 +75,7 @@ const handleMagicLink = () => {
 
           <div>
             <Button class="w-full" type="submit" @click="handleMagicLink">
-              {{ t('sendMagicLink') }}
+              {{ t('login.sendMagicLink') }}
             </Button>
           </div>
         </form>
@@ -89,7 +89,7 @@ const handleMagicLink = () => {
               class="relative flex justify-center text-sm font-medium leading-6"
             >
               <span class="bg-white px-6 text-gray-900">
-                {{ t('orContinueWith') }}
+                {{ t('login.orContinueWith') }}
               </span>
             </div>
           </div>
