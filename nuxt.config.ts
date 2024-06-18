@@ -62,11 +62,6 @@ export default defineNuxtConfig({
   gtag: {
     id: 'G-PCC7Y485VW',
   },
-  vite: {
-    server: {
-      hmr: false,
-    },
-  },
   content: {
     documentDriven: true,
   },
