@@ -456,5 +456,5 @@ useHead({
     </section>
     <FooterCentered />
   </div>
-  <!-- <ProductHuntBanner class="absolute left-5 bottom-5 max-w-[360px]" /> -->
+  <ProductHuntBanner class="absolute left-5 bottom-5 max-w-[360px]" />
 </template>
