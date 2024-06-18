@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     'nuxt-icon',
     'nuxt-gtag',
+    '@nuxt/content',
   ],
   i18n: {
     strategy: 'no_prefix',
@@ -65,5 +66,8 @@ export default defineNuxtConfig({
     server: {
       hmr: false,
     },
+  },
+  content: {
+    documentDriven: true,
   },
 })

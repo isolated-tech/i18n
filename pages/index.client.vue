@@ -82,7 +82,7 @@ const handleEmailSignUp = () => {
         <div class="mx-auto max-w-2xl">
           <div class="max-w-lg">
             <div class="mt-24 sm:mt-32 lg:mt-16">
-              <a href="#" class="inline-flex space-x-6">
+              <NuxtLink to="/blog/whats-new" class="inline-flex space-x-6">
                 <span
                   class="rounded-full bg-gray-600/10 px-3 py-1 text-sm font-semibold leading-6 text-gray-600 ring-1 ring-inset ring-gray-600/10"
                 >
@@ -97,7 +97,7 @@ const handleEmailSignUp = () => {
                     aria-hidden="true"
                   />
                 </span>
-              </a>
+              </NuxtLink>
             </div>
             <h1
               class="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
