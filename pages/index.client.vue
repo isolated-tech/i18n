@@ -416,6 +416,9 @@ useHead({
             </ul>
             <BuyNowDialog v-if="!isLoggedIn" />
             <StripeCheckoutButton v-else-if="isLoggedIn && !isSubbed" />
+            <Button v-else-if="isSubbed" disabled>
+              {{ $t('buyNowDialog.buyNow') }}
+            </Button>
           </div>
         </div>
       </div>
