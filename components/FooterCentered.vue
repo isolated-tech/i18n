@@ -9,8 +9,9 @@
           <a
             :href="item.href"
             class="text-sm leading-6 text-gray-600 hover:text-gray-900"
-            >{{ item.name }}</a
           >
+            {{ item.name }}
+          </a>
         </div>
       </nav>
       <div class="mt-10 flex justify-center space-x-10">
