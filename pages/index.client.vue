@@ -315,12 +315,57 @@ const handleEmailSignUp = () => {
           </div>
         </div>
         <div
-          class="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-1 lg:gap-8"
+          class="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-8"
         >
           <div
             class="flex flex-col items-center justify-center space-y-4 rounded-lg border p-6 shadow-sm"
           >
-            <h3 class="text-2xl font-bold">{{ $t('landing.translateAi') }}</h3>
+            <p class="text-4xl font-bold">$0</p>
+            <p class="text-gray-500 dark:text-gray-400">
+              {{ $t('landing.freePlan') }}
+            </p>
+            <ul class="grid gap-2 text-left">
+              <li class="flex items-center gap-2">
+                <Icon
+                  name="material-symbols:check"
+                  class="h-5 w-5 text-gray-500 dark:text-gray-400"
+                />
+                <span>{{ $t('landing.unlimitedTranslations') }}</span>
+              </li>
+
+              <li class="flex items-center gap-2">
+                <Icon
+                  name="material-symbols:check"
+                  class="h-5 w-5 text-gray-500 dark:text-gray-400"
+                />
+                <span
+                  >{{ baseLanguages.length }}
+                  {{ $t('landing.supportedLanguages') }}</span
+                >
+              </li>
+              <li class="flex items-center gap-2">
+                <Icon
+                  name="material-symbols:check"
+                  class="h-5 w-5 text-gray-500 dark:text-gray-400"
+                />
+                <span>{{ $t('landing.limitedToTwoLanguages') }}</span>
+              </li>
+              <li class="flex items-center gap-2 invisible">
+                <Icon
+                  name="material-symbols:check"
+                  class="h-5 w-5 text-gray-500 dark:text-gray-400"
+                />
+              </li>
+            </ul>
+            <NuxtLink to="get-started">
+              <Button>
+                {{ $t('landing.cta') }}
+              </Button>
+            </NuxtLink>
+          </div>
+          <div
+            class="flex flex-col items-center justify-center space-y-4 rounded-lg border p-6 shadow-sm"
+          >
             <p class="text-4xl font-bold">$20</p>
             <p class="text-gray-500 dark:text-gray-400">
               {{ $t('landing.oneTimePurchase') }}
@@ -342,6 +387,13 @@ const handleEmailSignUp = () => {
                   >{{ baseLanguages.length }}
                   {{ $t('landing.supportedLanguages') }}</span
                 >
+              </li>
+              <li class="flex items-center gap-2">
+                <Icon
+                  name="material-symbols:check"
+                  class="h-5 w-5 text-gray-500 dark:text-gray-400"
+                />
+                <span>{{ $t('landing.unlimitedLanguages') }}</span>
               </li>
               <li class="flex items-center gap-2">
                 <Icon
