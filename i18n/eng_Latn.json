@@ -45,7 +45,7 @@
   },
   "output": {
     "header": "Select output languages",
-    "description": "Now select that language(s) to translate to. Our model supports 230 languages. Please keep in mind that the time of task completion will vary depending on the number of languages you wish to translate to.",
+    "description": "Now select that language(s) to translate to. Our model supports 203 languages. Please keep in mind that the time of task completion will vary depending on the number of languages you wish to translate to.",
     "submit": "Submit"
   },
   "translate": {
