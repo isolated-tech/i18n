@@ -10,6 +10,7 @@ import { oneDark } from '@codemirror/theme-one-dark'
 import { js_beautify } from 'js-beautify'
 import { useLangStore } from '@/store/language'
 import { useToast } from '@/components/ui/toast/use-toast'
+import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 
 const { toast } = useToast()
 const router = useRouter()
@@ -111,7 +112,7 @@ const onMessageReceived = e => {
     case 'update':
       // Generation update: update the output text.
       const language = e.data.output.language as Language
-      // const outputText = e.data.output.data
+      const outputText = e.data.output.data
       // console.log(e.data.output.data)
 
       if (!translatedLanguages.value.find(l => l.code === language.code)) {
@@ -130,26 +131,27 @@ const onMessageReceived = e => {
       //   }
       // })
 
-      // setCodeOutput(language, outputText)
+      setCodeOutput(language, outputText)
       isTranslating.value = true
       break
 
     case 'complete':
       disabled.value = false
       const l = e.data.output.language as Language
-      const outputText = e.data.output.data
+      const oText = e.data.output.data
 
-      setCodeOutput(l, outputText)
+      setCodeOutput(l, oText)
       break
 
     case 'log':
-      console.log('log: ', toRaw(e.data.output))
-
+      // console.log('log: ', toRaw(e.data.output))
+      break
     case 'error':
       toast({
         title: 'Error',
         description: e.data.output.error,
       })
+      break
   }
 }
 
@@ -188,6 +190,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   worker.value?.removeEventListener('message', onMessageReceived)
+  worker.value?.terminate()
 })
 
 const viewedLanguage = ref<Language>()
@@ -195,6 +198,14 @@ const viewedLanguage = ref<Language>()
 const setL = (l: Language) => {
   viewedLanguage.value = l
 }
+
+onBeforeRouteLeave((to, from, next) => {
+  if (confirm('Leaving this page will cancel any active translation.')) {
+    next()
+  } else {
+    next(false)
+  }
+})
 
 useHead({
   title: 'Translating...',
