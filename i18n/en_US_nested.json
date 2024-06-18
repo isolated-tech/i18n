@@ -1,7 +1,8 @@
 {
   "whatsNew": "What's new",
   "nestedOne": {
-    "keyOne": "this is the first nested object"
+    "keyOne": "this is the first nested object",
+    "keyTwo": "second key"
   },
   "doubleNested": {
     "nestedTwo": {
