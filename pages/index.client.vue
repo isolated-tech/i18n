@@ -3,7 +3,22 @@ import { languages as baseLanguages } from '@/lib/constants'
 import { ChevronRightIcon } from '@heroicons/vue/20/solid'
 import eng_Latn from '../i18n/eng_Latn.json'
 import fra_Latn from '../i18n/fra_Latn.json'
+import hin_Deva from '../i18n/hin_Deva.json'
+import jpn_Jpan from '../i18n/jpn_Jpan.json'
+import spa_Latn from '../i18n/spa_Latn.json'
+import zho_Hans from '../i18n/zho_Hans.json'
+import zho_Hant from '../i18n/zho_Hant.json'
 import { useToast } from '@/components/ui/toast'
+
+const i18nSelector = ref([
+  { language: eng_Latn, code: 'eng_Latn', active: true },
+  { language: fra_Latn, code: 'fra_Latn', active: false },
+  { language: hin_Deva, code: 'hin_Deva', active: false },
+  { language: jpn_Jpan, code: 'jpn_Jpan', active: false },
+  { language: spa_Latn, code: 'spa_Latn', active: false },
+  { language: zho_Hans, code: 'zho_Hans', active: false },
+  { language: zho_Hant, code: 'zho_Hant', active: false },
+])
 
 const showUS = ref(true)
 const { t, setLocale } = useI18n()
@@ -14,7 +29,7 @@ const { toast } = useToast()
 const emailSignUp = ref<string>()
 
 const renderedJSON = computed(() => {
-  return showUS.value ? eng_Latn : fra_Latn
+  return i18nSelector.value.find(l => l.active)?.language
 })
 
 const activeMenuItems = ref([
@@ -46,6 +61,24 @@ watch(showUS, (newVal, _oldVal) => {
     setLocale('eng_Latn')
   } else {
     setLocale('fra_Latn')
+  }
+})
+
+const setActiveLanguage = (code: string) => {
+  i18nSelector.value.forEach(lang => {
+    lang.active = lang.code === code
+  })
+}
+
+const isActiveLanguage = (code: string) => {
+  return i18nSelector.value.find(item => item.code === code)?.active
+}
+
+watch(renderedJSON, (newVal, oldVal) => {
+  const activeLang = i18nSelector.value.find(l => l.active)
+  console.log('activeLang: ', activeLang)
+  if (activeLang) {
+    setLocale(activeLang.code)
   }
 })
 
@@ -155,24 +188,16 @@ useHead({
                       class="-mb-px flex text-sm font-medium leading-6 text-gray-400"
                     >
                       <button
+                        v-for="language in i18nSelector"
                         :class="{
                           'border-b border-r border-b-white/20 border-r-white/10 bg-white/5 px-4 py-2 text-white':
-                            showUS,
-                          'border-r border-gray-600/10 px-4 py-2': !showUS,
+                            isActiveLanguage(language.code),
+                          'border-r border-gray-600/10 px-4 py-2':
+                            !isActiveLanguage(language.code),
                         }"
-                        @click="showUS = true"
+                        @click="setActiveLanguage(language.code)"
                       >
-                        eng_Latn.json
-                      </button>
-                      <button
-                        :class="{
-                          'border-b border-r border-b-white/20 border-r-white/10 bg-white/5 px-4 py-2 text-white':
-                            !showUS,
-                          'border-r border-gray-600/10 px-4 py-2': showUS,
-                        }"
-                        @click="showUS = false"
-                      >
-                        fra_Latn.json
+                        {{ language.code }}
                       </button>
                     </div>
                   </div>
