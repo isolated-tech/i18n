@@ -52,7 +52,8 @@
     "header": "Translating...",
     "description": "The ability to download each language will appear as they finish being translated. You can download each translation as it appears, or wait until they are all finished and download them in bulk.",
     "note": "Do not refresh your browser. Our translations are local and only stored in the browser state. This still does not persist.",
-    "loadingModels": "Loading models... (only run once)"
+    "loadingModels": "Loading models... (only run once)",
+    "leaveWarning": "Leaving this page will cancel any active translation."
   },
   "buyNowDialog": {
     "buyNow": "Buy now"

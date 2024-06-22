@@ -199,7 +199,7 @@ const setL = (l: Language) => {
 }
 
 onBeforeRouteLeave((to, from, next) => {
-  if (confirm('Leaving this page will cancel any active translation.')) {
+  if (confirm(t('translate.leaveWarning'))) {
     next()
   } else {
     next(false)
