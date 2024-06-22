@@ -65,9 +65,9 @@ const isActiveLanguage = (code: string) => {
   return i18nSelector.value.find(item => item.code === code)?.active
 }
 
-watch(renderedJSON, (newVal, oldVal) => {
+watch(renderedJSON, (_newVal, _oldVal) => {
   const activeLang = i18nSelector.value.find(l => l.active)
-  console.log('activeLang: ', activeLang)
+
   if (activeLang) {
     setLocale(activeLang.code)
   }
