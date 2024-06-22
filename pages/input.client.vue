@@ -17,9 +17,6 @@ interface FileInputResult {
 
 const codeStore = useCodeStore()
 const { setCode } = codeStore
-// TODO: Ensure code is validate JSON
-// TODO: Error/Toast if not
-// TODO: Error out if JSON is nested.
 const { code } = storeToRefs(codeStore)
 const fileType = ref()
 const langStore = useLangStore()
@@ -29,12 +26,15 @@ const router = useRouter()
 const extensions = computed(() => {
   let baseExtensions = [oneDark]
 
-  if (fileType.value === 'json') {
-    baseExtensions.push(json())
-  } else if (fileType.value === 'yaml') {
-    baseExtensions.push(yaml())
-  } else {
-    baseExtensions.push(javascript())
+  switch (fileType.value) {
+    case 'json':
+      baseExtensions.push(json())
+      break
+    case 'yaml':
+      baseExtensions.push(yaml())
+      break
+    default:
+      baseExtensions.push(javascript())
   }
 
   return baseExtensions
