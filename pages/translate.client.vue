@@ -6,17 +6,20 @@ import { useCodeStore } from '@/store/code'
 import { storeToRefs } from 'pinia'
 import { Codemirror } from 'vue-codemirror'
 import { json } from '@codemirror/lang-json'
+import { yaml as yamlTheme } from '@codemirror/lang-yaml'
+import { javascript } from '@codemirror/lang-javascript'
 import { oneDark } from '@codemirror/theme-one-dark'
 import { js_beautify } from 'js-beautify'
 import { useLangStore } from '@/store/language'
 import { useToast } from '@/components/ui/toast/use-toast'
+import yaml from 'js-yaml'
 
 const { toast } = useToast()
 const { t } = useI18n()
 
 const codeStore = useCodeStore()
 const { setCodeOutput, getCodeOutput } = codeStore
-const { code, codeOutput } = storeToRefs(codeStore)
+const { code, codeOutput, fileType } = storeToRefs(codeStore)
 
 const langStore = useLangStore()
 const { checkedLanguages, inputLanguage, outputLanguages } =
@@ -24,13 +27,24 @@ const { checkedLanguages, inputLanguage, outputLanguages } =
 
 const formattedCodeOutput = computed(() => {
   if (codeOutput.value) {
-    return js_beautify(
-      JSON.stringify(codeOutput.value[viewedLanguage.value?.code as string]),
-      {
-        indent_size: 2,
-        space_in_empty_paren: true,
-      }
-    )
+    switch (fileType.value) {
+      case 'yaml':
+        console.log(
+          JSON.stringify(codeOutput.value[viewedLanguage.value?.code as string])
+        )
+        return yaml.dump(codeOutput.value[viewedLanguage.value?.code as string])
+
+      default:
+        return js_beautify(
+          JSON.stringify(
+            codeOutput.value[viewedLanguage.value?.code as string]
+          ),
+          {
+            indent_size: 2,
+            space_in_empty_paren: true,
+          }
+        )
+    }
   }
 })
 
@@ -41,7 +55,22 @@ const disabled = ref(false)
 
 const progressItems = ref([])
 const translatedLanguages = ref<Language[]>([])
-const extensions = [json(), oneDark]
+const extensions = computed(() => {
+  let baseExtensions = [oneDark]
+
+  switch (fileType.value) {
+    case 'json':
+      baseExtensions.push(json())
+      break
+    case 'yaml':
+      baseExtensions.push(yamlTheme())
+      break
+    default:
+      baseExtensions.push(javascript())
+  }
+
+  return baseExtensions
+})
 
 const downloadableTranscripts = computed(() => {
   if (
@@ -104,7 +133,6 @@ const onMessageReceived = e => {
 
     case 'ready':
       // Pipeline ready: the worker is ready to accept messages.
-
       ready.value = true
       break
 
@@ -112,7 +140,6 @@ const onMessageReceived = e => {
       // Generation update: update the output text.
       const language = e.data.output.language as Language
       const outputText = e.data.output.data
-      // console.log(e.data.output.data)
 
       if (!translatedLanguages.value.find(l => l.code === language.code)) {
         translatedLanguages.value.push(language)
@@ -121,14 +148,6 @@ const onMessageReceived = e => {
       if (translatedLanguages.value.length === 1) {
         setL(translatedLanguages.value[0])
       }
-
-      // nextTick(() => {
-      //   const container = document.querySelector('.overflow-x-scroll')
-
-      //   if (container) {
-      //     container.scrollLeft = container.scrollWidth
-      //   }
-      // })
 
       setCodeOutput(language, outputText)
       isTranslating.value = true
@@ -143,13 +162,14 @@ const onMessageReceived = e => {
       break
 
     case 'log':
-      // console.log('log: ', toRaw(e.data.output))
+      console.log('log: ', toRaw(e.data.output))
       break
     case 'error':
       toast({
         title: 'Error',
         description: e.data.output.error,
       })
+      console.log(e.data.output)
       break
   }
 }
@@ -159,6 +179,7 @@ const translate = () => {
     text: code.value,
     src_lang: toRaw(inputLanguage.value),
     targetLanguages: checkedLanguages.value.map(toRaw),
+    fileType: fileType.value,
   })
 }
 
@@ -198,13 +219,13 @@ const setL = (l: Language) => {
   viewedLanguage.value = l
 }
 
-onBeforeRouteLeave((to, from, next) => {
-  if (confirm(t('translate.leaveWarning'))) {
-    next()
-  } else {
-    next(false)
-  }
-})
+// onBeforeRouteLeave((to, from, next) => {
+//   if (confirm(t('translate.leaveWarning'))) {
+//     next()
+//   } else {
+//     next(false)
+//   }
+// })
 
 useHead({
   title: t('translate.header'),
