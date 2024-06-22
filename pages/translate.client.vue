@@ -25,20 +25,29 @@ const langStore = useLangStore()
 const { checkedLanguages, inputLanguage, outputLanguages } =
   storeToRefs(langStore)
 
+const textBeforeFirstBrace = ref('')
+
 const formattedCodeOutput = computed(() => {
   if (codeOutput.value) {
     switch (fileType.value) {
       case 'yaml':
-        console.log(
-          JSON.stringify(codeOutput.value[viewedLanguage.value?.code as string])
-        )
         return yaml.dump(codeOutput.value[viewedLanguage.value?.code as string])
-
-      default:
+      case 'json':
         return js_beautify(
           JSON.stringify(
             codeOutput.value[viewedLanguage.value?.code as string]
           ),
+          {
+            indent_size: 2,
+            space_in_empty_paren: true,
+          }
+        )
+      default:
+        return js_beautify(
+          textBeforeFirstBrace.value +
+            JSON.stringify(
+              codeOutput.value[viewedLanguage.value?.code as string]
+            ),
           {
             indent_size: 2,
             space_in_empty_paren: true,
@@ -84,12 +93,19 @@ const downloadableTranscripts = computed(() => {
 })
 
 const handleDownloadClick = (l: Language) => {
-  if (l.code === 'all') {
-    checkedLanguages.value.forEach(lang =>
-      handleDownload(getCodeOutput(lang), `${lang.code}.${fileType.value}`)
+  const prependString =
+    fileType.value === 'js' ? textBeforeFirstBrace.value : ''
+
+  const downloadFunction = (lang: Language) =>
+    handleDownload(
+      prependString + getCodeOutput(lang),
+      `${lang.code}.${fileType.value}`
     )
+
+  if (l.code === 'all') {
+    checkedLanguages.value.forEach(lang => downloadFunction(lang))
   } else {
-    handleDownload(getCodeOutput(l), `${l.code}.${fileType.value}`)
+    downloadFunction(l)
   }
 }
 
@@ -158,7 +174,11 @@ const onMessageReceived = e => {
       const l = e.data.output.language as Language
       const oText = e.data.output.data
 
+      if (fileType.value === 'js') {
+        textBeforeFirstBrace.value = e.data.output.textBeforeFirstBrace
+      }
       setCodeOutput(l, oText)
+
       break
 
     case 'log':
