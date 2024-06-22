@@ -4,9 +4,16 @@ import { storeToRefs } from 'pinia'
 
 import { Codemirror } from 'vue-codemirror'
 import { json } from '@codemirror/lang-json'
+import { yaml } from '@codemirror/lang-yaml'
+import { javascript } from '@codemirror/lang-javascript'
 import { oneDark } from '@codemirror/theme-one-dark'
 import { useCodeStore } from '@/store/code'
 import { useLangStore } from '@/store/language'
+
+interface FileInputResult {
+  code: string
+  type: string
+}
 
 const codeStore = useCodeStore()
 const { setCode } = codeStore
@@ -14,15 +21,34 @@ const { setCode } = codeStore
 // TODO: Error/Toast if not
 // TODO: Error out if JSON is nested.
 const { code } = storeToRefs(codeStore)
-
+const fileType = ref()
 const langStore = useLangStore()
 const { inputLanguage } = storeToRefs(langStore)
 
 const router = useRouter()
-const extensions = [json(), oneDark]
+const extensions = computed(() => {
+  let baseExtensions = [oneDark]
 
-const handleFileContents = (e: any) => {
-  setCode(e)
+  if (fileType.value === 'json') {
+    baseExtensions.push(json())
+  } else if (fileType.value === 'yaml') {
+    baseExtensions.push(yaml())
+  } else {
+    baseExtensions.push(javascript())
+  }
+
+  return baseExtensions
+})
+
+const handleFileContents = (fileResults: FileInputResult) => {
+  fileType.value = fileResults.type.includes('json')
+    ? 'json'
+    : fileResults.type.includes('yaml')
+    ? 'yaml'
+    : fileResults.type.includes('javascript')
+    ? 'javascript'
+    : 'typescript'
+  setCode(fileResults.code)
 }
 
 const handleNav = () => {

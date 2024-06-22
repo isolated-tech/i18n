@@ -6,7 +6,10 @@ const handleFileChange = (event: Event) => {
 
   const reader = new FileReader()
   reader.onload = e => {
-    emit('fileChange', e.target.result)
+    emit('fileChange', {
+      code: e.target.result,
+      type: file.type,
+    })
   }
 
   reader.readAsText(file)
