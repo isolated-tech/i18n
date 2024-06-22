@@ -86,10 +86,10 @@ const downloadableTranscripts = computed(() => {
 const handleDownloadClick = (l: Language) => {
   if (l.code === 'all') {
     checkedLanguages.value.forEach(lang =>
-      handleDownload(getCodeOutput(lang), `${lang.code}.json`)
+      handleDownload(getCodeOutput(lang), `${lang.code}.${fileType.value}`)
     )
   } else {
-    handleDownload(getCodeOutput(l), `${l.code}.json`)
+    handleDownload(getCodeOutput(l), `${l.code}.${fileType.value}`)
   }
 }
 
