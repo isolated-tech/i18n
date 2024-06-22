@@ -2,6 +2,7 @@
 import { useLangStore } from '@/store/language'
 import { ArrowLeftIcon } from '@heroicons/vue/20/solid'
 
+const { t } = useI18n()
 const router = useRouter()
 const langStore = useLangStore()
 const { setLanguage } = langStore
@@ -18,12 +19,11 @@ const handleNav = () => {
 }
 
 useHead({
-  title: 'Select your input language',
+  title: t('getStarted.header'),
   meta: [
     {
       name: 'description',
-      content:
-        'Get started by selecting the language you plan on translating from. This is typically your base i18n file that you work with within your native tongue.',
+      content: t('getStarted.description'),
     },
   ],
 })

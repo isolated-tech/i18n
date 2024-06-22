@@ -10,10 +10,9 @@ import { oneDark } from '@codemirror/theme-one-dark'
 import { js_beautify } from 'js-beautify'
 import { useLangStore } from '@/store/language'
 import { useToast } from '@/components/ui/toast/use-toast'
-import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 
 const { toast } = useToast()
-const router = useRouter()
+const { t } = useI18n()
 
 const codeStore = useCodeStore()
 const { setCodeOutput, getCodeOutput } = codeStore
@@ -208,12 +207,11 @@ onBeforeRouteLeave((to, from, next) => {
 })
 
 useHead({
-  title: 'Translating...',
+  title: t('translate.header'),
   meta: [
     {
       name: 'description',
-      content:
-        'The ability to download each language will appear as they finish being translated. You can download each translation as it appears, or wait until they are all finished and download them in bulk.',
+      content: t('translate.description'),
     },
   ],
 })

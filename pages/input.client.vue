@@ -22,6 +22,7 @@ const { code, fileType } = storeToRefs(codeStore)
 const langStore = useLangStore()
 const { inputLanguage } = storeToRefs(langStore)
 
+const { t } = useI18n()
 const router = useRouter()
 const extensions = computed(() => {
   let baseExtensions = [oneDark]
@@ -68,12 +69,11 @@ onMounted(() => {
 })
 
 useHead({
-  title: 'Import your JSON',
+  title: t('input.header'),
   meta: [
     {
       name: 'description',
-      content:
-        'Paste the file contents into the editor by copying from a text editor and pasting here, or use the file input to select your JSON file directly from your computer, which will automatically load the contents into the editor for you.',
+      content: t('input.description'),
     },
   ],
 })

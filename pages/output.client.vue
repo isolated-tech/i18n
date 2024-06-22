@@ -5,6 +5,7 @@ import { storeToRefs } from 'pinia'
 import { useLangStore } from '@/store/language'
 import { useCodeStore } from '@/store/code'
 
+const { t } = useI18n()
 const langStore = useLangStore()
 const { setLanguages } = langStore
 const { inputLanguage, checkedLanguages } = storeToRefs(langStore)
@@ -31,12 +32,11 @@ onMounted(() => {
 })
 
 useHead({
-  title: 'Select output languages',
+  title: t('output.header'),
   meta: [
     {
       name: 'description',
-      content:
-        'Select that language(s) to translate to. Our model supports 203 languages.',
+      content: t('output.description'),
     },
   ],
 })
