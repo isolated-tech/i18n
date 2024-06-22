@@ -50,7 +50,7 @@ const handleFileContents = (fileResults: FileInputResult) => {
       setFileType('yaml')
       break
     default:
-      setFileType('javascript')
+      setFileType('js')
   }
 
   setCode(fileResults.code)
