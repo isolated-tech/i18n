@@ -8,7 +8,7 @@ const handleFileChange = (event: Event) => {
   reader.onload = e => {
     emit('fileChange', {
       code: e.target.result,
-      type: file.type,
+      type: file.type === '' ? 'ts' : file.type,
     })
   }
 

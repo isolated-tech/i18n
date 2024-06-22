@@ -49,6 +49,9 @@ const handleFileContents = (fileResults: FileInputResult) => {
     case fileResults.type.includes('yaml'):
       setFileType('yaml')
       break
+    case fileResults.type.includes('ts'):
+      setFileType('ts')
+      break
     default:
       setFileType('js')
   }

@@ -93,8 +93,9 @@ const downloadableTranscripts = computed(() => {
 })
 
 const handleDownloadClick = (l: Language) => {
-  const prependString =
-    fileType.value === 'js' ? textBeforeFirstBrace.value : ''
+  const prependString = ['js', 'ts'].includes(fileType.value)
+    ? textBeforeFirstBrace.value
+    : ''
 
   const downloadFunction = (lang: Language) =>
     handleDownload(
@@ -174,7 +175,7 @@ const onMessageReceived = e => {
       const l = e.data.output.language as Language
       const oText = e.data.output.data
 
-      if (fileType.value === 'js') {
+      if (['js', 'ts'].includes(fileType.value)) {
         textBeforeFirstBrace.value = e.data.output.textBeforeFirstBrace
       }
       setCodeOutput(l, oText)
@@ -239,13 +240,13 @@ const setL = (l: Language) => {
   viewedLanguage.value = l
 }
 
-// onBeforeRouteLeave((to, from, next) => {
-//   if (confirm(t('translate.leaveWarning'))) {
-//     next()
-//   } else {
-//     next(false)
-//   }
-// })
+onBeforeRouteLeave((to, from, next) => {
+  if (confirm(t('translate.leaveWarning'))) {
+    next()
+  } else {
+    next(false)
+  }
+})
 
 useHead({
   title: t('translate.header'),
