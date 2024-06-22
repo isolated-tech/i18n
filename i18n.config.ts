@@ -5,6 +5,7 @@ import jpn_Jpan from './i18n/jpn_Jpan.json'
 import spa_Latn from './i18n/spa_Latn.json'
 import zho_Hans from './i18n/zho_Hans.json'
 import zho_Hant from './i18n/zho_Hant.json'
+import deu_Latn from './i18n/deu_Latn.json'
 
 export default defineI18nConfig(() => ({
   legacy: false,
@@ -17,5 +18,6 @@ export default defineI18nConfig(() => ({
     spa_Latn: spa_Latn,
     zho_Hans: zho_Hans,
     zho_Hant: zho_Hant,
+    deu_Latn: deu_Latn,
   },
 }))
