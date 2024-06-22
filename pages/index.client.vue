@@ -20,7 +20,6 @@ const i18nSelector = ref([
   { language: zho_Hant, code: 'zho_Hant', active: false },
 ])
 
-const showUS = ref(true)
 const { t, setLocale } = useI18n()
 const { data, signIn } = useAuth()
 const isLoggedIn = computed(() => data.value?.user)
@@ -55,14 +54,6 @@ function smoothScroll(event: any) {
     target.scrollIntoView({ behavior: 'smooth' })
   }
 }
-
-watch(showUS, (newVal, _oldVal) => {
-  if (newVal) {
-    setLocale('eng_Latn')
-  } else {
-    setLocale('fra_Latn')
-  }
-})
 
 const setActiveLanguage = (code: string) => {
   i18nSelector.value.forEach(lang => {
