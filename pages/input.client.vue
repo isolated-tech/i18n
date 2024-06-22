@@ -16,9 +16,9 @@ interface FileInputResult {
 }
 
 const codeStore = useCodeStore()
-const { setCode } = codeStore
-const { code } = storeToRefs(codeStore)
-const fileType = ref()
+const { setCode, setFileType } = codeStore
+const { code, fileType } = storeToRefs(codeStore)
+
 const langStore = useLangStore()
 const { inputLanguage } = storeToRefs(langStore)
 
@@ -41,13 +41,17 @@ const extensions = computed(() => {
 })
 
 const handleFileContents = (fileResults: FileInputResult) => {
-  fileType.value = fileResults.type.includes('json')
-    ? 'json'
-    : fileResults.type.includes('yaml')
-    ? 'yaml'
-    : fileResults.type.includes('javascript')
-    ? 'javascript'
-    : 'typescript'
+  switch (true) {
+    case fileResults.type.includes('json'):
+      setFileType('json')
+      break
+    case fileResults.type.includes('yaml'):
+      setFileType('yaml')
+      break
+    default:
+      setFileType('javascript')
+  }
+
   setCode(fileResults.code)
 }
 

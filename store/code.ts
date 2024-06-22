@@ -8,6 +8,7 @@ interface CodeOutput {
 export const useCodeStore = defineStore('codeStore', () => {
   const code = ref<string | undefined>()
   const codeOutput = ref<CodeOutput>({})
+  const fileType = ref<string>('javascript')
 
   const setCode = (c: string) => {
     code.value = c
@@ -17,9 +18,21 @@ export const useCodeStore = defineStore('codeStore', () => {
     codeOutput.value[l.code] = c
   }
 
+  const setFileType = (type: string) => {
+    fileType.value = type
+  }
+
   const getCodeOutput = (l: Language) => {
     return JSON.stringify(codeOutput.value[l.code])
   }
 
-  return { code, setCode, codeOutput, setCodeOutput, getCodeOutput }
+  return {
+    code,
+    setCode,
+    codeOutput,
+    setCodeOutput,
+    getCodeOutput,
+    fileType,
+    setFileType,
+  }
 })
