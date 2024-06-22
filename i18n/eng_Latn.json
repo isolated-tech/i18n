@@ -8,14 +8,15 @@
     "learnMore": "Learn More",
     "keyFeatures": "Key Features",
     "powerfulTranslation": "Powerful Translation Capabilities",
-    "powerfulTranslationDescription": "Our AI-powered translation tool supports multiple languages, provides local-first translations, never touching a server, and integrates seamlessly with JSON.",
+    "powerfulTranslationDescription": "Our AI-powered translation tool supports multiple languages, provides local-first translations, never touching a server, and integrates seamlessly with JSON, YAML, and JS/TS.",
     "multipleLanguages": "Multiple Languages",
     "multipleLanguagesDescription": "Translate your content into 200+ languages with our comprehensive language support.",
     "localFirstTranslation": "Local-first Translation",
     "localFirstTranslationDescription": "Keep your translation files safe and fully in your control. Our service only uses local-first models and will never communicate with a server.",
     "fileFormatSupport": "File Format Support",
-    "fileFormatDescription": "Translate content into the popular file format JSON.",
+    "fileFormatDescription": "Translate content into the popular file formats JSON, YAML, and JS/TS.",
     "fileFormatNote": "If there is a file format you prefer, let us know and we can discuss building it.",
+    "fileFormatsSupported": "Multiple formats supported",
     "pricing": "Pricing",
     "affordablePricing": "Affordable Pricing",
     "affordablePricingDescription": "Our AI-powered translation platform is available for a one-time purchase of $20.",
@@ -38,9 +39,9 @@
     "submit": "Submit"
   },
   "input": {
-    "header": "Import your JSON",
-    "description": "To import your JSON file, you have two options: either paste the file contents into the editor by copying from a text editor and pasting here, or use the file input to select your JSON file directly from your computer, which will automatically load the contents into the editor for you.",
-    "pasteYourJsonHere": "Paste your JSON here",
+    "header": "Import your i18n file",
+    "description": "To import your i18n file, use the file input to select your file directly from your computer, which will automatically load the contents into the editor for you.",
+    "pasteYourJsonHere": "Edit your inputted code here.",
     "submit": "Submit"
   },
   "output": {

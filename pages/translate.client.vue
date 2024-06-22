@@ -397,11 +397,13 @@ useHead({
                     borderBottomLeftRadius: '20px',
                     borderBottomRightRadius: '20px',
                     overflow: 'scroll',
+                    pointerEvents: 'none',
                   }"
                   :autofocus="true"
                   :indent-with-tab="true"
                   :tab-size="2"
                   :extensions="extensions"
+                  :disabled="true"
                 />
               </div>
             </div>

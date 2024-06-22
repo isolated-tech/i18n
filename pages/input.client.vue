@@ -164,11 +164,13 @@ useHead({
                     borderBottomLeftRadius: '20px',
                     borderBottomRightRadius: '20px',
                     overflow: 'hidden',
+                    pointerEvents: 'none',
                   }"
                   :autofocus="true"
                   :indent-with-tab="true"
                   :tab-size="2"
                   :extensions="extensions"
+                  :disabled="true"
                 />
               </div>
             </div>

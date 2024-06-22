@@ -117,7 +117,10 @@ useHead({
         <div class="mx-auto max-w-2xl">
           <div class="max-w-lg">
             <div class="mt-24 sm:mt-32 lg:mt-16">
-              <NuxtLink to="/blog/whats-new" class="inline-flex space-x-6">
+              <NuxtLink
+                to="/blog/new-file-formats"
+                class="inline-flex space-x-6"
+              >
                 <span
                   class="rounded-full bg-gray-600/10 px-3 py-1 text-sm font-semibold leading-6 text-gray-600 ring-1 ring-inset ring-gray-600/10"
                 >
@@ -126,7 +129,7 @@ useHead({
                 <span
                   class="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600"
                 >
-                  <span>{{ $t('landing.justShipped') }} v1.0.0</span>
+                  <span>{{ $t('landing.justShipped') }} v1.1</span>
                   <ChevronRightIcon
                     class="h-5 w-5 text-gray-400"
                     aria-hidden="true"
@@ -258,8 +261,12 @@ useHead({
               name="streamline:programming-script-file-code-1-code-files-angle-programming-file-bracket"
               class="h-10 w-10 text-gray-500 dark:text-gray-400"
             />
-            <h4 class="text-lg font-bold">Code Files</h4>
-            <p class="text-gray-500 dark:text-gray-400">.json</p>
+            <h4 class="text-lg font-bold">
+              {{ $t('landing.fileFormatsSupported') }}
+            </h4>
+            <p class="text-gray-500 dark:text-gray-400">
+              .json, .yaml, .yml, .js, .ts
+            </p>
           </div>
           <div class="flex flex-col justify-center space-y-4">
             <ul class="grid gap-6">
