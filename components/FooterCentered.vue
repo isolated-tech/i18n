@@ -39,7 +39,7 @@ const navigation = computed(() => {
   return {
     main: [
       { name: t('footer.home'), href: '/' },
-      { name: t('footer.blog'), href: '/blog/whats-new' },
+      { name: t('footer.blog'), href: '/blog' },
       { name: t('footer.tos'), href: '/tos' },
       { name: t('footer.privacy'), href: '/privacy' },
     ],
