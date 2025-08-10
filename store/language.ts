@@ -15,7 +15,7 @@ export const useLangStore = defineStore('langStore', () => {
   }
 
   const toggleAllLanguages = (checkTo: boolean) => {
-    languages.value.forEach(language => {
+    languages.value.forEach((language: Language) => {
       language.checked = checkTo
     })
   }
@@ -25,7 +25,7 @@ export const useLangStore = defineStore('langStore', () => {
   }
 
   const checkedLanguages = computed(() => {
-    return languages.value.filter(language => language.checked)
+    return languages.value.filter((language: Language) => language.checked)
   })
 
   return {

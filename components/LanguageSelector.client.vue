@@ -35,7 +35,7 @@ const handleToggle = (language: Language) => {
 
 
 const renderedLanguages = computed(() => {
-  const searchedLanguages = languages.value?.filter(language =>
+  const searchedLanguages = languages.value?.filter((language: Language) =>
     language.title.toLowerCase().includes(searchTerm.value)
   )
 
