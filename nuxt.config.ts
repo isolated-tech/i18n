@@ -2,10 +2,10 @@ import { languages } from './lib/constants'
 
 export default defineNuxtConfig({
     app: {
-        baseURL: '/i18n/demo/',
+        baseURL: process.env.NUXT_APP_BASE_URL || '/',
     },
     nitro: {
-        baseURL: '/i18n/demo',
+        baseURL: process.env.NUXT_APP_BASE_URL || '/',
     },
     devtools: { enabled: true },
     modules: [
@@ -36,7 +36,7 @@ export default defineNuxtConfig({
     },
     runtimeConfig: {
         public: {
-            BASE_URL: process.env.BASE_URL || 'https://isolated.tech/i18n/demo',
+            BASE_URL: process.env.BASE_URL || 'https://www.i18nlocale.com',
         },
     },
     routeRules: {
