@@ -19,43 +19,20 @@ const { single } = defineProps<Props>()
 const emit = defineEmits(['languagesUpdated'])
 const searchTerm = ref()
 
-const { data } = useAuth()
-const isSubbed = computed(() => data.value?.user.is_subscribed)
-const freeTierLimit = computed(
-  () => !isSubbed.value && checkedLanguages.value.length >= 2
-)
 
 const handleToggle = (language: Language) => {
   if (language) {
-    if (language.code === 'all' && !isSubbed.value) {
-      allDisabledToast()
-    } else if (language.code === 'all' && !single) {
+    if (language.code === 'all' && !single) {
       toggleAllLanguages(!language.checked)
     } else if (single) {
       toggleAllLanguages(false)
       language.checked = !language.checked
-    } else if (!language.checked && freeTierLimit.value) {
-      freeTierToast()
-      language.checked = false
     } else {
       language.checked = !language.checked
     }
   }
 }
 
-const freeTierToast = () => {
-  toast({
-    title: t('languageSelector.limitReached'),
-    description: t('languageSelector.limitedToTwo'),
-  })
-}
-
-const allDisabledToast = () => {
-  toast({
-    title: t('languageSelector.disabled'),
-    description: t('languageSelector.translatingAllRequiredPaid'),
-  })
-}
 
 const renderedLanguages = computed(() => {
   const searchedLanguages = languages.value?.filter(language =>
@@ -73,11 +50,6 @@ onMounted(() => {
   resetLanguages()
 })
 
-watch(freeTierLimit, (newVal, oldVal) => {
-  if (newVal === true) {
-    freeTierToast()
-  }
-})
 </script>
 
 <template>
@@ -139,12 +111,8 @@ watch(freeTierLimit, (newVal, oldVal) => {
             :id="language.code"
             :name="language.code"
             :checked="language.checked"
-            :disabled="!language.checked && freeTierLimit"
             type="checkbox"
-            class="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
-            :class="{
-              'cursor-pointer': language.checked && freeTierLimit,
-            }"
+            class="h-4 w-4 rounded border-gray-300 text-black focus:ring-black cursor-pointer"
             @change="() => handleToggle(language)"
           />
         </div>

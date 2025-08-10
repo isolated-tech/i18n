@@ -9,7 +9,6 @@ import spa_Latn from '../i18n/spa_Latn.json'
 import zho_Hans from '../i18n/zho_Hans.json'
 import zho_Hant from '../i18n/zho_Hant.json'
 import deu_Latn from '../i18n/deu_Latn.json'
-import { useToast } from '@/components/ui/toast'
 
 const i18nSelector = ref([
   { language: eng_Latn, code: 'eng_Latn', active: true },
@@ -23,11 +22,6 @@ const i18nSelector = ref([
 ])
 
 const { t, setLocale } = useI18n()
-const { data, signIn } = useAuth()
-const isLoggedIn = computed(() => data.value?.user)
-const isSubbed = computed(() => data.value?.user.is_subscribed)
-const { toast } = useToast()
-const emailSignUp = ref<string>()
 
 const renderedJSON = computed(() => {
   return i18nSelector.value.find(l => l.active)?.language
@@ -75,26 +69,6 @@ watch(renderedJSON, (_newVal, _oldVal) => {
   }
 })
 
-const handleEmailSignUp = () => {
-  if (!emailSignUp.value?.length) {
-    toast({
-      title: t('emailRequired'),
-      description: t('checkYourEmailForLoginLink'),
-    })
-  } else {
-    signIn('email', {
-      email: emailSignUp.value,
-      redirect: false,
-    })
-
-    toast({
-      title: t('linkSent'),
-      description: t('checkYourEmailForLoginLink'),
-    })
-
-    emailSignUp.value = ''
-  }
-}
 
 useHead({
   title: 'Local + Effortless i18n Translation',
@@ -439,11 +413,11 @@ useHead({
                 <span>{{ $t('landing.customerSupport') }}</span>
               </li>
             </ul>
-            <BuyNowDialog v-if="!isLoggedIn" />
-            <StripeCheckoutButton v-else-if="isLoggedIn && !isSubbed" />
-            <Button v-else-if="isSubbed" disabled>
-              {{ $t('buyNowDialog.buyNow') }}
-            </Button>
+            <NuxtLink to="get-started">
+              <Button>
+                {{ $t('landing.cta') }}
+              </Button>
+            </NuxtLink>
           </div>
         </div>
       </div>
@@ -464,18 +438,9 @@ useHead({
           </p>
         </div>
         <div class="mx-auto w-full max-w-sm space-y-2">
-          <form class="flex space-x-2" @submit.prevent="handleEmailSignUp">
-            <Input
-              v-model="emailSignUp"
-              type="email"
-              placeholder="Enter your email"
-              class="max-w-lg flex-1"
-            />
-            <Button type="submit">{{ $t('landing.signUp') }}</Button>
-          </form>
-          <p class="text-xs text-gray-500 dark:text-gray-400">
-            {{ $t('landing.signUpToGetStarted') }}
-          </p>
+          <NuxtLink to="get-started">
+            <Button class="w-full">{{ $t('landing.cta') }}</Button>
+          </NuxtLink>
         </div>
       </div>
     </section>

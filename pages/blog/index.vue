@@ -38,7 +38,6 @@ const { data: posts } = await useAsyncData('posts-list', () =>
         </div>
       </div>
     </section>
-    <LoginDialog class="absolute top-0 right-0" />
   </main>
 </template>
 
