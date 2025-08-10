@@ -8,7 +8,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "vercel-build": "prisma generate --no-engine && prisma migrate deploy && nuxt build"
+    "vercel-build": "nuxt build"
   },
   "dependencies": {
     "@codemirror/lang-javascript": "^6.2.2",
@@ -19,8 +19,6 @@
     "@nuxt/content": "^2.12.1",
     "@nuxtjs/i18n": "^8.3.1",
     "@pinia/nuxt": "^0.5.1",
-    "@prisma/client": "^5.14.0",
-    "@prisma/extension-accelerate": "^1.1.0",
     "@tailwindcss/forms": "^0.5.7",
     "@types/codemirror": "^5.60.15",
     "@vercel/postgres": "^0.8.0",
@@ -37,7 +35,6 @@
     "nuxt": "^3.11.2",
     "nuxt-gtag": "^2.0.6",
     "pinia": "^2.1.7",
-    "prisma": "^5.14.0",
     "prismjs": "^1.29.0",
     "radix-vue": "^1.8.3",
     "shadcn-nuxt": "^0.10.4",
