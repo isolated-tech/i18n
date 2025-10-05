@@ -16,9 +16,6 @@ A web application that provides local, effortless internationalization (i18n) tr
 - **Frontend Framework**: [Nuxt 3](https://nuxt.com/) - Vue.js meta-framework
 - **UI Components**: [shadcn-vue](https://www.shadcn-vue.com/) - Radix Vue components with Tailwind CSS
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Authentication**: [NextAuth.js](https://next-auth.js.org/) with Sidebase adapter
-- **Database**: PostgreSQL with [Prisma ORM](https://www.prisma.io/)
-- **Payment Processing**: [Stripe](https://stripe.com/)
 - **AI Models**: [HuggingFace Transformers](https://huggingface.co/docs/transformers.js) (Xenova)
 - **State Management**: [Pinia](https://pinia.vuejs.org/)
 - **Code Editor**: [CodeMirror](https://codemirror.net/)
@@ -56,43 +53,7 @@ yarn install
 bun install
 ```
 
-### 3. Set up environment variables
-
-Create a `.env` file in the root directory with the following variables:
-
-```env
-# Database
-DATABASE_URL="postgresql://username:password@localhost:5432/i18n_ai"
-POSTGRES_URL_NON_POOLING="postgresql://username:password@localhost:5432/i18n_ai"
-
-# NextAuth
-NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="your-secret-key"
-
-# Email Provider (for authentication)
-EMAIL_SERVER="smtp://username:password@smtp.example.com:587"
-EMAIL_FROM="noreply@example.com"
-
-# Stripe
-STRIPE_SECRET_KEY="sk_test_..."
-STRIPE_WEBHOOK_SECRET="whsec_..."
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_..."
-
-# Google Analytics (optional)
-NUXT_PUBLIC_GTAG_ID="G-XXXXXXXXXX"
-```
-
-### 4. Set up the database
-
-```bash
-# Generate Prisma client
-npx prisma generate
-
-# Run database migrations
-npx prisma migrate dev
-```
-
-### 5. Run the development server
+### 3. Run the development server
 
 ```bash
 # npm
@@ -163,10 +124,6 @@ i18n-ai/
 ├── i18n/               # Translation files
 ├── lib/                # Utility functions and constants
 ├── pages/              # Nuxt pages
-├── prisma/             # Database schema and migrations
-├── server/             # Server-side code
-│   ├── api/           # API routes
-│   └── utils/         # Server utilities
 ├── store/              # Pinia stores
 ├── content/            # Markdown content for blog
 └── public/             # Static assets
